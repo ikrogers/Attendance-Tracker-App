@@ -7,6 +7,9 @@
 <%= button_to "logo", destroy_user_session_path, :method => :delete%>
 <%= current_user.email %>
 
-<% if current_user.admin == true %>
+<% if current_user.admin == true 
+User.all%>
 <%= button_to "admin", admin_root_path, :method => :get %>
+
+
 <%end%>

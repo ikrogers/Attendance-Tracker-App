@@ -33,7 +33,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :lname
       t.string :phone
       t.string :carrier
-      
+      t.boolean :sq_advisor
 
       t.timestamps
     end
