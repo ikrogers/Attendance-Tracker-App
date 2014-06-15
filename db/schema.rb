@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140615041206) do
+ActiveRecord::Schema.define(version: 20140615042647) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -29,9 +29,11 @@ ActiveRecord::Schema.define(version: 20140615041206) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
 
   create_table "groups", force: true do |t|
-    t.string  "name"
-    t.integer "users_id"
-    t.integer "groups_id"
+    t.string   "name"
+    t.integer  "users_id"
+    t.integer  "groups_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "groups", ["groups_id"], name: "index_groups_on_groups_id"
@@ -42,6 +44,8 @@ ActiveRecord::Schema.define(version: 20140615041206) do
     t.integer  "users_id"
     t.boolean  "confirmed"
     t.datetime "confirm_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "message_lists", ["messages_id"], name: "index_message_lists_on_messages_id"
@@ -54,6 +58,8 @@ ActiveRecord::Schema.define(version: 20140615041206) do
     t.datetime "all_confirm"
     t.string   "delivery_method"
     t.integer  "users_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "messages", ["groups_id"], name: "index_messages_on_groups_id"

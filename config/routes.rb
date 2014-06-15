@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :message_lists
+
+  resources :messages
+
+  resources :groups
+
   ActiveAdmin.routes(self)
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
