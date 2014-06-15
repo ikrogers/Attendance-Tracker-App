@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140615031247) do
+ActiveRecord::Schema.define(version: 20140615041206) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -37,6 +37,28 @@ ActiveRecord::Schema.define(version: 20140615031247) do
   add_index "groups", ["groups_id"], name: "index_groups_on_groups_id"
   add_index "groups", ["users_id"], name: "index_groups_on_users_id"
 
+  create_table "message_lists", force: true do |t|
+    t.integer  "messages_id"
+    t.integer  "users_id"
+    t.boolean  "confirmed"
+    t.datetime "confirm_date"
+  end
+
+  add_index "message_lists", ["messages_id"], name: "index_message_lists_on_messages_id"
+  add_index "message_lists", ["users_id"], name: "index_message_lists_on_users_id"
+
+  create_table "messages", force: true do |t|
+    t.string   "messages"
+    t.integer  "groups_id"
+    t.boolean  "confirm"
+    t.datetime "all_confirm"
+    t.string   "delivery_method"
+    t.integer  "users_id"
+  end
+
+  add_index "messages", ["groups_id"], name: "index_messages_on_groups_id"
+  add_index "messages", ["users_id"], name: "index_messages_on_users_id"
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -56,9 +78,11 @@ ActiveRecord::Schema.define(version: 20140615031247) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"
+    t.integer  "groups_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["groups_id"], name: "index_users_on_groups_id"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

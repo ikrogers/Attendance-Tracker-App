@@ -6,6 +6,7 @@ class CreateMessages < ActiveRecord::Migration
       t.boolean :confirm
       t.datetime :all_confirm
       t.string :delivery_method
+      t.references :users, index: true
     end
   end
 end
