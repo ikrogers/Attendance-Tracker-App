@@ -5,7 +5,7 @@ class MessagesController < InheritedResources::Base
     @users = User.all
     @users.each do |user|
       email = user.email
-      UserMailer.recall_email(@user,@message).deliver
+      UserMailer.recall_email(email,@message).deliver
     end
     
     
