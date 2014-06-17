@@ -5,7 +5,7 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.1'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+#gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -27,6 +27,19 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+group :development do
+gem'better_errors'
+gem'binding_of_caller',:platforms=>[:mri_19,:mri_20,:rbx]
+gem'quiet_assets'
+gem'rails_layout'
+gem 'sqlite3', '1.3.9'
+
+end
+group :production do
+  gem 'sass-rails', '~> 4.0.0'
+  gem 'pg', '0.15.1'
+  gem 'rails_12factor', '0.0.2'
+end
 # Use unicorn as the app server
 # gem 'unicorn'
 
