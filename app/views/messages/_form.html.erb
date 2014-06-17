@@ -12,19 +12,20 @@
   <% end %>
   <div class="field">
     <%= f.label :delivery_method %><br>
-    <%= f.text_field :delivery_method %>
+    <%= f.select :delivery_method, options_for_select(%w[Email+SMS(Default) Email SMS]) %>
   </div>
-  <div class="field">
-    <%= f.label :confirm %><br>
-    <%= f.check_box :confirm %>
-  </div>
+  
 
 	<div class="field">
-    <%= f.label :messages %><br>
+    <%= f.label "Recall Message Content" %><br>
     <%= f.text_field :messages %>
   </div>
   
+  <div class="field">
+    <%= f.label "Enable confirmation" %><br>
+    <%= f.check_box :confirm %>
+  </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Initiate Recall" %>
   </div>
 <% end %>

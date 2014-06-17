@@ -2,10 +2,22 @@ class MessagesController < InheritedResources::Base
   
   def create
     @message = Message.new(message_params)
+    @users = User.all
+    @users.each do |user|
+      email = user.email
+      UserMailer.recall_email(@user,@message).deliver
+    end
+    
+    
+    
+    
+    
+    
+    
     respond_to do |format|
       if @message.save
         @message.update_attributes(:users_id => current_user.id)
-        format.html { redirect_to @message, notice: 'Sjgf dghdfghdfgwas successfully created.' }
+        format.html { redirect_to @message, notice: 'Message is successfully sent!' }
         format.json { render :show, status: :created, location: @message}
       else
         format.html { render :new }
