@@ -2,7 +2,7 @@ class MessagesController < InheritedResources::Base
   
   def create
     #@CARRIER_TYPES = ["@sms.3rivers.net", "@paging.acswireless.com","@message.alltel.com","@txt.att.net","@txt.bellmobility.ca","@bellmobility.ca","@txt.bell.ca","@myboostmobile.com","@mobile.celloneusa.com","@csouth1.com","@txt.att.net","@comcastpcs.textmsg.com","@mymetropcs.com","@clearlydigital.com","@messaging.nextel.com","@pcsone.net","@messaging.sprintpcs.com","@tmomail.net","@msg.telus.com","@txt.att.net","@messaging.sprintpcs.com","@tmomail.net","@email.uscc.net","@vtext.com","@vmobl.com","@cellularonewest.com"]
-    @carrier = {"Verizon"=>"@vtext.com", "ATT"=>"@txt.att.net"}
+    @carrier = {"Verizon"=>"@vtext.com", "AT&T"=>"@txt.att.net","Boost Mobile" => "@myboostmobile.com", "Cellular One"=>"@mobile.celloneusa.com","Metro PCS"=>"@mymetropcs.com","Nextel"=>"@messaging.nextel.com","Sprint"=>"@messaging.sprintpcs.com","T-Mobile"=>"@tmomail.net","Tracfone"=>"@txt.att.net"}
     @message = Message.new(message_params)
     @users = User.all
     @users.each do |user|
