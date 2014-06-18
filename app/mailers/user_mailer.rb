@@ -9,4 +9,12 @@ default from: 'RECALL@do-not-reply.com'
     subject: "RECALL"
    )
   end
+  def recall_text(phone, message)
+    @phone = phone
+    @msg = message.messages
+    mail(to: @phone, 
+    subject: "RECALL",
+    body: @msg
+   )
+  end
   end

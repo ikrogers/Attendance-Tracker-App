@@ -1,11 +1,22 @@
 class MessagesController < InheritedResources::Base
   
   def create
+    @CARRIER_TYPES = ["@sms.3rivers.net", "@paging.acswireless.com","@message.alltel.com","@txt.att.net","@txt.bellmobility.ca","@bellmobility.ca","@txt.bell.ca","@myboostmobile.com","@mobile.celloneusa.com","@csouth1.com","@txt.att.net","@comcastpcs.textmsg.com","@mymetropcs.com","@clearlydigital.com","@messaging.nextel.com","@pcsone.net","@messaging.sprintpcs.com","@tmomail.net","@msg.telus.com","@txt.att.net","@messaging.sprintpcs.com","@tmomail.net","@email.uscc.net","@vtext.com","@vmobl.com","@cellularonewest.com"]
+
     @message = Message.new(message_params)
     @users = User.all
+    #@users.each do |user|
+    #  email = user.email
+    #  UserMailer.recall_email(email,@message).deliver
+   # end
+    
     @users.each do |user|
-      email = user.email
-      UserMailer.recall_email(email,@message).deliver
+      phone = user.phone
+     if user.phone != ""
+      
+       UserMailer.recall_text("9125802665@vtext.com",@message).deliver
+      
+     end
     end
     
     
