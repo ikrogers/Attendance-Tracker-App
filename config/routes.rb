@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :message_lists
 
   resources :messages
-
+  get '/confirmation' => 'messages#confirmation'
   resources :groups
 
   ActiveAdmin.routes(self)

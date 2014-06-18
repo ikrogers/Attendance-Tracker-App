@@ -17,4 +17,20 @@ default from: 'RECALL@do-not-reply.com'
     body: @msg
    )
   end
+  
+  def message_confirm(user)
+    @user = user
+    mail :to => user.email, :subject => "Confirm Message"
+  end
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   end

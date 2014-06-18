@@ -20,7 +20,13 @@ class MessagesController < InheritedResources::Base
     end
    end
     
-    
+    @users.each do |user|
+    if user.phone != nil
+      phone = user.phone
+      carrier = user.carrier
+      user.send_confirm_message
+    end
+   end
     
     
     
@@ -40,7 +46,11 @@ class MessagesController < InheritedResources::Base
   
   
   
+  def confirmation
+    @user = User.find_by_messageconfirm_token!(params[:id])
+    
   
+  end
   
   
   private
