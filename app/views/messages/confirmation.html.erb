@@ -1,4 +1,4 @@
-<h1>Reset Password</h1>
+<h1>Confirm recall message</h1>
 
 <%= form_for @user, :url => confirmation_path(params[:id]) do |f| %>
   <% if @user.errors.any? %>
@@ -11,13 +11,13 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
-    <%= f.label "HOLE ON WAIT A MINUTE PUT A LITTLE LOVE IN IT!" %>
-    <%= f.password_field :password %>
+  <div>
+      <%= label_tag @message %>
   </div>
   <div class="field">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
+    <%= f.label "Please re-enter recall message in the space below. It is case and spelling sensitive" %>
+    <%= f.input_field :entered_message %>
+  </div>
   </div>
   <div class="actions"><%= f.submit "YOU BREAK IT NOW!" %></div>
 <% end %>

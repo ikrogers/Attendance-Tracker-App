@@ -21,9 +21,11 @@ class MessagesController < InheritedResources::Base
    end
     
     @users.each do |user|
-    if user.phone != nil
-      phone = user.phone
-      carrier = user.carrier
+    if user.email != nil
+    # user.update_attributes(:original_message => @message.messages)
+     #user.update_attributes(:messageconfirm_token => nil)
+    #  user.update_attributes(:confirmed_recall => false)
+
       user.send_confirm_message
     end
    end
@@ -47,8 +49,15 @@ class MessagesController < InheritedResources::Base
   
   
   def confirmation
-    @user = User.find_by_messageconfirm_token!(params[:id])
-    
+  @user = User.find_by_messageconfirm_token!(params[:id])
+   #@entered = User.find_by_messageconfirm_token!(params[:entered_message])
+   # @original = User.find_by_messageconfirm_token!(params[:original_message])
+   #if @entered == @original
+   #   @user.confirmed_recall = true
+   #   redirect_to authenticated_root_path :notice => "Recall message confirmed successfully. Thank you and have a good day!"
+   # else
+  #    redirect_to confirmation_path :notice => "Messages did not match. Please try again."
+  #  end
   
   end
   

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140618172705) do
+ActiveRecord::Schema.define(version: 20140618182611) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -88,6 +88,9 @@ ActiveRecord::Schema.define(version: 20140618172705) do
     t.integer  "groups_id"
     t.string   "messageconfirm_token"
     t.datetime "confirmtoken_sent_at"
+    t.string   "original_message"
+    t.string   "entered_message"
+    t.boolean  "confirmed_recall"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
