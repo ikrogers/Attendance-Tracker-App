@@ -6,15 +6,18 @@ class MessagesController < InheritedResources::Base
     @message = Message.new(message_params)
     @users = User.all
     @users.each do |user|
+    if user.email != nil
       email = user.email
       UserMailer.recall_email(email,@message).deliver
+      end
     end
     
     @users.each do |user|
+    if user.phone != nil
       phone = user.phone
       carrier = user.carrier
-       UserMailer.recall_text([phone, @carrier[carrier]].join(""),@message).deliver
-    
+      UserMailer.recall_text([phone, @carrier[carrier]].join(""),@message).deliver
+    end
    end
     
     
