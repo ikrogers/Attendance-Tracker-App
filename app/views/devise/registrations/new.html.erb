@@ -11,7 +11,15 @@
 
   <div><%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
-
+    
+    <div><%= f.label "Your phone number. Please include areacode. Must be 9 digits long" %><br />
+    <%= f.phone_field :phone, autocomplete: "off" %></div>
+    
+    <div><%= f.label "Select your carrier. This is important. I will add more soon if needed" %><br />
+    <%= f.select :carrier, options_for_select(["AT&T","Verizon", "Boost Mobile", "Cellular One", "Metro PCS", "Nextel", "Sprint", "T-Mobile", "Tracfone"]),autocomplete: "off" %></div>
+<br>
+<br>
+<br>
   <div><%= f.submit "Sign up" %></div>
 <% end %>
 
