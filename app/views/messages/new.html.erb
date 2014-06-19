@@ -1,5 +1,10 @@
+<% if notice %>
+<p id="notice">
+	<%= notice %>
+</p>
+<% end %>
 <h1>New message</h1>
 
 <%= render 'form' %>
 
-<%= button_to 'Back(DONT USE ATM)', "homepage#index", :method => :get %>
+<%= button_to 'Back', authenticated_root_path, :method => :get %>

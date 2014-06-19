@@ -1,37 +1,65 @@
 class MessagesController < InheritedResources::Base
   def create
-    #@CARRIER_TYPES = ["@sms.3rivers.net", "@paging.acswireless.com","@message.alltel.com","@txt.att.net","@txt.bellmobility.ca","@bellmobility.ca","@txt.bell.ca","@myboostmobile.com","@mobile.celloneusa.com","@csouth1.com","@txt.att.net","@comcastpcs.textmsg.com","@mymetropcs.com","@clearlydigital.com","@messaging.nextel.com","@pcsone.net","@messaging.sprintpcs.com","@tmomail.net","@msg.telus.com","@txt.att.net","@messaging.sprintpcs.com","@tmomail.net","@email.uscc.net","@vtext.com","@vmobl.com","@cellularonewest.com"]
     @carrier = {"Verizon"=>"@vtext.com", "AT&T"=>"@txt.att.net","Boost Mobile" => "@myboostmobile.com", "Cellular One"=>"@mobile.celloneusa.com","Metro PCS"=>"@mymetropcs.com","Nextel"=>"@messaging.nextel.com","Sprint"=>"@messaging.sprintpcs.com","T-Mobile"=>"@tmomail.net","Tracfone"=>"@txt.att.net"}
     @message = Message.new(message_params)
     @users = User.all
-    @users.each do |user|
-      if user.email != nil
-        email = user.email
-        UserMailer.recall_email(email,@message).deliver
+    @delivery = @message.delivery_method
+    @confirm = @message.confirm
+
+    if @delivery == "Email+SMS"
+      @users.each do |user|
+        if user.email != nil
+          email = user.email
+          UserMailer.recall_email(email,@message).deliver
+        end
+      end
+
+      @users.each do |user|
+        if user.phone != nil
+          phone = user.phone
+          carrier = user.carrier
+          UserMailer.recall_text([phone, @carrier[carrier]].join(""),@message).deliver
+        end
       end
     end
 
-    @users.each do |user|
-      if user.phone != nil
-        phone = user.phone
-        carrier = user.carrier
-        UserMailer.recall_text([phone, @carrier[carrier]].join(""),@message).deliver
+    if @delivery == "SMS"
+      @users.each do |user|
+        if user.phone != nil
+          phone = user.phone
+          carrier = user.carrier
+          UserMailer.recall_text([phone, @carrier[carrier]].join(""),@message).deliver
+        end
       end
     end
 
-    @users.each do |user|
-      if user.email != nil
-        user.update_attributes(:original_message => @message.messages)
-        user.update_attributes(:confirmed_recall => false)
-
-      user.send_confirm_message
+    if @delivery == "Email"
+      @users.each do |user|
+        if user.email != nil
+          email = user.email
+          UserMailer.recall_email(email,@message).deliver
+        end
       end
     end
+    if @confirm == 1
+      
+      
+      
+      
+      
+      @users.each do |user|
+        if user.email != nil
+          user.update_attributes(:original_message => @message.messages)
+          user.update_attributes(:confirmed_recall => false)
 
+        user.send_confirm_message
+        end
+      end
+    end
     respond_to do |format|
       if @message.save
         @message.update_attributes(:users_id => current_user.id)
-        format.html { redirect_to @message, notice: 'Message is successfully sent!' }
+        format.html { redirect_to new_message_path, notice: 'Message is successfully sent!' }
         format.json { render :show, status: :created, location: @message}
       else
         format.html { render :new }
@@ -42,10 +70,9 @@ class MessagesController < InheritedResources::Base
 
   def confirmation
     @user = User.find_by_messageconfirmtoken!(params[:id])
-    
 
   end
-  
+
   def validate_message
     @user = User.find_by_messageconfirmtoken!(params[:id])
 
@@ -59,7 +86,6 @@ class MessagesController < InheritedResources::Base
 
     end
   end
- 
 
   private
 
