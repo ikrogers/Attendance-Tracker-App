@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   resources :message_lists
 
   resources :messages
-  get '/confirmation' => 'messages#confirmation'
+  
+  
+  get "/confirmation/:id" , :to => "messages#confirmation", :as => 'confirmation'
+  patch "/validate_message/:id" , :to => "messages#validate_message", :as => 'validate_message'
+
   resources :groups
 
   ActiveAdmin.routes(self)

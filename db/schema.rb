@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20140618182611) do
     t.datetime "updated_at"
   end
 
+  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace"
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
 
@@ -59,8 +60,6 @@ ActiveRecord::Schema.define(version: 20140618182611) do
     t.integer  "users_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "messageconfirm_token"
-    t.datetime "confirmtoken_sent_at"
   end
 
   add_index "messages", ["groups_id"], name: "index_messages_on_groups_id"
@@ -86,7 +85,7 @@ ActiveRecord::Schema.define(version: 20140618182611) do
     t.datetime "updated_at"
     t.boolean  "admin"
     t.integer  "groups_id"
-    t.string   "messageconfirm_token"
+    t.string   "messageconfirmtoken"
     t.datetime "confirmtoken_sent_at"
     t.string   "original_message"
     t.string   "entered_message"

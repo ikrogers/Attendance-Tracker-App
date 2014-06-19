@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
          
-         
+     has_many :messages 
    def gen_token(column)
     begin
       self[column] = SecureRandom.urlsafe_base64
@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
     
     
     def send_confirm_message
-  gen_token(:messageconfirm_token)
+  gen_token(:messageconfirmtoken)
   self.confirmtoken_sent_at = Time.zone.now
   save!
   UserMailer.message_confirm(self).deliver
