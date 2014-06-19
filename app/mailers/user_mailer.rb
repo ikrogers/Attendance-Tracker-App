@@ -1,0 +1,36 @@
+class UserMailer < ActionMailer::Base
+default from: 'RECALL@do-not-reply.com'
+ @msg = ""
+  def recall_email(email, message)
+    @email = email
+    @msg = message.messages
+    @url  = 'http://example.com/login'
+    mail(to: @email, 
+    subject: "RECALL"
+   )
+  end
+  def recall_text(phone, message)
+    @phone = phone
+    @msg = message.messages
+    mail(to: @phone, 
+    subject: "RECALL",
+    body: @msg
+   )
+  end
+  
+  def message_confirm(user)
+    @user = user
+    mail :to => user.email, :subject => "Confirm Message"
+  end
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  end

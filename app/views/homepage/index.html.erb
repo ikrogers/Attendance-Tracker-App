@@ -1,0 +1,17 @@
+<% if notice %> 
+<p id="notice"><%= notice %></p> 
+<% end %> 
+
+<h1>Homepage#index</h1>
+<p>Find me in app/views/homepage/index.html.erb</p>
+<%= button_to "logo", destroy_user_session_path, :method => :delete%>
+<%= current_user.email %>
+
+<% if current_user.admin == true %>
+
+<%= button_to "admin", admin_root_path, :method => :get %>
+<%= button_to "recall", new_message_path, :method => :get %>
+
+
+
+<%end%>

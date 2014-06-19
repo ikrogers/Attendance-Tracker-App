@@ -1,0 +1,30 @@
+
+<% if notice %>
+<p id="notice">
+	<%= notice %>
+</p>
+<% end %>
+<h1>Confirm recall message</h1>
+
+<%= form_tag(validate_message_path) do%>
+  <% if @user.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @user.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+      <%=  @message %>
+  </div>
+  <div class="field">
+    <%= label_tag :entered_message %>
+    <%= text_field_tag :entered_message %>
+  </div>
+  </div>
+  <div class="actions">
+  	<%= submit_tag "YOU BREAK IT NOW!" %></div>
+<% end %>
