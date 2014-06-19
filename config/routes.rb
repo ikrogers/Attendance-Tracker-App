@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   
   get "/confirmation/:id" , :to => "messages#confirmation", :as => 'confirmation'
   post "/validate_message/:id" , :to => "messages#validate_message", :as => 'validate_message'
+
   resources :groups
 
   ActiveAdmin.routes(self)

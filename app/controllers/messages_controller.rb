@@ -48,6 +48,7 @@ class MessagesController < InheritedResources::Base
   
   def validate_message
     @user = User.find_by_messageconfirmtoken!(params[:id])
+
     @entered = params[:entered_message]
     @original = @user.original_message
     if @entered == @original
@@ -55,6 +56,7 @@ class MessagesController < InheritedResources::Base
       redirect_to authenticated_root_path, :notice => "Recall message confirmed successfully. Thank you and have a good day!"
     else
       redirect_to confirmation_path, :notice => "Messages did not match. Please try again."
+
     end
   end
  
