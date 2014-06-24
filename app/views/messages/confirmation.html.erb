@@ -20,7 +20,7 @@
     </div>
   <% end %>
   <div>
-      <%=  @message %>
+      <p>Please type the following message in the box below: <%=@user.original_message %></p>
   </div>
   <div class="field">
     <%= label_tag :entered_message %>
@@ -28,6 +28,6 @@
   </div>
   </div>
   <div class="actions">
-  	<%= submit_tag "YOU BREAK IT NOW!" %></div>
+  	<%= submit_tag "Confirm" %></div>
 
 <% end %>

@@ -12,7 +12,7 @@
   <% end %>
   <div class="field">
     <%= f.label :delivery_method %><br>
-    <%= f.select :delivery_method, options_for_select(%w[Email+SMS Email SMS]) %>
+    <%= f.select :delivery_method, options_for_select(["Email+SMS", "SMS", "Email"]) %>
   </div>
   
 
@@ -23,7 +23,7 @@
   
   <div class="field">
     <%= f.label "Enable confirmation" %><br>
-    <%= f.check_box :confirm %>
+    <%= f.select :confirm, options_for_select(["Confirmation", "No Confirmation"]) %>
   </div>
   <div class="actions">
     <%= f.submit "Initiate Recall" %>

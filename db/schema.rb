@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20140618182611) do
   create_table "messages", force: true do |t|
     t.string   "messages"
     t.integer  "groups_id"
-    t.boolean  "confirm"
+    t.string   "confirm"
     t.datetime "all_confirm"
     t.string   "delivery_method"
     t.integer  "users_id"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20140618182611) do
     t.datetime "confirmtoken_sent_at"
     t.string   "original_message"
     t.string   "entered_message"
+    t.datetime "confirmed_time"
     t.boolean  "confirmed_recall"
   end
 
@@ -97,4 +98,3 @@ ActiveRecord::Schema.define(version: 20140618182611) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
-

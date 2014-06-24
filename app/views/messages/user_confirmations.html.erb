@@ -1,0 +1,28 @@
+
+<table>
+	<th>
+		Email:
+	</th>
+	<th>
+		Confirmation status:
+	</th>
+		<th>
+		Confirmation time:
+	</th>
+	<%@users.each do |user|%>
+	<tr>
+		<td>
+			<%=user.email%>
+		</td>
+		<td>
+			<%=user.confirmed_recall%>
+		</td>
+		<td>
+			<%=user.confirmed_time%>
+		</td>
+
+	</tr>
+	<%end%>
+	
+</table>
+<%= button_to "Home", authenticated_root_path, :method => :get %>

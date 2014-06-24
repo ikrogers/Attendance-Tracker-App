@@ -9,18 +9,24 @@ default from: 'RECALL@do-not-reply.com'
     subject: "RECALL"
    )
   end
-  def recall_text(phone, message)
+  def recall_email_text(phone, message)
     @phone = phone
     @msg = message.messages
     mail(to: @phone, 
     subject: "RECALL",
-    body: @msg
    )
   end
   
-  def message_confirm(user)
+  def message_confirm(user,message)
+    @msg = message
     @user = user
-    mail :to => user.email, :subject => "Confirm Message"
+    mail :to => user.email, :subject => "CONFIRM RECALL"
+  end
+  
+   def message_confirm_text(user,message,phone)
+     @msg = message
+    @user = user
+    mail :to => phone, :subject => "CONFIRM RECALL"
   end
   
   
