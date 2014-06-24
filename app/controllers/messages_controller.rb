@@ -53,10 +53,11 @@ class MessagesController < InheritedResources::Base
       end
 
     else #Required confirm
-      user.gentoken
       if @message.delivery_method == "Email+SMS"
         @users.each do |user|
           if user.phone != nil
+                  user.gentoken
+
             user.update_attributes(:original_message => @message.messages)
             user.update_attributes(:confirmed_recall => false)  
             phone = user.phone
@@ -79,6 +80,8 @@ class MessagesController < InheritedResources::Base
       if @message.delivery_method == 'SMS'
         @users.each do |user|
           if user.phone != nil
+                  user.gentoken
+
             user.update_attributes(:original_message => @message.messages)
             user.update_attributes(:confirmed_recall => false)
             phone = user.phone
@@ -91,6 +94,8 @@ class MessagesController < InheritedResources::Base
       if @message.delivery_method == "Email"
         @users.each do |user|
           if user.email != nil
+                  user.gentoken
+
             user.update_attributes(:original_message => @message.messages)
             user.update_attributes(:confirmed_recall => false)
 
