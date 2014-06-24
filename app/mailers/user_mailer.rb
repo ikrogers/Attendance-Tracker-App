@@ -26,7 +26,7 @@ default from: 'RECALL@do-not-reply.com'
    def message_confirm_text(user,message,phone)
      @msg = message
     @user = user
-    mail :to => phone, :subject => "CONFIRM RECALL"
+    mail :to => phone, :subject => "RECALL"
   end
   
   
