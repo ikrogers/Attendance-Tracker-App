@@ -60,6 +60,8 @@ class MessagesController < InheritedResources::Base
 
             user.update_attributes(:original_message => @message.messages)
             user.update_attributes(:confirmed_recall => false)  
+            user.update_attributes(:confirmed_time => nil)  
+
             phone = user.phone
             carrier = user.carrier
           user.send_confirm_message_text(@message.messages,[phone, @carrier[carrier]].join(""))
@@ -70,6 +72,8 @@ class MessagesController < InheritedResources::Base
           if user.email != nil
             user.update_attributes(:original_message => @message.messages)
             user.update_attributes(:confirmed_recall => false)
+                        user.update_attributes(:confirmed_time => nil)  
+
 
           user.send_confirm_message(@message.messages)
           end
@@ -84,6 +88,8 @@ class MessagesController < InheritedResources::Base
 
             user.update_attributes(:original_message => @message.messages)
             user.update_attributes(:confirmed_recall => false)
+                        user.update_attributes(:confirmed_time => nil)  
+
             phone = user.phone
             carrier = user.carrier
           user.send_confirm_message_text(@message.messages,[phone, @carrier[carrier]].join(""))
@@ -98,6 +104,8 @@ class MessagesController < InheritedResources::Base
 
             user.update_attributes(:original_message => @message.messages)
             user.update_attributes(:confirmed_recall => false)
+                        user.update_attributes(:confirmed_time => nil)  
+
 
           user.send_confirm_message(@message.messages)
           end
