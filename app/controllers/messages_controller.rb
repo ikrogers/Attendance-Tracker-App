@@ -53,7 +53,7 @@ class MessagesController < InheritedResources::Base
       end
 
     else #Required confirm
-
+      user.gentoken
       if @message.delivery_method == "Email+SMS"
         @users.each do |user|
           if user.phone != nil

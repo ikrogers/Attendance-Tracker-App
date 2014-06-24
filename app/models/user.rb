@@ -3,7 +3,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-         
+  def gentoken
+    gen_token(:messageconfirmtoken)
+  end
      has_many :messages 
    def gen_token(column)
     begin
@@ -13,14 +15,12 @@ class User < ActiveRecord::Base
     
     
   def send_confirm_message(message)
-  gen_token(:messageconfirmtoken)
   self.confirmtoken_sent_at = Time.zone.now
   save!
   UserMailer.message_confirm(self, message).deliver
 end  
 
 def send_confirm_message_text(message, number)
-  gen_token(:messageconfirmtoken)
   self.confirmtoken_sent_at = Time.zone.now
   save!
   UserMailer.message_confirm_text(self, message, number).deliver
