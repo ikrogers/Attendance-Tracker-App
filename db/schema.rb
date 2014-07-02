@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140618182611) do
+ActiveRecord::Schema.define(version: 20140702002423) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -38,6 +38,14 @@ ActiveRecord::Schema.define(version: 20140618182611) do
 
   add_index "groups", ["groups_id"], name: "index_groups_on_groups_id"
   add_index "groups", ["users_id"], name: "index_groups_on_users_id"
+
+  create_table "has_groups", force: true do |t|
+    t.integer "uid_id"
+    t.integer "gid_id"
+  end
+
+  add_index "has_groups", ["gid_id"], name: "index_has_groups_on_gid_id"
+  add_index "has_groups", ["uid_id"], name: "index_has_groups_on_uid_id"
 
   create_table "message_lists", force: true do |t|
     t.integer  "messages_id"

@@ -1,17 +1,31 @@
 <%= form_for(@group) do |f| %>
-  <% if @group.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+<% if @group.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
 
-      <ul>
-      <% @group.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<ul>
+		<% @group.errors.full_messages.each do |message| %>
+		<li>
+			<%= message %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<% @users = User.all
+  @array = Array.new
+  @users.each do |user|
+    @array << user.email
+  end
+%>
+<div>
+
+	<%= select_tag "list", options_for_select(@array), :multiple=>true %>
+
+</div>
+
+<div class="actions">
+	<%= f.submit %>
+</div>
 <% end %>
