@@ -1,3 +1,4 @@
+
 <%= form_for(@group) do |f| %>
 <% if @group.errors.any? %>
 <div id="error_explanation">
@@ -19,11 +20,12 @@
     @array << user.email
   end
 %>
+
 <div>
-
-	<%= select_tag "list", options_for_select(@array), :multiple=>true %>
-
+	<%= f.text_field :name%>
 </div>
+<%= select_tag :user_ids, options_for_select(User.all.collect {|u| [u.email, u.id]}),:multiple => true, :prompt => 'Select Person', :name=>'project[user_ids][]' %>
+
 
 <div class="actions">
 	<%= f.submit %>
