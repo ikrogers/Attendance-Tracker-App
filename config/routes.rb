@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :in_groups
+
   resources :message_lists
 
   resources :messages
@@ -7,6 +9,8 @@ Rails.application.routes.draw do
   get "/confirmation/:id" , :to => "messages#confirmation", :as => 'confirmation'
   get "/user_confirmations" => "messages#user_confirmations"
   post "/validate_message/:id" , :to => "messages#validate_message", :as => 'validate_message'
+  
+  get "/show_members/:id", :to => "in_groups#show_members", :as => 'show_members'
 
   resources :groups
 

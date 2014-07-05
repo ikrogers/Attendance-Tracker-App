@@ -1,0 +1,33 @@
+
+<%= form_for(@group) do |f| %>
+<% if @group.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+
+	<ul>
+		<% @group.errors.full_messages.each do |message| %>
+		<li>
+			<%= message %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
+
+<% @users = User.all
+  @array = Array.new
+  @users.each do |user|
+    @array << user.email
+  end
+%>
+
+<div>
+	<%= f.text_field :name%>
+</div>
+<%= select_tag :user_ids, options_for_select(User.all.collect {|u| [u.email, u.id]}),:multiple => true, :prompt => 'Select Person', :name=>'project[user_ids][]' %>
+
+
+<div class="actions">
+	<%= f.submit %>
+</div>
+<% end %>

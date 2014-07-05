@@ -1,0 +1,11 @@
+<table>
+	<%
+	@group_members = InGroup.where(:groups_id => params[:id])
+
+	@group_members.all.each do |u| %>
+	<% @user = User.find(u.users_id) %>
+	<tr>
+		<td><%= @user.email %></td>
+	</tr>
+	<% end %>
+</table>

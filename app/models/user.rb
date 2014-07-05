@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
          
-  has_one :group
+  has_many :in_group
   def gentoken
     gen_token(:messageconfirmtoken)
   end
