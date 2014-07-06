@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20140706195240) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
 
   create_table "attendances", force: true do |t|
-    t.integer  "absent"
+    t.boolean  "absent"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 20140706195240) do
     t.string   "carrier"
     t.boolean  "leader"
     t.boolean  "tracker"
+    t.integer  "absent"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"

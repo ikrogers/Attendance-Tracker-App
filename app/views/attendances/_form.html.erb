@@ -11,6 +11,9 @@
     </div>
   <% end %>
 
+
+<%= select_tag :user_ids, options_for_select(User.all.collect {|u| [u.email, u.id]}),:multiple => true, :prompt => 'Select Person', :name=>'project[user_ids][]' %>
+
   <div class="actions">
     <%= f.submit %>
   </div>
