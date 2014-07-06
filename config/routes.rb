@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :attendances
+
   resources :in_groups
 
   resources :message_lists

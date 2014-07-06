@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140704190628) do
+ActiveRecord::Schema.define(version: 20140706195240) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -27,6 +27,15 @@ ActiveRecord::Schema.define(version: 20140704190628) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace"
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+
+  create_table "attendances", force: true do |t|
+    t.integer  "absent"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "attendances", ["user_id"], name: "index_attendances_on_user_id"
 
   create_table "groups", force: true do |t|
     t.string   "name"
@@ -91,7 +100,7 @@ ActiveRecord::Schema.define(version: 20140704190628) do
     t.string   "phone"
     t.string   "carrier"
     t.boolean  "leader"
-    t.integer  "group"
+    t.boolean  "tracker"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"
