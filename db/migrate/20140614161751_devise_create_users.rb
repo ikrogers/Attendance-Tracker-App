@@ -35,7 +35,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :carrier
       t.boolean :leader
       t.boolean :tracker
-      t.integer :absent      
+      t.integer :absentpt
+      t.integer :absentllab      
       t.timestamps
     end
 

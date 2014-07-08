@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20140706195240) do
   create_table "attendances", force: true do |t|
     t.boolean  "absent"
     t.integer  "user_id"
+    t.string   "event"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -101,7 +102,8 @@ ActiveRecord::Schema.define(version: 20140706195240) do
     t.string   "carrier"
     t.boolean  "leader"
     t.boolean  "tracker"
-    t.integer  "absent"
+    t.integer  "absentpt"
+    t.integer  "absentllab"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"
