@@ -6,7 +6,7 @@
 
 <h1>Homepage#index</h1>
 <p>
-	Find me in app/views/homepage/index.html.erb
+
 </p>
 <%= button_to "logout", destroy_user_session_path, :method => :delete%>
 <%= current_user.email %>
@@ -23,12 +23,12 @@
 <%if @leader != nil%>
 <%= button_to "record attendance", attendances_path, :method => :get %>
 <% end %>
-
+<% end %>
 
 <% @attendancept = Attendance.where(user_id: current_user.id, event: "PT")%>
 <% @attendancellab = Attendance.where(user_id: current_user.id, event: "LLAB")%>
 
-<% %>
+
 <br>Attendance Stats:<br>
 Missed PT:
 <%= @attendancept.count %>
@@ -36,7 +36,7 @@ Missed PT:
 <% @attendancept.each do |a|%>
 
 	<th>
-		Date:
+		Date missed:
 	</th>
 	<tr>
 		<td>
@@ -53,7 +53,7 @@ Missed LLAB:
 <% @attendancellab.each do |a|%>
 
 	<th>
-		Date:
+		Date missed:
 	</th>
 	<tr>
 		<td>
@@ -61,16 +61,7 @@ Missed LLAB:
 		</td>
 	</tr>
 
-<% end %>
-</table>
-<% %>
-<% %>
-<% %>
-<% %>
-<% %>
-<% %>
-<% %>
-<% %>
-<% %>
-<% %>
+
+
 <%end%>
+</table>
