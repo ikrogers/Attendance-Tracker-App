@@ -2,9 +2,14 @@ class GroupsController < InheritedResources::Base
   def create
     @group = Group.new(group_params)
     @user = User.find(params[:project][:user_ids]) rescue []
-    @user.each do |u|
-      @u = User.find_by_id(u.id)
-    end
+    
+      @u = User.find_by_id(@user[0])
+      if @group.grouptype == "Attendance"
+      @u.update_attributes(:tracker => true)
+      else
+      @u.update_attributes(:leader => true)
+      end
+    
     @group.update_attributes(:users_id => @u.id)
     respond_to do |format|
       if @group.save
@@ -31,10 +36,22 @@ class GroupsController < InheritedResources::Base
           @in_group.update_attributes(:users_id => u.id)
         end
       end
+      
+      
+      
       @user = User.find(params[:project][:user_id]) rescue nil
       if @user!=nil
         @user.each do |u|
           @u = User.find_by_id(u.id)
+          @oldu = User.find_by_id(@group.users_id)
+          if @group.grouptype =="Attendance"
+            @oldu.update_attributes(:tracker => false)
+            @u.update_attributes(:tracker => true)
+          else
+            @oldu.update_attributes(:leader => false)
+            @u.update_attributes(:leader => true)
+          end
+
         end
         @group.update_attributes(:users_id => @u.id)
       end
