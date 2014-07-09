@@ -1,24 +1,37 @@
 <%= form_for(@attendance) do |f| %>
-  <% if @attendance.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@attendance.errors.count, "error") %> prohibited this attendance from being saved:</h2>
+<% if @attendance.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@attendance.errors.count, "error") %> prohibited this attendance from being saved:</h2>
 
-      <ul>
-      <% @attendance.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<ul>
+		<% @attendance.errors.full_messages.each do |message| %>
+		<li>
+			<%= message %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
 
- <%= f.label "PT or LLAB?" %><br>
-    <%= f.select :event, options_for_select(["PT", "LLAB"]) %>
-    
-     <%= f.label "Select present users" %><br>
+<% @trackeruser = User.find_by_id(current_user.id) %>
+<% @group = InGroup.find_by_users_id(@trackeruser.id).groups_id %>
+<% @usersingroup = InGroup.where(groups_id: @group) %>
+<% @userarray = Array.new %>
+<% @usersingroup.each do |u| %>
+<% @us = User.find_by_id(u.users_id) %>
+<% @userarray << @us %>
+<% end %>
 
-<%= select_tag :user_ids, options_for_select(User.all.collect {|u| [u.email, u.id]}),:multiple => true, :prompt => 'Select Person', :name=>'project[user_ids][]' %>
+<%= f.label "PT or LLAB?" %>
+<br>
+<%= f.select :event, options_for_select(["PT", "LLAB"]) %>
+<br>
+<%= f.label "Select absent users" %>
+<br>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<%= select_tag :user_ids, options_for_select(@userarray.collect {|u| [u.email, u.id]}),:multiple => true, :name=>'project[user_ids][]' %>
+
+<div class="actions">
+	<%= f.submit %>
+</div>
 <% end %>

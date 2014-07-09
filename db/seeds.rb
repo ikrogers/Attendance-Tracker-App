@@ -8,5 +8,14 @@
 User.create(:email => "admin@admin.com", :password => "123123123", :password_confirmation => "123123123", :admin => true)
 User.create(:email => "ikrogers91@gmail.com", :password => "123123123", :password_confirmation => "123123123", :admin => false, :phone => "9125802665", :carrier=>"Verizon")
 User.create(:email => "ikrogers@valdosta.edu", :password => "123123123", :password_confirmation => "123123123", :admin => false, :phone => "9125802665", :carrier=>"Verizon", :tracker => true)
+User.create(:email => "ikrogers1@valdosta.edu", :password => "123123123", :password_confirmation => "123123123", :admin => false, :phone => "9125802665", :carrier=>"Verizon", :tracker => true)
+User.create(:email => "ikrogers2@valdosta.edu", :password => "123123123", :password_confirmation => "123123123", :admin => false, :phone => "9125802665", :carrier=>"Verizon", :tracker => false)
+User.create(:email => "ikrogers3@valdosta.edu", :password => "123123123", :password_confirmation => "123123123", :admin => false, :phone => "9125802665", :carrier=>"Verizon", :tracker => false)
+User.create(:email => "ikrogers4@valdosta.edu", :password => "123123123", :password_confirmation => "123123123", :admin => false, :phone => "9125802665", :carrier=>"Verizon", :tracker => false)
+User.create(:email => "ikrogers5@valdosta.edu", :password => "123123123", :password_confirmation => "123123123", :admin => false, :phone => "9125802665", :carrier=>"Verizon", :tracker => false)
+User.create(:email => "ikrogers6@valdosta.edu", :password => "123123123", :password_confirmation => "123123123", :admin => false, :phone => "9125802665", :carrier=>"Verizon", :tracker => false)
+User.create(:email => "ikrogers7@valdosta.edu", :password => "123123123", :password_confirmation => "123123123", :admin => false, :phone => "9125802665", :carrier=>"Verizon", :tracker => false)
+User.create(:email => "ikrogers8@valdosta.edu", :password => "123123123", :password_confirmation => "123123123", :admin => false, :phone => "9125802665", :carrier=>"Verizon", :tracker => false)
+User.create(:email => "ikrogers9@valdosta.edu", :password => "123123123", :password_confirmation => "123123123", :admin => false, :phone => "9125802665", :carrier=>"Verizon", :tracker => false)
 
 

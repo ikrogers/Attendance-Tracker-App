@@ -2,7 +2,7 @@ class AttendancesController < InheritedResources::Base
   def create
     @users = User.find(params[:project][:user_ids]) rescue []
 
-    #this will not work atm hence there is 2 different types of absences fix that first
+    
     @users.each do |u|
       @attendance = Attendance.new(attendance_params)
       if @attendance.event == "PT"
