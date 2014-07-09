@@ -22,5 +22,55 @@
 <% @leader = Group.find_by_users_id(current_user.id) rescue nil%>
 <%if @leader != nil%>
 <%= button_to "record attendance", attendances_path, :method => :get %>
-<%end%>
+<% end %>
+
+
+<% @attendancept = Attendance.where(user_id: current_user.id, event: "PT")%>
+<% @attendancellab = Attendance.where(user_id: current_user.id, event: "LLAB")%>
+
+<% %>
+<br>Attendance Stats:<br>
+Missed PT:
+<%= @attendancept.count %>
+<table>
+<% @attendancept.each do |a|%>
+
+	<th>
+		Date:
+	</th>
+	<tr>
+		<td>
+			<%= a.created_at%>
+		</td>
+	</tr>
+
+<% end %>
+</table>
+<br>
+Missed LLAB:
+<%= @attendancellab.count %>
+<table>
+<% @attendancellab.each do |a|%>
+
+	<th>
+		Date:
+	</th>
+	<tr>
+		<td>
+			<%= a.created_at%>
+		</td>
+	</tr>
+
+<% end %>
+</table>
+<% %>
+<% %>
+<% %>
+<% %>
+<% %>
+<% %>
+<% %>
+<% %>
+<% %>
+<% %>
 <%end%>

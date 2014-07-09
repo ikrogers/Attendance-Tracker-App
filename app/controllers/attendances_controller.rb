@@ -10,14 +10,7 @@ class AttendancesController < InheritedResources::Base
         @attendance.update_attributes(:user_id => u.id)
         @attendance.update_attributes(:event=> @attendance.event)
 
-        @user = User.find_by_id(u.id)
-        if @user.absentpt == nil
-          abs = 1
-          @user.update_attributes(:absentpt => abs)
-        else
-          abs = @user.absentpt + 1
-          @user.update_attributes(:absentpt => abs)
-        end
+        
       end
       
       if @attendance.event == "LLAB"
@@ -25,14 +18,7 @@ class AttendancesController < InheritedResources::Base
         @attendance.update_attributes(:user_id => u.id)
         @attendance.update_attributes(:event=> @attendance.event)
 
-        @user = User.find_by_id(u.id)
-        if @user.absentllab == nil
-          abs = 1
-          @user.update_attributes(:absentllab => abs)
-        else
-          abs = @user.absentllab + 1
-          @user.update_attributes(:absentllab => abs)
-        end
+       
       end
     end
 
