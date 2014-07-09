@@ -1,9 +1,13 @@
-<% if notice %> 
-<p id="notice"><%= notice %></p> 
-<% end %> 
+<% if notice %>
+<p id="notice">
+	<%= notice %>
+</p>
+<% end %>
 
 <h1>Homepage#index</h1>
-<p>Find me in app/views/homepage/index.html.erb</p>
+<p>
+	Find me in app/views/homepage/index.html.erb
+</p>
 <%= button_to "logout", destroy_user_session_path, :method => :delete%>
 <%= current_user.email %>
 
@@ -15,7 +19,8 @@
 <%= button_to "track confirmations(If applicable)", user_confirmations_path, :method => :get %>
 
 <% elsif current_user.tracker == true %>
-	
+<% @leader = Group.find_by_users_id(current_user.id) rescue nil%>
+<%if @leader != nil%>
 <%= button_to "record attendance", attendances_path, :method => :get %>
-
+<%end%>
 <%end%>

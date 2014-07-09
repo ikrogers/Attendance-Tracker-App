@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20140706195240) do
     t.string   "name"
     t.integer  "users_id"
     t.integer  "groups_id"
+    t.string   "grouptype"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

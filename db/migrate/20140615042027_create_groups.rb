@@ -4,6 +4,7 @@ class CreateGroups < ActiveRecord::Migration
       t.string :name
       t.references :users, index: true
       t.references :groups, index: true 
+      t.string :grouptype
       t.timestamps
     end
   end
