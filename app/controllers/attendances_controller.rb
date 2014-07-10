@@ -1,10 +1,11 @@
 class AttendancesController < InheritedResources::Base
   def create
     @users = User.find(params[:project][:user_ids]) rescue []
-
+    
     
     @users.each do |u|
       @attendance = Attendance.new(attendance_params)
+      @attendance.update_attributes(:tracker_id => current_user.id)
       if @attendance.event == "PT"
         @attendance.update_attributes(:absent => true)
         @attendance.update_attributes(:user_id => u.id)

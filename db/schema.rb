@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20140706195240) do
     t.boolean  "absent"
     t.integer  "user_id"
     t.string   "event"
+    t.integer  "tracker_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -103,8 +104,6 @@ ActiveRecord::Schema.define(version: 20140706195240) do
     t.string   "carrier"
     t.boolean  "leader"
     t.boolean  "tracker"
-    t.integer  "absentpt"
-    t.integer  "absentllab"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"

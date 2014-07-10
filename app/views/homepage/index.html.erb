@@ -17,11 +17,11 @@
 <%= button_to "recall", new_message_path, :method => :get %>
 <%= button_to "create/manage groups", groups_path, :method => :get %>
 <%= button_to "track confirmations(If applicable)", user_confirmations_path, :method => :get %>
-
-<% elsif current_user.tracker == true %>
+<%end%>
+<% if current_user.tracker == true %>
 <% @leader = Group.find_by_users_id(current_user.id) rescue nil%>
 <%if @leader != nil%>
-<%= button_to "record attendance", attendances_path, :method => :get %>
+<%= button_to "manage attendance", attendances_path, :method => :get %>
 <% end %>
 <% end %>
 
