@@ -33,6 +33,9 @@
 	<%= select_tag :user_id, options_for_select(User.all.collect {|u| [u.email, u.id]}),:multiple => false, :prompt => 'Select group leader', :name=>'project[user_id][]' %>
 </div>
 <br>
+<%@group= Group.find params[:id]%>
+
+	<%= render '/in_groups/show_members', :id => @group.id %>
 
 <div class="actions">
 	<%= f.submit %>
