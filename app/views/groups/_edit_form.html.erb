@@ -1,4 +1,3 @@
-
 <%= form_for(@group) do |f| %>
 <% if @group.errors.any? %>
 <div id="error_explanation">
@@ -14,10 +13,12 @@
 </div>
 <% end %>
 
-<% @users = User.all
-  @array = Array.new
-  @users.each do |user|
-    @array << user.email
+<%
+  @ingroup = InGroup.where(groups_id: @group.id)
+  @usersnotingroup = User.where("users.id NOT IN (?)", InGroup.select(:users_id))
+  @usersingroup= Array.new
+  @ingroup.each do |ig|
+    @usersingroup << User.find_by_id(ig.users_id)
   end
 %>
 
@@ -25,17 +26,25 @@
 	<%= f.text_field :name%>
 </div>
 <div>
-<%= select_tag :user_ids, options_for_select(User.all.collect {|u| [u.email, u.id]}),:multiple => true, :prompt => 'Select Person', :name=>'project[user_ids][]' %>
-<br>
-<%= f.label "Change group leader" %>
+	<%= f.label "Select Users to add" %>
+	<br>
+	<%= select_tag :user_ids, options_for_select(@usersnotingroup.collect {|u| [u.email, u.id]}),:multiple => true, :name=>'project[user_ids][]' %>
+	<br>
+	<%= f.label "Select Users to remove" %>
+	<br>
+	<%= select_tag :user_remove, options_for_select(@usersingroup.collect {|u| [u.email, u.id]}),:multiple => true, :name=>'project[user_remove][]' %>
+	<br>
+	<br>
+	<%= f.label "Change group leader" %>
 </div>
-<div>
-	<%= select_tag :user_id, options_for_select(User.all.collect {|u| [u.email, u.id]}),:multiple => false, :prompt => 'Select group leader', :name=>'project[user_id][]' %>
-</div>
-<br>
-<%@group= Group.find params[:id]%>
 
-	<%= render '/in_groups/show_members', :id => @group.id %>
+<div>
+	<%= select_tag :user_id, options_for_select(@usersingroup.collect {|u| [u.email, u.id]}),:multiple => false, :prompt => 'Select group leader', :name=>'project[user_id][]' %>
+</div>
+<br>
+<% @group= Group.find params[:id]%>
+
+<%= render '/in_groups/show_members', :id => @group.id %>
 
 <div class="actions">
 	<%= f.submit %>

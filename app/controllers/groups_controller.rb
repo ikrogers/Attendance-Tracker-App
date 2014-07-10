@@ -2,15 +2,20 @@ class GroupsController < InheritedResources::Base
   def create
     @group = Group.new(group_params)
     @user = User.find(params[:project][:user_ids]) rescue []
-    
-      @u = User.find_by_id(@user[0])
-      if @group.grouptype == "Attendance"
+
+    @u = User.find_by_id(@user[0])
+    if @group.grouptype == "Attendance"
       @u.update_attributes(:tracker => true)
-      else
+    else
       @u.update_attributes(:leader => true)
-      end
-    
+    end
+
     @group.update_attributes(:users_id => @u.id)
+    
+    @in_group = InGroup.new
+    @in_group.update_attributes(:groups_id => @group.id)
+    @in_group.update_attributes(:users_id => @u.id)
+
     respond_to do |format|
       if @group.save
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
@@ -28,8 +33,11 @@ class GroupsController < InheritedResources::Base
 
     respond_to do |format|
       @users = User.find(params[:project][:user_ids]) rescue nil
+      @removeusers = User.find(params[:project][:user_remove]) rescue nil
+
       if @users != nil
         @users.each do |u|
+          
           @in_group = InGroup.new
 
           @in_group.update_attributes(:groups_id => @group.id)
@@ -37,23 +45,29 @@ class GroupsController < InheritedResources::Base
         end
       end
       
-      
-      
+      if @removeusers != nil
+        @removeusers.each do |u|
+          @kill = InGroup.find_by_users_id(u.id)       
+          @kill.destroy
+        end
+      end
+
       @user = User.find(params[:project][:user_id]) rescue nil
       if @user!=nil
         @user.each do |u|
           @u = User.find_by_id(u.id)
           @oldu = User.find_by_id(@group.users_id)
-          if @grgitoup.grouptype =="Attendance"
+          
+          if @group.grouptype =="Attendance"
             @oldu.update_attributes(:tracker => false)
             @u.update_attributes(:tracker => true)
           else
             @oldu.update_attributes(:leader => false)
             @u.update_attributes(:leader => true)
           end
-
         end
         @group.update_attributes(:users_id => @u.id)
+        
       end
       if @group.update(group_params)
         format.html { redirect_to @group, notice: 'Product was successfully updated.' }
