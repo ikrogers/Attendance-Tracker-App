@@ -7,9 +7,24 @@ class MessagesController < InheritedResources::Base
     @confirm = @message.confirm
     @sendtogroup = Group.find(params[:project][:groups_id]) rescue nil
 
+
+
+
+
+
     
     if @sendtogroup == nil
     @users = User.all
+    if @users != nil
+      
+      @users.each do |u|
+         @message_list = MessageList.new
+         @message_list.update_attributes(:messages_id => @message.id)
+         @message_list.update_attributes(:users_id => u.id)
+        end
+      end
+    
+    
     if @message.confirm == 'No Confirmation'
       if @message.delivery_method == "Email+SMS"
         @users.each do |user|
@@ -132,7 +147,7 @@ class MessagesController < InheritedResources::Base
     end #end else
     
     else #If the group was selected
-         @sendtogroup.each do |g|
+      @sendtogroup.each do |g|
          @message.update_attributes(:groups_id => g.id)
          @gusers = InGroup.where(groups_id: g.id)
          @users = Array.new
@@ -140,7 +155,14 @@ class MessagesController < InheritedResources::Base
            @us = User.find_by_id(u.users_id) 
          @users << @us
         end 
+      end
+      
+      @users.each do |u|
+         @message_list = MessageList.new
+         @message_list.update_attributes(:messages_id => @message.id)
+         @message_list.update_attributes(:users_id => u.id)
         end
+      end
 
       if @message.confirm == 'No Confirmation'
       if @message.delivery_method == "Email+SMS"
