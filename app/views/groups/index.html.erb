@@ -43,4 +43,6 @@
 <br>
 <% if current_user.admin == true %>
 <%= link_to 'New Group', new_group_path %>
+<%= link_to 'Home', authenticated_root_path %>
+
 <% end %>
