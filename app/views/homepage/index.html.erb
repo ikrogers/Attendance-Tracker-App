@@ -8,28 +8,23 @@
 <p>
 
 </p>
-<%= button_to "logout", destroy_user_session_path, :method => :delete%>
 <%= current_user.email %>
 
 <% if current_user.admin == true %>
 	<%= button_to "admin", admin_root_path, :method => :get %>
 	<%= button_to "recall", new_message_path, :method => :get %>
-	<%= button_to "create/manage groups", groups_path, :method => :get %>
-	<%= button_to "track confirmations(If applicable)", user_confirmations_path, :method => :get %>
+	<%= button_to "Group and Attendace Management", groups_path, :method => :get %>
+	<%= button_to "track recall confirmations(If applicable)", user_confirmations_path, :method => :get %>
 <%end%>
 
-<% if current_user.tracker == true %>
-<% @leader = Group.find_by_users_id(current_user.id) rescue nil%>
-	<% if @leader != nil%>
-	<%= button_to "manage attendance", attendances_path, :method => :get %>
-	<% end %>
+
+<% if current_user.leader == true && current_user.admin == false %>
+	
+	<%= button_to "Take/View Attendance", groups_path, :method => :get %>
 <% end %>
 
-<% if current_user.leader== true || current_user.tracker == true%>
-	<%= button_to "create/manage groups", groups_path, :method => :get %>
-<% %>
-<% %>
-<% end %>
+<%= button_to "logout", destroy_user_session_path, :method => :delete%>
+
 <% %>
 <% %>
 <% %>
