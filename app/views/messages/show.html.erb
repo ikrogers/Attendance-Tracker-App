@@ -1,4 +1,40 @@
-<p id="notice"><%= notice %></p>
+<p id="notice">
+	<%= notice %>
+</p>
 
-<%= link_to 'Edit', edit_message_path(@message) %> |
+<%
+ @message = Message.find_by_id(params[:id])
+  @group = @message.groups_id rescue nil
+  if @group != nil
+    @groupusers = InGroup.where(groups_id: @group)
+    @users = Array.new
+    @groupusers.each do |u|
+      @users << User.find_by_id(u.users_id)
+    end
+  else
+    @users = User.all
+  end
+%>
+
+<h1> Message Content:
+<%= @message.messages%> </h1>
+<h2>Recipients:</h2>
+<table>
+	<th> Email: </th>
+	<%if @message.confirm == "Confirmation"%>
+	<th> Confirmation status: </th>
+	<th> Confirmation time: </th>
+	<% end %>
+	<%@users.each do |user|%>
+	<tr>
+		<td> <%= user.email%> </td>
+		<%if @message.confirm == "Confirmation"%>
+		<td> <%= user.confirmed_recall%> </td>
+		<td> <%= user.confirmed_time%> </td>
+		<% end %>
+	</tr>
+	<%end%>
+
+</table>
+<%= button_to "Home", authenticated_root_path, :method => :get %>
 <%= link_to 'Back', messages_path %>

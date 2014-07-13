@@ -10,6 +10,16 @@
       </ul>
     </div>
   <% end %>
+
+  
+  
+  
+  <div class="field">
+    <%= f.label "Recipients (Groups)" %><br>
+   	<%= select_tag :groups_id, options_for_select(Group.all.collect {|u| [u.name, u.id]}),:multiple => false, :prompt => 'All', :name=>'project[groups_id][]' %>
+
+  </div>
+  
   <div class="field">
     <%= f.label :delivery_method %><br>
     <%= f.select :delivery_method, options_for_select(["Email+SMS", "SMS", "Email"]) %>
@@ -17,7 +27,7 @@
   
 
 	<div class="field">
-    <%= f.label "Recall Message Content" %><br>
+    <%= f.label "Message Content" %><br>
     <%= f.text_field :messages %>
   </div>
   
@@ -26,6 +36,6 @@
     <%= f.select :confirm, options_for_select(["Confirmation", "No Confirmation"]) %>
   </div>
   <div class="actions">
-    <%= f.submit "Initiate Recall" %>
+    <%= f.submit "Initiate Recall",data: { confirm: 'Please make sure all options are set correctly. Press OK if you are satisfied with your selections and Cancel to return.' } %>
   </div>
 <% end %>

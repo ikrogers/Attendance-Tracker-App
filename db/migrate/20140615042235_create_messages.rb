@@ -1,7 +1,7 @@
 class CreateMessages < ActiveRecord::Migration
   def change
     create_table :messages do |t|
-       t.string :messages
+      t.string :messages
       t.references :groups, index: true
       t.string :confirm
       t.datetime :all_confirm
