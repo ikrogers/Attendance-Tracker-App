@@ -1,28 +1,46 @@
 <h1>Listing groups</h1>
 
-
-
-
-
 <table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+	<thead>
+		<tr>
+			<th colspan="3"></th>
+		</tr>
+	</thead>
 
-  <tbody>
-    <% @groups.each do |group| %>
-      <tr>
-      	<td><%= group.name %></td>
-        <td><%= link_to 'Show members', group %></td>
-        <td><%= link_to 'Add/Edit users', edit_group_path(group) %></td>
-        <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+	<tbody>
+		<% @groups.each do |group| %>
+		<% if group.users_id == current_user.id && current_user.admin == false%>
+		<tr>
+			<td><%= group.name %></td>
+			<td><%= group.grouptype %></td>
+			<td><%= User.find_by_id(group.users_id).email %></td>
+			<td><%= link_to 'Show Members', group %></td>
+			<% if current_user.tracker == true && current_user.admin == false && group.grouptype == 'Attendance' %>
+				<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id) %></td>
+			<% end %>
+			<% end %>
+		</tr>
+		<%if  current_user.admin == true %><tr>
+			<td><%= group.name %></td>
+			<td><%= group.grouptype %></td>
+			<td><%= User.find_by_id(group.users_id).email %></td>
+			<td><%= link_to 'Show Members', group %></td>
+				<td><%= link_to 'Add/Remove Users', edit_group_path(group) %></td>
+				<td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+					<% if group.grouptype == 'Attendance'%>
+				<td><%= link_to 'Take Attendance', new_attendance_path(:group_id => group.id) %></td>
+				<td><%= link_to 'Adjust Attendance', attendances_path(:attgroup_id => group.id) %></td>
+					<% end %>
+			<% end %>
+		
+			
+			
+		</tr>
+		<% end %>
+	</tbody>
 </table>
 
 <br>
-
+<% if current_user.admin == true %>
 <%= link_to 'New Group', new_group_path %>
+<% end %>

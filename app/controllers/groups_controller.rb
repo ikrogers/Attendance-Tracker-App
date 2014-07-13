@@ -11,7 +11,7 @@ class GroupsController < InheritedResources::Base
     end
 
     @group.update_attributes(:users_id => @u.id)
-    
+
     @in_group = InGroup.new
     @in_group.update_attributes(:groups_id => @group.id)
     @in_group.update_attributes(:users_id => @u.id)
@@ -37,18 +37,21 @@ class GroupsController < InheritedResources::Base
 
       if @users != nil
         @users.each do |u|
-          
+
           @in_group = InGroup.new
 
           @in_group.update_attributes(:groups_id => @group.id)
           @in_group.update_attributes(:users_id => u.id)
         end
       end
-      
+
       if @removeusers != nil
         @removeusers.each do |u|
-          @kill = InGroup.find_by_users_id(u.id)       
+          @kill = InGroup.find_by_users_id(u.id)
+          @ug = Group.find_by(users_id: u.id, id: @group.id) rescue nil
+          if @ug == nil
           @kill.destroy
+          end
         end
       end
 
@@ -57,7 +60,7 @@ class GroupsController < InheritedResources::Base
         @user.each do |u|
           @u = User.find_by_id(u.id)
           @oldu = User.find_by_id(@group.users_id)
-          
+
           if @group.grouptype =="Attendance"
             @oldu.update_attributes(:tracker => false)
             @u.update_attributes(:tracker => true)
@@ -67,7 +70,7 @@ class GroupsController < InheritedResources::Base
           end
         end
         @group.update_attributes(:users_id => @u.id)
-        
+
       end
       if @group.update(group_params)
         format.html { redirect_to @group, notice: 'Product was successfully updated.' }

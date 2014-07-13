@@ -1,4 +1,4 @@
-<h1>Listing recorded absenses for your group</h1>
+<h1>Absence Records</h1>
 <%@currentuserattendance = Attendance.where(tracker_id: current_user.id)%>
 <table>
   <thead>
@@ -9,11 +9,12 @@
 
   <tbody>
     <% @currentuserattendance.each do |attendance| %>
+    
       <tr>
         <td><%= User.find_by_id(attendance.user_id).email %></td>
         <td><%= attendance.event %></td>
         <td><%= attendance.created_at %></td>
-
+        <td><%= User.find_by_id(attendance.tracker_id).email %></td>
         <td><%= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

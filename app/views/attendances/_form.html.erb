@@ -12,9 +12,7 @@
 	</ul>
 </div>
 <% end %>
-
-<% @trackeruser = User.find_by_id(current_user.id) %>
-<% @group = InGroup.find_by_users_id(@trackeruser.id).groups_id %>
+<% @group = params[:group_id] %>
 <% @usersingroup = InGroup.where(groups_id: @group) %>
 <% @userarray = Array.new %>
 <% @usersingroup.each do |u| %>

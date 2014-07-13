@@ -14,8 +14,16 @@
 <% end %>
 
 <%
+  @group= Group.find params[:id]
   @ingroup = InGroup.where(groups_id: @group.id)
-  @usersnotingroup = User.where("users.id NOT IN (?)", InGroup.select(:users_id))
+  @users = User.all
+  @usersnotingroup = Array.new
+  @users.each do |u|
+    @notin = InGroup.find_by(users_id: u.id, groups_id: @group.id) rescue nil
+    if @notin == nil
+      @usersnotingroup << User.find_by_id(u.id)
+    end
+  end
   @usersingroup= Array.new
   @ingroup.each do |ig|
     @usersingroup << User.find_by_id(ig.users_id)
@@ -42,7 +50,7 @@
 	<%= select_tag :user_id, options_for_select(@usersingroup.collect {|u| [u.email, u.id]}),:multiple => false, :prompt => 'Select group leader', :name=>'project[user_id][]' %>
 </div>
 <br>
-<% @group= Group.find params[:id]%>
+
 
 <%= render '/in_groups/show_members', :id => @group.id %>
 

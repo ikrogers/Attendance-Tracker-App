@@ -5,7 +5,44 @@
 	@group_members.all.each do |u| %>
 	<% @user = User.find(u.users_id) %>
 	<tr>
-		<td><%= @user.email %></td>
+		<% @u = Group.find_by_users_id(@user.id) rescue nil %>
+		<%if @u != nil%>
+		<td><%= @user.email %>(Leader)</td>
+		<%else%>
+		<td><%= @user.email %>(Member)</td>
+		<%end%>
+
 	</tr>
+
+</table>
+<br>
+<% attendancept = Attendance.where(user_id: @user.id, event: "PT")%>
+<% attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")%>
+
+Missed PT:
+<%= attendancept.count %>
+<table>
+	<% attendancept.each do |a|%>
+
+	<th> Date missed: </th>
+	<tr>
+		<td> <%= a.created_at%> </td>
+	</tr>
+
 	<% end %>
 </table>
+<br>
+Missed LLAB:
+<%= attendancellab.count %>
+<table>
+	<% attendancellab.each do |a|%>
+
+	<th> Date missed: </th>
+	<tr>
+		<td> <%= a.created_at%> </td>
+	</tr>
+
+	<%end%>
+</table>
+
+<% end %>
