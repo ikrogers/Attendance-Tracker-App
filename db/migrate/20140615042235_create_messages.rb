@@ -4,7 +4,8 @@ class CreateMessages < ActiveRecord::Migration
       t.string :messages
       t.references :groups, index: true
       t.string :confirm
-      t.datetime :all_confirm
+      t.boolean :all_confirm
+      t.datetime :all_confirm_time
       t.string :delivery_method
       t.references :users, index: true
       t.timestamps

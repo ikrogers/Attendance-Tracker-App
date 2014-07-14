@@ -3,7 +3,7 @@
 <table>
 	<thead>
 		<tr>
-			<th colspan="3"></th>
+			<th colspan="4"></th>
 		</tr>
 	</thead>
 
@@ -15,6 +15,11 @@
 			<td><%= link_to 'Track Confirmations/Details', message %></td>
 			<% else %>
 			<td><%= link_to 'Details', message %></td>
+			<% end %>
+			<% if message.all_confirm == true%>
+			<td>All Confirmed</td>
+			<% else %>
+			<td>In Progress</td>
 			<% end %>
 			<%if current_user.admin == true %>
 			<td><%= link_to 'Destroy', message, method: :delete, data: { confirm: 'Are you sure?' } %></td>

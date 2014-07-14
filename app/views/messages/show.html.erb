@@ -18,6 +18,14 @@
 
 <h1> Message Content:
 <%= @message.messages%> </h1>
+
+<% if @message.all_confirm == true %>
+<h1>All Confirmed Time: <%= @message.all_confirm_time - @message.created_at%></h1>
+<%else%>
+<h1>Confirmations in progress...</h1>
+
+<% end %>
+
 <h2>Recipients:</h2>
 <table>
 	<th> Email: </th>
@@ -26,15 +34,15 @@
 	<th> Confirmation time: </th>
 	<% end %>
 	<%@users.each do |user|%>
+	<% @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id) %>
 	<tr>
 		<td> <%= user.email%> </td>
 		<%if @message.confirm == "Confirmation"%>
-		<td> <%= user.confirmed_recall%> </td>
-		<td> <%= user.confirmed_time%> </td>
+		<td> <%= @msgl.confirmed_recall%> </td>
+		<td> <%= @msgl.confirmed_time%> </td>
 		<% end %>
 	</tr>
 	<%end%>
-
 </table>
 <%= button_to "Home", authenticated_root_path, :method => :get %>
 <%= link_to 'Back', messages_path %>

@@ -7,8 +7,6 @@ class MessagesController < InheritedResources::Base
     @delivery = @message.delivery_method
     @confirm = @message.confirm
     @sendtogroup = Group.find(params[:project][:groups_id]) rescue nil
-
-
     
     if @sendtogroup == nil
     @users = User.all
@@ -69,7 +67,7 @@ class MessagesController < InheritedResources::Base
       end
 
     else #Required confirm
-      
+      @message.update_attributes(:all_confirm => false)
       if @message.delivery_method == "Email+SMS"
         
         #SMS
@@ -80,7 +78,7 @@ class MessagesController < InheritedResources::Base
             @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
             phone = user.phone
             carrier = user.carrier
-          @msgl.send_confirm_message_text(user, @message.messages,[phone, @carrier[carrier]].join(""))
+          @msgl.send_confirm_message_text(@msgl, @message.messages,[phone, @carrier[carrier]].join(""))
           end
         end
 
@@ -91,39 +89,35 @@ class MessagesController < InheritedResources::Base
             @msgl.gentoken
             @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
             
-          @msgl.send_confirm_message(user, @message.messages, user.email)
+          @msgl.send_confirm_message(@msgl, @message.messages, user.email)
           end
         end
 
       end
 
       if @message.delivery_method == 'SMS'
+        #SMS
         @users.each do |user|
           if user.phone != nil
-                  user.gentoken
-
-            user.update_attributes(:original_message => @message.messages)
-            user.update_attributes(:confirmed_recall => false)
-                        user.update_attributes(:confirmed_time => nil)  
-
+            @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id)
+            @msgl.gentoken
+            @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
             phone = user.phone
             carrier = user.carrier
-          user.send_confirm_message_text(@message.messages,[phone, @carrier[carrier]].join(""))
+          @msgl.send_confirm_message_text(@msgl, @message.messages,[phone, @carrier[carrier]].join(""))
           end
         end
       end
 
       if @message.delivery_method == "Email"
+        #email
         @users.each do |user|
           if user.email != nil
-                  user.gentoken
-
-            user.update_attributes(:original_message => @message.messages)
-            user.update_attributes(:confirmed_recall => false)
-                        user.update_attributes(:confirmed_time => nil)  
-
-
-          user.send_confirm_message(@message.messages)
+            @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id)
+            @msgl.gentoken
+            @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
+            
+          @msgl.send_confirm_message(@msgl, @message.messages, user.email)
           end
         end
       end
@@ -133,7 +127,7 @@ class MessagesController < InheritedResources::Base
       respond_to do |format|
         if @message.save
           @message.update_attributes(:users_id => current_user.id)
-          format.html { redirect_to user_confirmations_path, notice: 'Message is successfully sent! Awaiting user confirmation' }
+          format.html { redirect_to new_message_path, notice: 'Message is successfully sent! Awaiting user confirmation' }
           format.json { render :show, status: :created, location: @message}
         else
           format.html { render :new }
@@ -208,61 +202,57 @@ class MessagesController < InheritedResources::Base
       end
 
     else #Required confirm
+      @message.update_attributes(:all_confirm => false)     
       if @message.delivery_method == "Email+SMS"
+        
+        #SMS
         @users.each do |user|
           if user.phone != nil
-                  user.gentoken
-
-            user.update_attributes(:original_message => @message.messages)
-            user.update_attributes(:confirmed_recall => false)  
-            user.update_attributes(:confirmed_time => nil)  
-
+            @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id)
+            @msgl.gentoken
+            @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
             phone = user.phone
             carrier = user.carrier
-          user.send_confirm_message_text(@message.messages,[phone, @carrier[carrier]].join(""))
+          @msgl.send_confirm_message_text(@msgl, @message.messages,[phone, @carrier[carrier]].join(""))
           end
         end
 
+        #email
         @users.each do |user|
           if user.email != nil
-            user.update_attributes(:original_message => @message.messages)
-            user.update_attributes(:confirmed_recall => false)
-                        user.update_attributes(:confirmed_time => nil)  
-
-
-          user.send_confirm_message(@message.messages)
+            @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id)
+            @msgl.gentoken
+            @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
+            
+          @msgl.send_confirm_message(@msgl, @message.messages, user.email)
           end
         end
 
       end
 
       if @message.delivery_method == 'SMS'
+        #SMS
         @users.each do |user|
           if user.phone != nil
-                  user.gentoken
-
-            user.update_attributes(:original_message => @message.messages)
-            user.update_attributes(:confirmed_recall => false)
-                        user.update_attributes(:confirmed_time => nil)  
-
+            @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id)
+            @msgl.gentoken
+            @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
             phone = user.phone
             carrier = user.carrier
-          user.send_confirm_message_text(@message.messages,[phone, @carrier[carrier]].join(""))
+          @msgl.send_confirm_message_text(@msgl, @message.messages,[phone, @carrier[carrier]].join(""))
           end
         end
       end
 
       if @message.delivery_method == "Email"
+        #email
         @users.each do |user|
           if user.email != nil
-                  user.gentoken
-
-            user.update_attributes(:original_message => @message.messages)
-            user.update_attributes(:confirmed_recall => false)
-                        user.update_attributes(:confirmed_time => nil)  
-
-
-          user.send_confirm_message(@message.messages)
+            @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id)
+            @msgl.gentoken
+            @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
+            
+          @msgl.send_confirm_message(@msgl, @message.messages, user.email)
           end
         end
       end
@@ -272,7 +262,7 @@ class MessagesController < InheritedResources::Base
       respond_to do |format|
         if @message.save
           @message.update_attributes(:users_id => current_user.id)
-          format.html { redirect_to user_confirmations_path, notice: 'Message is successfully sent! Awaiting user confirmation' }
+          format.html { redirect_to new_message_path, notice: 'Message is successfully sent! Awaiting user confirmation' }
           format.json { render :show, status: :created, location: @message}
         else
           format.html { render :new }
@@ -284,7 +274,8 @@ class MessagesController < InheritedResources::Base
   end #end create
 
   def confirmation
-    @user = User.find_by_messageconfirmtoken!(params[:id])
+    
+    @user = MessageList.find_by_messageconfirmtoken!(params[:id])
   end
 
   def user_confirmations
@@ -292,8 +283,8 @@ class MessagesController < InheritedResources::Base
   end
 
   def validate_message
-    @user = User.find_by_messageconfirmtoken!(params[:id])
-    @message = Message.find_by_id(params[:id])
+    @user = MessageList.find_by_messageconfirmtoken!(params[:id])
+    @message = Message.find_by_id(@user.messages_id)
     @entered = params[:entered_message]
     @original = @user.original_message
     if @entered == @original
@@ -312,18 +303,23 @@ class MessagesController < InheritedResources::Base
          @users = User.all
        end
        
+       @flag = true
+       @users.each do |u|
+         @msgl = MessageList.find_by(users_id: u.id, messages_id: @message.id)
+         if @msgl.confirmed_recall == false
+           @flag = false
+           break
+         end
+       end
        
-      
-      
-      
-      
-      
-      
-      
+       if @flag == true
+         @message.update_attributes(:all_confirm => true,:all_confirm_time => Time.now)
+       else
+         @message.update_attributes(:all_confirm => false)
+       end
       redirect_to authenticated_root_path, :notice => "Recall message confirmed successfully. Thank you and have a good day!"
     else
       redirect_to confirmation_path, :notice => "Messages did not match. Please try again."
-
     end
   end
 

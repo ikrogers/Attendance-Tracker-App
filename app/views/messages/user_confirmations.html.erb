@@ -10,15 +10,16 @@
 		Confirmation time:
 	</th>
 	<%@users.each do |user|%>
+	<%@msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id) %>
 	<tr>
 		<td>
 			<%=user.email%>
 		</td>
 		<td>
-			<%=user.confirmed_recall%>
+			<%= @msgl.confirmed_recall%>
 		</td>
 		<td>
-			<%=user.confirmed_time%>
+			<%= @msgl.confirmed_time%>
 		</td>
 
 	</tr>
