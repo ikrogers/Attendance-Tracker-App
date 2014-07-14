@@ -5,15 +5,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
          
   has_many :in_group
-  def gentoken
-    gen_token(:messageconfirmtoken)
-  end
-     has_many :messages 
-   def gen_token(column)
-    begin
-      self[column] = SecureRandom.urlsafe_base64
-     end while User.exists?(column => self[column])
-    end    
+
+  
+  has_many :messages 
+  
+  
+     
     
     
   def send_confirm_message(message)

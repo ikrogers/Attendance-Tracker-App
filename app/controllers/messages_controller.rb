@@ -3,26 +3,22 @@ class MessagesController < InheritedResources::Base
               # Yes its redundant but it works fine
     @carrier = {"Verizon"=>"@vtext.com", "AT&T"=>"@txt.att.net","Boost Mobile" => "@myboostmobile.com", "Cellular One"=>"@mobile.celloneusa.com","Metro PCS"=>"@mymetropcs.com","Nextel"=>"@messaging.nextel.com","Sprint"=>"@messaging.sprintpcs.com","T-Mobile"=>"@tmomail.net","Tracfone"=>"@txt.att.net"}
     @message = Message.new(message_params)
+    @message.save #fix this!!!!!!!
     @delivery = @message.delivery_method
     @confirm = @message.confirm
     @sendtogroup = Group.find(params[:project][:groups_id]) rescue nil
 
 
-
-
-
-
     
     if @sendtogroup == nil
     @users = User.all
-    if @users != nil
-      
+    
+     if @users != nil 
       @users.each do |u|
          @message_list = MessageList.new
-         @message_list.update_attributes(:messages_id => @message.id)
-         @message_list.update_attributes(:users_id => u.id)
+         @message_list.update_attributes(:users_id => u.id, :messages_id => @message.id, :original_message => @message.messages)
         end
-      end
+     end
     
     
     if @message.confirm == 'No Confirmation'
@@ -73,29 +69,29 @@ class MessagesController < InheritedResources::Base
       end
 
     else #Required confirm
+      
       if @message.delivery_method == "Email+SMS"
+        
+        #SMS
         @users.each do |user|
           if user.phone != nil
-                  user.gentoken
-
-            user.update_attributes(:original_message => @message.messages)
-            user.update_attributes(:confirmed_recall => false)  
-            user.update_attributes(:confirmed_time => nil)  
-
+            @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id)
+            @msgl.gentoken
+            @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
             phone = user.phone
             carrier = user.carrier
-          user.send_confirm_message_text(@message.messages,[phone, @carrier[carrier]].join(""))
+          @msgl.send_confirm_message_text(user, @message.messages,[phone, @carrier[carrier]].join(""))
           end
         end
 
+        #email
         @users.each do |user|
           if user.email != nil
-            user.update_attributes(:original_message => @message.messages)
-            user.update_attributes(:confirmed_recall => false)
-                        user.update_attributes(:confirmed_time => nil)  
-
-
-          user.send_confirm_message(@message.messages)
+            @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id)
+            @msgl.gentoken
+            @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
+            
+          @msgl.send_confirm_message(user, @message.messages, user.email)
           end
         end
 
@@ -157,12 +153,12 @@ class MessagesController < InheritedResources::Base
         end 
       end
       
+       if @users != nil 
       @users.each do |u|
          @message_list = MessageList.new
-         @message_list.update_attributes(:messages_id => @message.id)
-         @message_list.update_attributes(:users_id => u.id)
+         @message_list.update_attributes(:users_id => u.id, :messages_id => @message.id, :original_message => @message.messages)
         end
-      end
+    end
 
       if @message.confirm == 'No Confirmation'
       if @message.delivery_method == "Email+SMS"
@@ -317,20 +313,6 @@ class MessagesController < InheritedResources::Base
        end
        
        
-       flag = false
-       @users.each do |u|
-         if u.confirmed_recall == true
-           flag = true
-         else
-           flag = false
-           break
-         end
-       end
-       if flag == false
-        # @message.update_attributes(:all_confirm => false)
-       else
-         #@message.update_attributes(:all_confirm => true)
-       end
       
       
       
