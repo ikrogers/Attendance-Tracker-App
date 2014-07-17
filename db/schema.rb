@@ -86,6 +86,8 @@ ActiveRecord::Schema.define(version: 20140706195240) do
     t.boolean  "all_confirm"
     t.datetime "all_confirm_time"
     t.string   "delivery_method"
+    t.string   "notify"
+    t.string   "notification_method"
     t.integer  "users_id"
     t.datetime "created_at"
     t.datetime "updated_at"

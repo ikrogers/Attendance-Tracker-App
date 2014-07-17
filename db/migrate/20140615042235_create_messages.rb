@@ -7,6 +7,8 @@ class CreateMessages < ActiveRecord::Migration
       t.boolean :all_confirm
       t.datetime :all_confirm_time
       t.string :delivery_method
+      t.string :notify
+      t.string :notification_method
       t.references :users, index: true
       t.timestamps
     end

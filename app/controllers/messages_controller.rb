@@ -3,11 +3,12 @@ class MessagesController < InheritedResources::Base
               # Yes its redundant but it works fine
     @carrier = {"Verizon"=>"@vtext.com", "AT&T"=>"@txt.att.net","Boost Mobile" => "@myboostmobile.com", "Cellular One"=>"@mobile.celloneusa.com","Metro PCS"=>"@mymetropcs.com","Nextel"=>"@messaging.nextel.com","Sprint"=>"@messaging.sprintpcs.com","T-Mobile"=>"@tmomail.net","Tracfone"=>"@txt.att.net"}
     @message = Message.new(message_params)
+    
     @message.save #fix this!!!!!!!
     @delivery = @message.delivery_method
     @confirm = @message.confirm
     @sendtogroup = Group.find(params[:project][:groups_id]) rescue nil
-    
+    @message.update_attributes(:users_id => current_user.id)
     if @sendtogroup == nil
     @users = User.all
     
@@ -283,10 +284,13 @@ class MessagesController < InheritedResources::Base
   end
 
   def validate_message
+    @carrier = {"Verizon"=>"@vtext.com", "AT&T"=>"@txt.att.net","Boost Mobile" => "@myboostmobile.com", "Cellular One"=>"@mobile.celloneusa.com","Metro PCS"=>"@mymetropcs.com","Nextel"=>"@messaging.nextel.com","Sprint"=>"@messaging.sprintpcs.com","T-Mobile"=>"@tmomail.net","Tracfone"=>"@txt.att.net"}
     @user = MessageList.find_by_messageconfirmtoken!(params[:id])
     @message = Message.find_by_id(@user.messages_id)
+    @sendinguser = User.find_by_id(@message.users_id)
     @entered = params[:entered_message]
     @original = @user.original_message
+    
     if @entered == @original
       @user.update_attributes(:confirmed_recall => true)
       @user.update_attributes(:confirmed_time => Time.now)
@@ -314,7 +318,23 @@ class MessagesController < InheritedResources::Base
        
        if @flag == true
          @message.update_attributes(:all_confirm => true,:all_confirm_time => Time.now)
-         UserMailer.notify(@message).deliver
+         
+         
+       #Delivers that recall has been completed based on user preferences  
+       if @message.notify == "1" 
+          if @message.notification_method == "Email+SMS"      
+            UserMailer.notify(@message).deliver
+            UserMailer.notify_text(@message, [@sendinguser.phone, @carrier[@sendinguser.carrier]].join("")).deliver
+          end
+          if @message.notification_method == "Email"      
+            UserMailer.notify(@message).deliver
+          end
+          if @message.notification_method == "SMS"      
+            UserMailer.notify_text(@message, [@sendinguser.phone, @carrier[@sendinguser.carrier]].join("")).deliver
+          end       
+       end
+        
+         
        else
          @message.update_attributes(:all_confirm => false)
        end
@@ -334,7 +354,7 @@ class MessagesController < InheritedResources::Base
   # Never trust parameters from the scary internet, only allow the white list through.
 
   def message_params
-    params.require(:message).permit(:confirm, :messages, :delivery_method, :groups_id)
+    params.require(:message).permit(:confirm, :messages, :delivery_method, :groups_id, :notify, :notification_method)
   end
 
 end

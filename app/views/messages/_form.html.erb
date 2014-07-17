@@ -22,13 +22,13 @@
   
   <div class="field">
     <%= f.label "Notify me when completed" %><br>
-   	<%= check_box_tag :notify ,:name => 'notify' %>
+   	<%= f.check_box :notify %>
 
   </div>
   
   <div class="field">
     <%= f.label "Notification Method" %><br>
-    <%= select_tag :notification_method, options_for_select(["Email+SMS", "SMS", "Email"]), :name => 'notification_method' %>
+    <%= f.select :notification_method, options_for_select(["Email+SMS", "SMS", "Email"]) %>
   </div>
   
   <div class="field">
@@ -43,7 +43,7 @@
   </div>
   
   <div class="field">
-    <%= f.label "Enable confirmation" %><br>
+    <%= f.label "Enable confirmation will only work for Email option" %><br>
     <%= f.select :confirm, options_for_select(["Confirmation", "No Confirmation"]) %>
   </div>
   <div class="actions">

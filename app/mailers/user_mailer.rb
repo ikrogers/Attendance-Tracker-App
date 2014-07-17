@@ -35,6 +35,11 @@ default from: 'RECALL@do-not-reply.com'
     mail :to => email, :subject => "Recall Completed"   
   end
   
+  def notify_text(message, phone)
+    @message = message
+    mail :to => phone, :subject => "Recall Completed"   
+  end
+  
   
   
   
