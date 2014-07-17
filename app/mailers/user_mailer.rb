@@ -29,6 +29,12 @@ default from: 'RECALL@do-not-reply.com'
     mail :to => phone, :subject => "RECALL"
   end
   
+  def notify(message)
+    @message = message
+    email = User.find_by_id(@message.users_id).email
+    mail :to => email, :subject => "Recall Completed"   
+  end
+  
   
   
   

@@ -314,6 +314,7 @@ class MessagesController < InheritedResources::Base
        
        if @flag == true
          @message.update_attributes(:all_confirm => true,:all_confirm_time => Time.now)
+         UserMailer.notify(@message).deliver
        else
          @message.update_attributes(:all_confirm => false)
        end

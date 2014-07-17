@@ -21,6 +21,17 @@
   </div>
   
   <div class="field">
+    <%= f.label "Notify me when completed" %><br>
+   	<%= check_box_tag :notify ,:name => 'notify' %>
+
+  </div>
+  
+  <div class="field">
+    <%= f.label "Notification Method" %><br>
+    <%= select_tag :notification_method, options_for_select(["Email+SMS", "SMS", "Email"]), :name => 'notification_method' %>
+  </div>
+  
+  <div class="field">
     <%= f.label :delivery_method %><br>
     <%= f.select :delivery_method, options_for_select(["Email+SMS", "SMS", "Email"]) %>
   </div>
