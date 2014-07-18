@@ -40,6 +40,22 @@ default from: 'RECALL@do-not-reply.com'
     mail :to => phone, :subject => "Recall Completed"   
   end
   
+  def absence_notify_text
+    
+  end
+  
+  def absence_notify(user,event)
+    @user = user
+    @event = event
+    mail :to => user.email, :subject => "You have new "+@event+" absence"
+  end
+  
+  def absence_notify_text(user,phone,event)
+    @user = user
+    @event = event
+    mail :to => phone, :subject => "You have new "+@event+" absence"
+  end
+  
   
   
   
