@@ -1,7 +1,7 @@
-<h1>Absence Records</h1>
-<%@currentgroup = Group.find_by_id(params[:attgroup_id])%>
-<%@currentuserattendance = Attendance.where(tracker_id: @currentgroup.users_id)%>
 
+<%@currentgroup = Group.find_by_id(params[:attgroup_id])%>
+<%@currentuserattendance = Attendance.where(groups_id: @currentgroup.id)%>
+<h1>Absence Records For Group: <%= @currentgroup.name%></h1>
 
 
 <table>

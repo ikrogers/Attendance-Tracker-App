@@ -60,13 +60,14 @@ class GroupsController < InheritedResources::Base
         @user.each do |u|
           @u = User.find_by_id(u.id)
           @oldu = User.find_by_id(@group.users_id)
-
+          if @oldu != @u
           if @group.grouptype =="Attendance"
             @oldu.update_attributes(:tracker => false)
             @u.update_attributes(:tracker => true)
           else
             @oldu.update_attributes(:leader => false)
             @u.update_attributes(:leader => true)
+          end
           end
         end
         @group.update_attributes(:users_id => @u.id)

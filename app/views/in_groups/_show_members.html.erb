@@ -5,7 +5,7 @@
 	@group_members.all.each do |u| %>
 	<% @user = User.find(u.users_id) %>
 	<tr>
-		<% @u = Group.find_by_users_id(@user.id) rescue nil %>
+		<% @u = Group.find_by(users_id: @user.id, id: params[:id]) rescue nil %>
 		<%if @u != nil%>
 		<td><%= @user.email %>(Leader)</td>
 		<%else%>

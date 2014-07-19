@@ -18,9 +18,10 @@
 <%end%>
 
 
-<% if current_user.leader == true && current_user.admin == false %>
-	
+<% if current_user.leader == true || current_user.tracker == true %>
+	<% if current_user.admin == false || current_user.admin == nil%>
 	<%= button_to "Take/View Attendance", groups_path, :method => :get %>
+	<%end%>
 <% end %>
 
 <%= button_to "Edit Profile", edit_user_registration_path, :method => :get %>

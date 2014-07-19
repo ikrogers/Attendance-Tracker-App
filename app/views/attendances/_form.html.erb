@@ -18,6 +18,7 @@
 <% @usersingroup.each do |u| %>
 <% @us = User.find_by_id(u.users_id) %>
 <% @userarray << @us %>
+
 <% end %>
 
 <%= f.label "PT or LLAB?" %>
@@ -26,7 +27,8 @@
 <br>
 <%= f.label "Select absent users" %>
 <br>
-<% f.hidden_field :g_id,value: @group%>
+<%= f.hidden_field :groups_id, :value=>@group%>
+
 <%= select_tag :user_ids, options_for_select(@userarray.collect {|u| [u.email, u.id]}),:multiple => true, :name=>'project[user_ids][]' %>
 
 <div class="actions">
