@@ -5,6 +5,7 @@ class CreateAttendances < ActiveRecord::Migration
       t.references :user, index: true
       t.string :event
       t.integer :tracker_id
+      t.integer :groups_id
       t.timestamps
     end
   end

@@ -26,7 +26,7 @@
 <br>
 <%= f.label "Select absent users" %>
 <br>
-
+<% f.hidden_field :g_id,value: @group%>
 <%= select_tag :user_ids, options_for_select(@userarray.collect {|u| [u.email, u.id]}),:multiple => true, :name=>'project[user_ids][]' %>
 
 <div class="actions">

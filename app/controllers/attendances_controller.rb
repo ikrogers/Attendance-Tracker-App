@@ -2,13 +2,13 @@ class AttendancesController < InheritedResources::Base
   def create
     @users = User.find(params[:project][:user_ids]) rescue nil
     @carrier = {"Verizon"=>"@vtext.com", "AT&T"=>"@txt.att.net","Boost Mobile" => "@myboostmobile.com", "Cellular One"=>"@mobile.celloneusa.com","Metro PCS"=>"@mymetropcs.com","Nextel"=>"@messaging.nextel.com","Sprint"=>"@messaging.sprintpcs.com","T-Mobile"=>"@tmomail.net","Tracfone"=>"@txt.att.net"}
-
+    @group = Post.find(params[:attendance][:g_id])
     if @users != nil
     @users.each do |u|
       attendancept = Attendance.where(user_id: u.id, event: "PT")
       attendancellab = Attendance.where(user_id: u.id, event: "LLAB")
       @attendance = Attendance.new(attendance_params)
-      @attendance.update_attributes(:tracker_id => current_user.id)
+      @attendance.update_attributes(:tracker_id => current_user.id, :groups_id => @group)
       
       if @attendance.event == "PT"
         @attendance.update_attributes(:absent => true)
@@ -47,6 +47,6 @@ class AttendancesController < InheritedResources::Base
   end
 
   def attendance_params
-    params.require(:attendance).permit(:event,:absent,:user_id,:tracker_id)
+    params.require(:attendance).permit(:event,:absent,:user_id,:tracker_id, :groups_id)
   end
 end
