@@ -30,6 +30,6 @@
 <%= select_tag :user_ids, options_for_select(@userarray.collect {|u| [u.email, u.id]}),:multiple => true, :name=>'project[user_ids][]' %>
 
 <div class="actions">
-	<%= f.submit %>
+	<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' } %>
 </div>
 <% end %>

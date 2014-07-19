@@ -8,6 +8,14 @@ class User < ActiveRecord::Base
 
   
   has_many :messages 
+  validates :fname, :presence => true
+  validates :lname, :presence => true
+  validates :email, :presence => true
+  validates :phone, :format => { :with => /\A(\+1)?[0-9]{10}\z/, :message => "Not a valid 10-digit telephone number" } 
+  validates :carrier, :presence => true
+
+
+
   
   
      

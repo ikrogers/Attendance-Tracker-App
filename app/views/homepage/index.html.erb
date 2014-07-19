@@ -4,7 +4,7 @@
 </p>
 <% end %>
 
-<h1>Homepage#index</h1>
+<h1>Welcome <%=current_user.fname.to_s.humanize%> <%=current_user.lname.to_s.humanize%>!</h1>
 <p>
 
 </p>
@@ -23,7 +23,7 @@
 	<%= button_to "Take/View Attendance", groups_path, :method => :get %>
 <% end %>
 
-
+<%= button_to "Edit Profile", edit_user_registration_path, :method => :get %>
 <%= button_to "logout", destroy_user_session_path, :method => :delete%>
 
 <% %>

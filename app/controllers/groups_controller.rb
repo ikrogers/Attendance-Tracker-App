@@ -83,6 +83,6 @@ class GroupsController < InheritedResources::Base
   end
 
   def group_params
-    params.require(:group).permit(:name, :grouptype)
+    params.require(:group).permit(:name, :grouptype, :users_id, :groups_id)
   end
 end

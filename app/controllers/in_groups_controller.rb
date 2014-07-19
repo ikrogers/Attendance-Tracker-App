@@ -5,6 +5,10 @@ class InGroupsController < InheritedResources::Base
    
   end
   
+  
+  def group_params
+    params.require(:in_group).permit(:name, :users_id, :groups_id)
+  end
   private
     def show_members
       @group_id = params[:group_id]

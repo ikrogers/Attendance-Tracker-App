@@ -354,7 +354,7 @@ class MessagesController < InheritedResources::Base
   # Never trust parameters from the scary internet, only allow the white list through.
 
   def message_params
-    params.require(:message).permit(:confirm, :messages, :delivery_method, :groups_id, :notify, :notification_method)
+    params.require(:message).permit(:confirm, :messages, :delivery_method, :groups_id, :notify, :notification_method, :users_id)
   end
 
 end

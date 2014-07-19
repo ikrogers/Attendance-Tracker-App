@@ -47,6 +47,6 @@ class AttendancesController < InheritedResources::Base
   end
 
   def attendance_params
-    params.require(:attendance).permit(:event)
+    params.require(:attendance).permit(:event,:absent,:user_id,:tracker_id)
   end
 end
