@@ -1,0 +1,420 @@
+[33mcommit 33de358aa8bf2d7e945cbcf35bcd56de93d17f75[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sat Jul 19 19:40:23 2014 -0400
+
+    Bootstrap
+
+[33mcommit cccbee21c314aface5882adf50ffb159c1bd28e8[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sat Jul 19 18:11:09 2014 -0400
+
+    Bugfixes
+
+[33mcommit 4348f89b27be7c08389a563f41ba648e8ebda453[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sat Jul 19 17:09:19 2014 -0400
+
+    trying to pass value from form to controller no success
+
+[33mcommit 45d18abf76457a15a6a298a910a4a5a0131c7568[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Fri Jul 18 23:19:43 2014 -0400
+
+    hue
+
+[33mcommit 458afaf3b881807a329cf446a26485d333887b80[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Fri Jul 18 23:08:53 2014 -0400
+
+    hue
+
+[33mcommit 9e78ee025b1c4c64ebd16ccfe6f37fd06623b020[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Fri Jul 18 22:58:07 2014 -0400
+
+    Worked on some forms and bugfixes
+
+[33mcommit 4557755aded1e9f31cc314a53c327b453d91c0a7[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Thu Jul 17 22:15:11 2014 -0400
+
+    implemented absence notification. Users will not be notified if they have been marked absent
+
+[33mcommit be96a963a868cf38e5d2aa7c7720ecbddca4bdcc[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jul 16 23:19:50 2014 -0400
+
+    Implemented notification when recall is completed
+
+[33mcommit 8ddd214828bcfaa1a6df953e14e985d08e9f19fb[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jul 16 23:09:08 2014 -0400
+
+    Implemented notification when recall is completed
+
+[33mcommit 930f5b975079b32f233956967be0d0afc45dfced[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jul 16 21:01:46 2014 -0400
+
+    Added notification when recall is completeed
+
+[33mcommit 109bd35cbde40c7922c31d7e4ea9df97c91a0aa4[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sun Jul 13 23:14:11 2014 -0400
+
+    Overhauled messages and recall can now send to groups and time/track confirmations
+
+[33mcommit 4c9007ab0e961996049823f1db1d8cd8c18f806a[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sun Jul 13 21:29:33 2014 -0400
+
+    hue
+
+[33mcommit 2c9d665c8f68bd6d9af7d9aeb665bd46a70c88c2[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sun Jul 13 18:46:13 2014 -0400
+
+    Refining recall interface. Changed up databse so that messages and users have many to many relation
+
+[33mcommit 8cb9717db7954c1bbe4a8c2c6f2b34eef540555e[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sun Jul 13 18:36:39 2014 -0400
+
+    Refining recall interface. Changed up databse so that messages and users have many to many relation
+
+[33mcommit 6a361f733797c2d9c20b3d236e0f796590323751[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sat Jul 12 22:04:39 2014 -0400
+
+    View adjustments
+
+[33mcommit 08469ea2f04375c99be41acd996d3b0486d0ae44[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sat Jul 12 21:55:33 2014 -0400
+
+    View adjustments
+
+[33mcommit 5af828cc8d744b24263ba790329642635ae661bd[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sat Jul 12 21:31:35 2014 -0400
+
+    Good progress on attendance/group flow
+
+[33mcommit 54863e9e1dc4b2211b72231eabe877aefa1afc95[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jul 9 22:10:53 2014 -0400
+
+    Added where users are unique to a group and admin can add/delete users
+
+[33mcommit 63445ce3460549b70029b85f9fbe7a54abba016e[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jul 9 20:56:02 2014 -0400
+
+    merge
+
+[33mcommit 1be0a0f87577f5643f50edec96e82befc1b9f1c1[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jul 9 20:23:41 2014 -0400
+
+    Added where attendance trackers can only view record they have crwtaed
+
+[33mcommit 850a6d3fde721f6e474876908fac43818ef67f98[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jul 9 20:06:58 2014 -0400
+
+    updates
+
+[33mcommit 392655fadbe527479b028898c81f6b0c80184996[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jul 9 19:57:16 2014 -0400
+
+    Slight adjustments to showing attendance
+
+[33mcommit d007b59734d85a6cb19f43813764fdf0d5767b95[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jul 9 19:39:03 2014 -0400
+
+    Added dynamic attendance display
+
+[33mcommit 3bb38ed9bed0de11e041a368b54194938b8c4ef7[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jul 8 21:37:42 2014 -0400
+
+    added where you can switch group leaders and that it updated database correctly ie. old user gets set to flase and new to true
+
+[33mcommit cb278afae4326a6199e94fd2502cdbc7008b3d80[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jul 8 21:08:27 2014 -0400
+
+    added where if tracker has not been assigned a group he cannot keep attendance
+
+[33mcommit 501398e90730a20d6efecdfc561addab171f8e9c[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jul 8 20:15:49 2014 -0400
+
+    Trackers w can only track their own groups
+
+[33mcommit 453461927449a7072f57daa391eef24ef44bc54b[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Mon Jul 7 21:34:53 2014 -0400
+
+    added LLAB and PT identifier. App counts how how many misses each has for pt and llab
+
+[33mcommit a233a2c82bafac5ef686fa7f47ab77a2c9483072[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sun Jul 6 16:43:37 2014 -0400
+
+    tracking of absences and proper attendance record insertion
+
+[33mcommit 40694d86fada3337d6686d25a236c4a7bbd9f24b[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sun Jul 6 16:03:21 2014 -0400
+
+    Added attendance
+
+[33mcommit f9eac88760632bd48a99138be34557f06362e0bb[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Fri Jul 4 20:49:40 2014 -0400
+
+    Can add users to multiple groups
+
+[33mcommit 6f48d3d326f344b83d4ba75656331112f4258c47[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Fri Jul 4 11:03:04 2014 -0400
+
+    creating groups working on adding users to a group
+
+[33mcommit 3c85ce5f7a8414d97a8a021e14d3a7c3b84347e8[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jul 1 21:06:52 2014 -0400
+
+    started on groups working on form input.
+
+[33mcommit 4f22c7d4bbfd6ac6e40c9e6a87b5bcbad9ac3012[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Mon Jun 23 23:36:24 2014 -0400
+
+    getting recall ironed out
+
+[33mcommit 6fe38b082dd63f60d867707b9ef22902777445b2[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Mon Jun 23 23:25:28 2014 -0400
+
+    getting recall ironed out
+
+[33mcommit 8586f1e7a2016082b91249a4f4ab40cf6c1ad78b[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Mon Jun 23 23:22:14 2014 -0400
+
+    getting recall ironed out
+
+[33mcommit 72c1aec130cf549041717939a28e9c54610e9d8a[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Mon Jun 23 23:19:03 2014 -0400
+
+    getting recall ironed out
+
+[33mcommit 14b5cdc881ad50451c260e83a1a359f9516fa6ac[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Mon Jun 23 23:11:06 2014 -0400
+
+    getting recall ironed out
+
+[33mcommit 90aaa16818064aeb657e919862a3c18b505794ad[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Mon Jun 23 23:02:00 2014 -0400
+
+    getting recall ironed out
+
+[33mcommit 7f54f364ffdcec6869468c0c6277c01a188c2d02[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Mon Jun 23 22:44:56 2014 -0400
+
+    getting recall ironed out
+
+[33mcommit eff63023522386629b16ed09dcb5f0b5276b080c[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Thu Jun 19 20:25:52 2014 -0400
+
+    changed mailer credetials due to undeliverable mail spamming by inbox
+
+[33mcommit c39699e571ebd10b47c4f306dc92e6359c4a8fa1[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Thu Jun 19 18:56:30 2014 -0400
+
+    cleaning up things change password for devise works trying to work on recall tracking
+
+[33mcommit 1dca9e123a51a51888fc6754645cba83ddb9436d[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jun 18 22:34:05 2014 -0400
+
+    merge conflicts... yay git is just so amazing at merging... NOT FIXEDgit add -A
+
+[33mcommit bcb4a92ed9a6a4d6d8f71fd3a26d84711a4b0fa4[m
+Merge: 8f1ac5e dd72b1d
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jun 18 22:31:27 2014 -0400
+
+    merge conflicts... yay
+
+[33mcommit 8f1ac5e845e5b31b459765b367f295672fa2ec10[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jun 18 22:23:32 2014 -0400
+
+    Confirmation routine is finished. Need to polish so that it sets all required values in database correctly
+
+[33mcommit dd72b1d9590d8d5ece04c1ddfac914a971bc009b[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jun 18 20:54:47 2014 -0400
+
+    Confirmation almost working gonna send stuff from form
+
+[33mcommit fa72c39c640632e304fcbf5828e8da9e6eb45fd5[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jun 18 15:02:54 2014 -0400
+
+    Active record is being retarded record cannot find by token
+
+[33mcommit 0e00d411e52f835d4362ae0d5bfd80520d8818e3[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Wed Jun 18 14:11:52 2014 -0400
+
+    confirmation nearly works
+
+[33mcommit 1446f5542986ee6882feef311657113aaee4741c[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 22:30:45 2014 -0400
+
+    mailer look for email works but not text
+
+[33mcommit 09f4f982377481f2c486116340581de9ec8158f2[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 22:22:29 2014 -0400
+
+    Added phones to controller
+
+[33mcommit 73cadeb319092675d826d278f84784e169ae9e3f[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 22:16:58 2014 -0400
+
+    added where users can sign up with phone and carrier
+
+[33mcommit 481599b289a2de11d4e5253f595450fbb62127fb[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 21:03:33 2014 -0400
+
+    mailer look for email works but not text
+
+[33mcommit 96c71f4a50fdd01a9951e8bd76c8b2180c07fec7[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 20:55:02 2014 -0400
+
+    mailer look for email works but not text
+
+[33mcommit 54930b9427752329dda7ac1efdcc6c912a58a4a1[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 17:26:59 2014 -0400
+
+    mass email alerts are somewhat setup time to woek on texts
+
+[33mcommit 08b6c574557b78858d541f5f9f5a9623c2b1880e[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 17:10:02 2014 -0400
+
+    testing00
+
+[33mcommit 5679cb2e2bdec3a299e71af62e3ad0f183487c6c[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 16:58:44 2014 -0400
+
+    testing00
+
+[33mcommit 01e6c690ce6ab8750a0dd04e8bf184e098a93599[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 16:55:03 2014 -0400
+
+    testing00
+
+[33mcommit 68eda85984b615ada1cadd099f7f28a13eb66f25[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 16:47:27 2014 -0400
+
+    testing0
+
+[33mcommit a97852997b5eaed2aa7954d110d9cbf47e8d71bb[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 16:44:49 2014 -0400
+
+    testing0
+
+[33mcommit f7c3732eb03e04ba7696f28f5389329e66984a06[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 16:42:28 2014 -0400
+
+    testing6
+
+[33mcommit 2d842f9cd55a18535a9b9a438bf3f2f3275a4af4[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 16:33:23 2014 -0400
+
+    testing9
+
+[33mcommit 010f64d2ee90630c96196f0fcca8afe990cbcafd[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 16:28:24 2014 -0400
+
+    testing3
+
+[33mcommit 16a05792622905121795b37b12aa8e4bc316ed31[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 16:26:05 2014 -0400
+
+    testing2
+
+[33mcommit f839f01214b5ecea79d6a3dbb1a110cf07bdaf87[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 16:22:38 2014 -0400
+
+    testing1
+
+[33mcommit 59774198a34a5155d2840e83d85b5bd9b6d8624e[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 16:21:19 2014 -0400
+
+    testing
+
+[33mcommit 18836bbeee31d94f69bdaefca84429bf67ff097b[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Tue Jun 17 16:15:39 2014 -0400
+
+    working on mailer and message set up test 1
+
+[33mcommit 99fba11cc39487cb69aa9d7be8214eaad7907165[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sun Jun 15 01:22:01 2014 -0400
+
+    working on grabbing messages
+
+[33mcommit 6676ae1b93f749c61d6d404f3e3f47a05e26425b[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sun Jun 15 00:14:40 2014 -0400
+
+    db correctiosn
+
+[33mcommit f3274740ed7f0e0fdbe145846a92e7a188015c7d[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sat Jun 14 23:28:44 2014 -0400
+
+    phase 1 db finished
+
+[33mcommit 2cdd30d21aa06cd4ce0cb1fef6116463ece55dc3[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sat Jun 14 20:03:05 2014 -0400
+
+    Fixed where you can edit and create new use through active admin, added exta columns to user table
+
+[33mcommit cee9ae8296fc2b892c07616018c050b60637da18[m
+Author: Ilya Rogers <ikrogers92@gmail.com>
+Date:   Sat Jun 14 18:18:13 2014 -0400
+
+    Devise auth and Active Admin way
