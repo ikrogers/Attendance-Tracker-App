@@ -148,6 +148,9 @@ GEM
       polyamorous (~> 1.0.0)
     rdoc (4.1.1)
       json (~> 1.4)
+    realtime-validations (0.3.1)
+      jquery-rails (>= 1.0.19)
+      rails (>= 3.1.3)
     responders (1.0.0)
       railties (>= 3.2, < 5)
     sass (3.2.19)
@@ -211,6 +214,7 @@ DEPENDENCIES
   rails (= 4.1.1)
   rails_12factor (= 0.0.2)
   rails_layout
+  realtime-validations
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   simple_form (~> 3.0.0.rc)

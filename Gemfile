@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'devise'
 gem 'devise_security_extension'
 gem 'activeadmin', github: 'gregbell/active_admin'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.1'
 # Use sqlite3 as the database for Active Record
@@ -28,13 +29,12 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'realtime-validations'
 gem 'bootstrap-sass'
 gem 'figaro'
 gem 'high_voltage'
 gem 'simple_form', '~> 3.0.0.rc'
 gem 'xkimo'
-
-
 
 group :development do
 gem'better_errors'
