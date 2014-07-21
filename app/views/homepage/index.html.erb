@@ -1,69 +1,73 @@
 
-<h1>Welcome <%=current_user.fname.to_s.humanize%> <%=current_user.lname.to_s.humanize%>!</h1>
-<p>
-
-</p>
-<%= current_user.email %>
-
-<% if current_user.admin == true %>
-	<%= button_to "admin", admin_root_path, :method => :get %>
-	<%= button_to "Send Messages", new_message_path, :method => :get %>
-	<%= button_to "Group and Attendace Management", groups_path, :method => :get %>
-	<%= button_to "track recall confirmations(If applicable)", messages_path, :method => :get %>
-<%end%>
-
-
-<% if current_user.leader == true || current_user.tracker == true %>
-	<% if current_user.admin == false || current_user.admin == nil%>
-	<%= button_to "Take/View Attendance", groups_path, :method => :get %>
-	<%end%>
-<% end %>
-
-<%= button_to "Edit Profile", edit_user_registration_path, :method => :get %>
-<%= button_to "logout", destroy_user_session_path, :method => :delete%>
-
-<% %>
-<% %>
-<% %>
-<% %>
-
-<% @attendancept = Attendance.where(user_id: current_user.id, event: "PT")%>
-<% @attendancellab = Attendance.where(user_id: current_user.id, event: "LLAB")%>
-
-
-<br>Attendance Stats:<br>
-Missed PT:
-<%= @attendancept.count %>
-<table>
-<% @attendancept.each do |a|%>
-
-	<th>
-		Date missed:
-	</th>
-	<tr>
-		<td>
-			<%= a.created_at%>
-		</td>
-	</tr>
-
-<% end %>
-</table>
 <br>
-Missed LLAB:
-<%= @attendancellab.count %>
-<table>
-<% @attendancellab.each do |a|%>
+<br />
+<br>
+<div class="row">
+	<div class="col-xs-7">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Information</h3>
+			</div>
+			<div class="panel-body">
+				<h1>Welcome <%=current_user.fname.to_s.humanize%> <%=current_user.lname.to_s.humanize%>!</h1>
+				<h2>Your Attendance Statistics:</h2>
+				<% @attendancept = Attendance.where(user_id: current_user.id, event: "PT")%>
+				<% @attendancellab = Attendance.where(user_id: current_user.id, event: "LLAB")%>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th align="right">Missed PT: <%= @attendancept.count %></th>
+							<th>Missed LLAB: <%= @attendancellab.count %></th>
+						</tr>
+					</thead>
+					<tbody>
 
-	<th>
-		Date missed:
-	</th>
-	<tr>
-		<td>
-			<%= a.created_at%>
-		</td>
-	</tr>
+						<% @attendancept.each do |a|%>
+						<tr>
+							<td> <%= a.created_at.to_date.to_formatted_s(:long)%> </td>
+						</tr>
+						<% end %>
 
+						<% @attendancellab.each do |a|%>
+						<tr>
+							<td> <%= a.created_at.to_date.to_formatted_s(:long)%> </td>
+						</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Navigation</h3>
+			</div>
+			<div class="panel-body" align="center">
+				<% if current_user.admin == true %>
+				<%= button_to "Active Admin Interface", admin_root_path, :method => :get,:class => 'btn btn-primary btn-lg btn-block' %>
+				<br>
+				<%= button_to "Send Group Messages", new_message_path, :method => :get,:class => 'btn btn-primary btn-lg btn-block' %>
+				<br>
+				<%= button_to "Group and Attendace Management", groups_path, :method => :get,:class => 'btn btn-primary btn-lg btn-block' %>
+				<br>
+				<%= button_to "View and Track Messages", messages_path, :method => :get,:class => 'btn btn-primary btn-lg btn-block' %>
+				<br>
+				<%end%>
 
+				<% if current_user.leader == true || current_user.tracker == true %>
+				<% if current_user.admin == false || current_user.admin == nil%>
+				<%= button_to "Take/View Attendance", groups_path, :method => :get,:class => 'btn btn-primary btn-lg btn-block' %>
+				<br>
+				<%end%>
+				<% end %>
 
-<%end%>
-</table>
+				<%= button_to "Edit Profile", edit_user_registration_path, :method => :get,:class => 'btn btn-primary btn-lg btn-block' %>
+				<br>
+				<%= button_to "Log Out", destroy_user_session_path, :method => :delete,:class => 'btn btn-primary btn-lg btn-block'%>
+				<br>
+			</div>
+		</div>
+	</div>
+</div>
+
