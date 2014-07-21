@@ -1,13 +1,9 @@
 module DeviseHelper
   def devise_error_messages!(field)
     return nil if resource.errors.empty?
-    if resource.errors.get(field).kind_of?(Array)
-      messages = resource.errors.get(field) { |msg| content_tag(:li, msg) }.join
-    else
-      messages = resource.errors.get(field) { |msg| content_tag(:li, msg) }
-    end
-    if resource.errors.get(field) !=nil
-    html = <<-HTML
+    messages = resource.errors.full_messages_for(field).map { |msg| content_tag(:li, msg) }.join
+    if resource.errors.full_messages_for(field) != []
+      html = <<-HTML
     <div class="alert alert-error alert-block"> <button type="button"
     class="close" data-dismiss="alert">x</button>
       #{messages}
