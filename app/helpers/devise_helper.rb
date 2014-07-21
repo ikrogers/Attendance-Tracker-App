@@ -1,0 +1,21 @@
+module DeviseHelper
+  def devise_error_messages!
+    return '' if resource.errors.empty?
+
+    messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
+    html = <<-HTML
+    <div class="alert alert-error alert-block"> <button type="button"
+    class="close" data-dismiss="alert">x</button>
+      #{messages}
+    </div>
+    HTML
+
+    html.html_safe
+  end
+  def errors_for(model, attribute)
+  if model.errors[attribute].present?
+    content_tag :span, :class => 'error_explanation' do
+    end
+  end
+end
+end

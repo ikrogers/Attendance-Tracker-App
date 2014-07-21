@@ -6,12 +6,11 @@
 		Sign Up
 	</div>
 	<div class="panel-body">
-
 		<body id="content" role="main">
 			<div class="container">
-
-				<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+				<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 				<%= devise_error_messages! %>
+
 				<div>
 					<%= f.text_field :fname, autofocus: true, :class => 'form-control', :placeholder => 'First Name' %>
 					<br>
@@ -23,7 +22,7 @@
 				</div>
 
 				<div>
-					<%= f.email_field :email, :class => 'form-control', :placeholder => 'Email (Must be deliverable)'%>
+					<%= f.text_field :email, :class => 'form-control', :placeholder => 'Email (Must be deliverable)'%>
 					<br>
 				</div>
 
