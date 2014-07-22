@@ -1,51 +1,51 @@
-<%= form_for(@message) do |f| %>
-  <% if @message.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h2>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		Message Configuration
+	</div>
+	<div class="panel-body">
+		<body id="content" role="main">
+			<div class="container">
+				<%= form_for(@message) do |f| %>
 
-      <ul>
-      <% @message.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+				<div class="field">
+					<%= f.label "Recipients (All or a specific group)" %>
+					<br>
+					<%= select_tag(:groups_id, options_for_select(Group.all.collect {|u| [u.name, u.id]}), {:class => 'form-control', :multiple => false, :prompt => 'All', :name=>'project[groups_id][]'})%>
+				</div>
 
-  
-  
-  
-  <div class="field">
-    <%= f.label "Recipients (Groups)" %><br>
-   	<%= select_tag :groups_id, options_for_select(Group.all.collect {|u| [u.name, u.id]}),:multiple => false, :prompt => 'All', :name=>'project[groups_id][]' %>
-  </div>
-  
-  <div class="field">
-    <%= f.label "Notify me when completed" %><br>
-   	<%= f.check_box :notify %>
+				<div class="field">
+					<%= f.label "Message Content" %>
+					<br>
+					<%= f.text_area :messages, :class => 'form-control' %>
+				</div>
 
-  </div>
-  
-  <div class="field">
-    <%= f.label "Notification Method" %><br>
-    <%= f.select :notification_method, options_for_select(["Email+SMS", "SMS", "Email"]) %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :delivery_method %><br>
-    <%= f.select :delivery_method, options_for_select(["Email+SMS", "SMS", "Email"]) %>
-  </div>
-  
+				<div>
+					<h4>Configuration Options:</h4>
 
-	<div class="field">
-    <%= f.label "Message Content" %><br>
-    <%= f.text_field :messages %>
-  </div>
-  
-  <div class="field">
-    <%= f.label "Enable confirmation will only work for Email option" %><br>
-    <%= f.select :confirm, options_for_select(["Confirmation", "No Confirmation"]) %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Initiate Recall",data: { confirm: 'Please make sure all options are set correctly. Press OK if you are satisfied with your selections and Cancel to return.' } %>
-  </div>
-<% end %>
+					<table class="table">
+						<thead>
+							<tr>
+
+								<th>Message delivery method</th>
+								<th>Enable email confirmation</th>
+								<th>All confirmed notification method</th>
+								<th>Notify me when confirmation recall is finished</th>
+							</tr>
+						</thead>
+						<tbody>
+							<td> <%= f.select(:delivery_method, options_for_select([["Email+SMS"], ["SMS"], ["Email"]]),{},{:class=>'form-control'}) %> </td>
+							<td> <%= f.select(:confirm, options_for_select([["Confirmation"], ["No Confirmation"]]),{},{:class=>'form-control'}) %> </td>
+							<td> <%= f.select(:notification_method, options_for_select([["Email+SMS"], ["SMS"], ["Email"]]),{},{:class=>'form-control'}) %> </td>
+							<td><%= f.check_box :notify%></td>
+						</tbody>
+					</table>
+				</div>
+				<div class="actions">
+					<%= f.submit "Initiate Recall",data: { confirm: 'Please make sure all options are set correctly. Press OK if you are satisfied with your selections and Cancel to return.' }, :class => 'btn btn-primary custombtnblock' %>
+				</div>
+			</div>
+
+			<% end %>
+		</body>
+	</div>
+</div>

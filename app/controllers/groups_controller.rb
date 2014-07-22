@@ -1,4 +1,6 @@
 class GroupsController < InheritedResources::Base
+    layout 'application1'
+
   def create
     @group = Group.new(group_params)
     @user = User.find(params[:project][:user_ids]) rescue []
