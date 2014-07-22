@@ -35,7 +35,7 @@ class AttendancesController < InheritedResources::Base
 
     respond_to do |format|
       if @attendance.save
-        format.html { redirect_to @attendance, notice: 'Attendance recorded!' }
+        format.html { redirect_to groups_path, notice: 'Attendance recorded successfully!' }
         format.js
         format.json { render action: 'show', status: :created, location: @attendance }
       else

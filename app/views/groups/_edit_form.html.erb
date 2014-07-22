@@ -1,60 +1,68 @@
-<%= form_for(@group) do |f| %>
-<% if @group.errors.any? %>
-<div id="error_explanation">
-	<h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		Edit Group
+	</div>
+	<div class="panel-body">
+		<%= form_for(@group) do |f| %>
+		<% if @group.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
 
-	<ul>
-		<% @group.errors.full_messages.each do |message| %>
-		<li>
-			<%= message %>
-		</li>
+			<ul>
+				<% @group.errors.full_messages.each do |message| %>
+				<li>
+					<%= message %>
+				</li>
+				<% end %>
+			</ul>
+		</div>
 		<% end %>
-	</ul>
-</div>
-<% end %>
 
-<%
-  @group= Group.find params[:id]
-  @ingroup = InGroup.where(groups_id: @group.id)
-  @users = User.all
-  @usersnotingroup = Array.new
-  @users.each do |u|
-    @notin = InGroup.find_by(users_id: u.id, groups_id: @group.id) rescue nil
-    if @notin == nil
-      @usersnotingroup << User.find_by_id(u.id)
-    end
-  end
-  @usersingroup= Array.new
-  @ingroup.each do |ig|
-    @usersingroup << User.find_by_id(ig.users_id)
-  end
+		<%
+ @group= Group.find params[:id]
+      @ingroup = InGroup.where(groups_id: @group.id)
+      @users = User.all
+      @usersnotingroup = Array.new
+      @users.each do |u|
+        @notin = InGroup.find_by(users_id: u.id, groups_id: @group.id) rescue nil
+        if @notin == nil
+          @usersnotingroup << User.find_by_id(u.id)
+        end
+      end
+      @usersingroup= Array.new
+      @ingroup.each do |ig|
+        @usersingroup << User.find_by_id(ig.users_id)
+      end
 %>
 
-<div>
-	<%= f.text_field :name%>
-</div>
-<div>
-	<%= f.label "Select Users to add" %>
-	<br>
-	<%= select_tag :user_ids, options_for_select(@usersnotingroup.collect {|u| [u.email, u.id]}),:multiple => true, :name=>'project[user_ids][]' %>
-	<br>
-	<%= f.label "Select Users to remove" %>
-	<br>
-	<%= select_tag :user_remove, options_for_select(@usersingroup.collect {|u| [u.email, u.id]}),:multiple => true, :name=>'project[user_remove][]' %>
-	<br>
-	<br>
-	<%= f.label "Change group leader" %>
-</div>
+		<div>
+			<%= f.label "Name" %>
+			<br>
+			<%= f.text_field :name, :class=>'form-control'%>
+		</div>
+		<div>
+			<%= f.label "Select Users to add" %>
+			<br>
+			<%= select_tag(:user_ids, options_for_select(@usersnotingroup.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+			<br>
+			<%= f.label "Select Users to remove" %>
+			<br>
+			<%= select_tag(:user_remove, options_for_select(@usersingroup.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_remove][]'}) %>
+			<br>
 
-<div>
-	<%= select_tag :user_id, options_for_select(@usersingroup.collect {|u| [u.email, u.id]}),:multiple => false, :prompt => 'Select group leader', :name=>'project[user_id][]' %>
-</div>
-<br>
+			<%= f.label "Change group leader" %>
+			<br />
+			<%= select_tag(:user_id, options_for_select(@usersingroup.collect {|u| [u.email, u.id]}),{:class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
 
+			<div class="actions">
+				<%= f.submit "Update Group", :class=>'btn btn-primary' %>
+			</div>
+			<% end %>
+		</div>
+	</div>
 
-<%= render '/in_groups/show_members', :id => @group.id %>
-
-<div class="actions">
-	<%= f.submit %>
-</div>
-<% end %>
+	<script>
+		$(document).ready(function() {
+			$('select').selectpicker();
+		});
+	</script>

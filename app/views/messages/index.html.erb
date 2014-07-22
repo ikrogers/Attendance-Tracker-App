@@ -21,8 +21,10 @@
 
 			<tbody>
 				<% @messages.each do |message| %>
+
 				<tr>
-					<%@g = Group.find_by_id(message.groups_id)%>
+					<% @g = Group.find_by_id(message.groups_id) rescue nil%>
+					
 					<%if message.groups_id == nil%>
 					<td>All</td>
 					<%else%>
@@ -37,7 +39,7 @@
 					<% end %>
 					<%if message.notify == "1"%>
 					<td>Enabled</td>
-					<td><%=message.notification_method%></td>
+					<td><%= message.notification_method%></td>
 					<%else%>
 					<td>Disabled</td>
 					<td>N/A</td>
@@ -46,6 +48,7 @@
 					<td><%= link_to 'Details/Track', message,:class=>'btn btn-primary' %></td>
 					<td><%= link_to 'Destroy', message, method: :delete, data: { confirm: 'Are you sure?' }, :class=>'btn btn-danger' %></td>
 				</tr>
+				
 				<% end %>
 			</tbody>
 		</table>

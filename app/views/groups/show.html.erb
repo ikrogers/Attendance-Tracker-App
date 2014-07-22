@@ -1,8 +1,4 @@
-<p id="notice"><%= notice %></p>
-
     <%@group= Group.find params[:id]%>
 
 	<%= render '/in_groups/show_members', :id => @group.id %>
 
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>

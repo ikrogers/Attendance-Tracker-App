@@ -20,7 +20,7 @@ class GroupsController < InheritedResources::Base
 
     respond_to do |format|
       if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        format.html { redirect_to groups_path, notice: 'Group was successfully created.' }
         format.js
         format.json { render action: 'show', status: :created, location: @group }
       else
@@ -76,7 +76,7 @@ class GroupsController < InheritedResources::Base
 
       end
       if @group.update(group_params)
-        format.html { redirect_to @group, notice: 'Product was successfully updated.' }
+        format.html { redirect_to groups_path, notice: 'Product was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

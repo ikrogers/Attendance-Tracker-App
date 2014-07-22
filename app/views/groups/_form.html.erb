@@ -1,51 +1,61 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		New Group
+	</div>
+	<div class="panel-body">
+		<body id="content" role="main">
+			<%= form_for(@group) do |f| %>
+			<% if @group.errors.any? %>
+			<div id="error_explanation">
+				<h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
 
-<%= form_for(@group) do |f| %>
-<% if @group.errors.any? %>
-<div id="error_explanation">
-	<h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+				<ul>
+					<% @group.errors.full_messages.each do |message| %>
+					<li>
+						<%= message %>
+					</li>
+					<% end %>
+				</ul>
+			</div>
+			<% end %>
 
-	<ul>
-		<% @group.errors.full_messages.each do |message| %>
-		<li>
-			<%= message %>
-		</li>
-		<% end %>
-	</ul>
-</div>
-<% end %>
-
-<% @users = User.all
+			<% @users = User.all
   @array = Array.new
   @users.each do |user|
     @array << user.email
   end
 %>
 
-<div>
-<%= f.label "Give your group a name" %>
-</div>
-<div>
-	<%= f.text_field :name%>
-</div>
-<div>
-<%= f.label "Select group type" %>
+			<div>
+				<%= f.label "Give group a name" %>
+			</div>
+			<div>
+				<%= f.text_field :name, :class => 'form-control'%>
+			</div>
+			<div>
+				<%= f.label "Select group type" %>
+			</div>
+
+			<div>
+				<%= f.select(:grouptype, options_for_select([["Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control'})%>
+			</div>
+			<div>
+				<%= f.label "Select group leader" %>
+			</div>
+			<div>
+				<%= select_tag(:user_ids, options_for_select(User.all.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => false, :name=>'project[user_ids][]'}) %>
+			</div>
+			<br>
+
+			<div class="actions">
+				<%= f.submit "Create Group", :class=>'btn btn-primary' %>
+			</div>
+			<% end %>
+	</div>
 </div>
 
-<div>
-	<%= f.select :grouptype, options_for_select(["Attendance", "Non-Attendance"]) %>
-</div>
-<br>
-<div>
-<%= f.label "Select group leader" %>
-</div>
-<div>
-	<%= select_tag :user_ids, options_for_select(User.all.collect {|u| [u.email, u.id]}),:multiple => false, :prompt => 'Select group leader', :name=>'project[user_ids][]' %>
-</div>
-<br>
-
-
-
-<div class="actions">
-	<%= f.submit %>
-</div>
-<% end %>
+<script>
+	$(document).ready(function() {
+		$('select').selectpicker();
+	}); 
+</script>
