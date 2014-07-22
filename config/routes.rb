@@ -28,7 +28,7 @@ devise_for :users, :controllers => { :registrations => "registrations" }
 devise_scope :user do
   authenticated :user do
     
-    root :to => 'homepage#index', as: :authenticated_root
+    root :to => 'homepage#index'
     end
  
   unauthenticated :user do
