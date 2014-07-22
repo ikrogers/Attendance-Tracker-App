@@ -1,45 +1,37 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Attendance Records</h3>
+	</div>
+	<div class="panel-body">
+		<% @currentgroup = Group.find_by_id(params[:attgroup_id])%>
+		<% @currentuserattendance = Attendance.where(groups_id: @currentgroup.id)%>
+		<h1>Absence Records For Group: <%= @currentgroup.name%></h1>
 
-<%@currentgroup = Group.find_by_id(params[:attgroup_id])%>
-<%@currentuserattendance = Attendance.where(groups_id: @currentgroup.id)%>
-<h1>Absence Records For Group: <%= @currentgroup.name%></h1>
+		<table class='table'>
+			<thead>
+				<tr>
+					<th> Absent user </th>
+					<th> Event </th>
+					<th> Recorded Date </th>
+					<th> Tracker </th>
+					<th> Remove Record </th>
+				</tr>
+			</thead>
 
+			<tbody>
+				<% @currentuserattendance.each do |attendance| %>
 
-<table>
-  <thead>
-    <tr>
-      <th>
-      	Absent user
-      </th>
-      <th>
-      	Event
-      </th>
-      <th>
-      	Recorded Date
-      </th>
-      <th>
-      	Tracker
-      </th>
-      <th>
-      	Remove Record
-      </th>
-    </tr>
-  </thead>
+				<tr>
+					<td><%= User.find_by_id(attendance.user_id).email %></td>
+					<td><%= attendance.event %></td>
+					<td><%= attendance.created_at.to_datetime.to_formatted_s(:long) %></td>
+					<td><%= User.find_by_id(attendance.tracker_id).email %></td>
+					<td><%= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?' }, :class=>'btn btn-danger' %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
 
-  <tbody>
-    <% @currentuserattendance.each do |attendance| %>
-    
-      <tr>
-        <td><%= User.find_by_id(attendance.user_id).email %></td>
-        <td><%= attendance.event %></td>
-        <td><%= attendance.created_at %></td>
-        <td><%= User.find_by_id(attendance.tracker_id).email %></td>
-        <td><%= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Attendance', new_attendance_path %>
-<%= link_to 'Groups Back', groups_path %>
+		<br>
+	</div>
+</div>

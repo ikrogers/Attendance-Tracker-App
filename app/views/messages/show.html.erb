@@ -16,33 +16,46 @@
   end
 %>
 
-<h1> Message Content:
-<%= @message.messages%> </h1>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Details</h3>
+	</div>
+	<div class="panel-body">
+		<h1> Message Content:
+		<%= @message.messages%> </h1>
 
-<% if @message.all_confirm == true %>
-<h1>All Confirmed Time: <%= @message.all_confirm_time - @message.created_at%></h1>
-<%else%>
-<h1>Confirmations in progress...</h1>
+		<% if @message.all_confirm == true %>
+		<h2>Time taken: <%= (@message.all_confirm_time - @message.created_at).to_time.to_formatted_s(:long)%></h2>
+		<%else%>
+		<h2>Confirmation in progress...</h2>
 
-<% end %>
-
-<h2>Recipients:</h2>
-<table>
-	<th> Email: </th>
-	<%if @message.confirm == "Confirmation"%>
-	<th> Confirmation status: </th>
-	<th> Confirmation time: </th>
-	<% end %>
-	<%@users.each do |user|%>
-	<% @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id) %>
-	<tr>
-		<td> <%= user.email%> </td>
-		<%if @message.confirm == "Confirmation"%>
-		<td> <%= @msgl.confirmed_recall%> </td>
-		<td> <%= @msgl.confirmed_time%> </td>
 		<% end %>
-	</tr>
-	<%end%>
-</table>
-<%= button_to "Home", authenticated_root_path, :method => :get %>
-<%= link_to 'Back', messages_path %>
+
+		<table class='table'>
+			<th> Recipients: </th>
+			<%if @message.confirm == "Confirmation"%>
+			<th> Confirmation status: </th>
+			<th> Confirmation time: </th>
+			<% end %>
+			<%@users.each do |user|%>
+			<% @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id) %>
+			<tr>
+				<td> <%= user.email%> </td>
+				<%if @message.confirm == "Confirmation"%>
+
+				<%if @msgl.confirmed_recall == true%>
+				<td>Confirmed</td>
+				<%else%>
+				<td>Not Confirmed</td>
+				<%end%>
+				<%if @msgl.confirmed_time ==nil%>
+				<td>N/A</td>
+				<%else%>
+				<td><%= @msgl.confirmed_time.to_datetime.to_formatted_s(:long)%> </td>
+				<%end%>
+				<% end %>
+			</tr>
+			<%end%>
+		</table>
+	</div>
+</div>

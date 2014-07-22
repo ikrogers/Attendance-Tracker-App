@@ -1,34 +1,55 @@
-<h1>Listing messages</h1>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Messages</h3>
+	</div>
+	<div class="panel-body">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Sent To</th>
+					<th>Type of Message</th>
+					<th>Delivery Method</th>
+					<th>Confirmation status</th>
+					<th>All Confirm Notification</th>
+					<th>Notification Method</th>
+					<th>Date Created</th>
+					<th>Message Details</th>
+					<th>Destroy Message</th>
 
-<table>
-	<thead>
-		<tr>
-			<th colspan="4"></th>
-		</tr>
-	</thead>
+				</tr>
+			</thead>
 
-	<tbody>
-		<% @messages.each do |message| %>
-		<tr>
-			<td><%= message.id %></td>
-			<%if message.confirm == "Confirmation"%>
-			<td><%= link_to 'Track Confirmations/Details', message %></td>
-			<% else %>
-			<td><%= link_to 'Details', message %></td>
-			<% end %>
-			<% if message.all_confirm == true%>
-			<td>All Confirmed</td>
-			<% else %>
-			<td>In Progress</td>
-			<% end %>
-			<%if current_user.admin == true %>
-			<td><%= link_to 'Destroy', message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-			<% end %>
-		</tr>
-		<% end %>
-	</tbody>
-</table>
+			<tbody>
+				<% @messages.each do |message| %>
+				<tr>
+					<%@g = Group.find_by_id(message.groups_id)%>
+					<%if message.groups_id == nil%>
+					<td>All</td>
+					<%else%>
+					<td><%= @g.name %></td>
+					<%end%>
+					<td><%= message.confirm%></td>
+					<td><%= message.delivery_method%></td>
+					<% if message.all_confirm == true%>
+					<td>All Confirmed</td>
+					<% else %>
+					<td>In Progress</td>
+					<% end %>
+					<%if message.notify == "1"%>
+					<td>Enabled</td>
+					<td><%=message.notification_method%></td>
+					<%else%>
+					<td>Disabled</td>
+					<td>N/A</td>
+					<%end%>
+					<td><%= message.created_at.to_datetime.to_formatted_s(:long)%></td>
+					<td><%= link_to 'Details/Track', message,:class=>'btn btn-primary' %></td>
+					<td><%= link_to 'Destroy', message, method: :delete, data: { confirm: 'Are you sure?' }, :class=>'btn btn-danger' %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
 
-<br>
-
-<%= link_to 'New Message', new_message_path %>
+		<br>
+	</div>
+</div>

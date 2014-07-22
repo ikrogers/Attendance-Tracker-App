@@ -1,33 +1,47 @@
-
-
 <% if notice %>
 <p id="notice">
 	<%= notice %>
 </p>
 <% end %>
-<h1>Confirm recall message</h1>
+<br />
+<br>
+<br>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Confirm Message</h3>
+	</div>
+	<div class="panel-body">
+		<body>
+			<div>
+				<%= form_tag(validate_message_path) do%>
 
-<%= form_tag(validate_message_path) do%>
+				<% if @user.errors.any? %>
+				<div class="error_messages">
+					<h2>Form is invalid</h2>
+					<ul>
+						<% for message in @user.errors.full_messages %>
+						<li>
+							<%= message %>
+						</li>
+						<% end %>
+					</ul>
+				</div>
+				<% end %>
+				<div>
+					<h3> Please type the following message in the box below: "<%= @user.original_message %>" </h3>
+				</div>
+				<div class="field">
+					<%= text_area_tag :entered_message,nil, :class => 'form-control'%>
+				</div>
+				<br>
+			</div>
+			<div class="actions">
+				<%= submit_tag "Confirm", :class => 'btn btn-primary custombtnblock'  %>
+			</div>
 
-  <% if @user.errors.any? %>
-    <div class="error_messages">
-      <h2>Form is invalid</h2>
-      <ul>
-        <% for message in @user.errors.full_messages %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <div>
-      <p>Please type the following message in the box below: <%=@user.original_message %></p>
-  </div>
-  <div class="field">
-    <%= label_tag :entered_message %>
-    <%= text_field_tag :entered_message %>
-  </div>
-  </div>
-  <div class="actions">
-  	<%= submit_tag "Confirm" %></div>
+			<% end %>
+	</div>
+	</body>
+</div>
+</div>
 
-<% end %>

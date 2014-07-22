@@ -13,10 +13,10 @@
 				<h2>Your Attendance Statistics:</h2>
 				<% @attendancept = Attendance.where(user_id: current_user.id, event: "PT")%>
 				<% @attendancellab = Attendance.where(user_id: current_user.id, event: "LLAB")%>
-				<table class="table table-striped">
+				<table class="table">
 					<thead>
 						<tr>
-							<th align="right">Missed PT: <%= @attendancept.count %></th>
+							<th>Missed PT: <%= @attendancept.count %></th>
 							<th>Missed LLAB: <%= @attendancellab.count %></th>
 						</tr>
 					</thead>

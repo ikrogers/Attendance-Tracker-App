@@ -12,7 +12,9 @@
   </head>
   <body>
 <header>
+	<%if params[:action]!='confirmation'%>
 	<%= render 'layouts/navigation' %>
+	<%end%>
 </header>
     <main role="main">
        <%= render 'layouts/messages' %>
