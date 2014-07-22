@@ -1,4 +1,7 @@
 class MessagesController < InheritedResources::Base
+  
+  
+  layout 'application1'
   def create #This entire create block is more on less the same just repeated bunch of times. Only differences are what to do what based on if staements
               # Yes its redundant but it works fine
     @carrier = {"Verizon"=>"@vtext.com", "AT&T"=>"@txt.att.net","Boost Mobile" => "@myboostmobile.com", "Cellular One"=>"@mobile.celloneusa.com","Metro PCS"=>"@mymetropcs.com","Nextel"=>"@messaging.nextel.com","Sprint"=>"@messaging.sprintpcs.com","T-Mobile"=>"@tmomail.net","Tracfone"=>"@txt.att.net"}
