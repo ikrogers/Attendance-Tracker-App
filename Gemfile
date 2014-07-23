@@ -31,8 +31,9 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'bootstrap-sass'
 gem 'figaro'
 gem 'high_voltage'
-gem 'simple_form', '~> 3.0.0.rc'
+gem 'simple_form'
 gem 'xkimo'
+
 
 group :development do
 gem'better_errors'
