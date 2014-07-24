@@ -1,0 +1,59 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Groups</h3>
+	</div>
+	<div class="panel-body">
+		<table class="table">
+			<thead>
+				<% if current_user.admin == nil || current_user.admin == false%>
+				<th>Group Name</th>
+				<th>Show</th>
+				<th>Attendance</th>
+
+				<% end %>
+
+				<%if  current_user.admin == true %>
+				<th>Group Name</th>
+				<th>Show</th>
+				<th>Attendance</th>
+
+				<%end%>
+			</thead>
+			<tbody>
+
+				<% @groups.each do |group| %>
+				<% if group.users_id == current_user.id%>
+				<% if current_user.admin == nil || current_user.admin == false%>
+				<tr>
+					<td><%= group.name %></td>
+					<td><%= link_to 'Show Members', group ,:class=>'btn btn-info'%></td>
+					<% if current_user.tracker == true%>
+					<% if group.grouptype == 'Attendance' %>
+					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
+					<% end %>
+
+					<% end %>
+					<td></td>
+					<td></td>
+					<% end %>
+					<% end %>
+				</tr>
+				<%if  current_user.admin == true %>
+				<tr>
+					<td><%= group.name %></td>
+					<td><%= link_to 'Show Members', group, :class => 'btn btn-info' %></td>
+					<% if group.grouptype == 'Attendance'%>
+					<td><%= link_to 'Take Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary' %></td>
+					<% else %>
+					<td><%= link_to 'Take Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary', :disabled => true %></td>
+					<td></td>
+					<%end%>
+					<% end %>
+
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>
+

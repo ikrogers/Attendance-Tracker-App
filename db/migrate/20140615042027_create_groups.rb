@@ -1,10 +1,10 @@
 class CreateGroups < ActiveRecord::Migration
   def change
     create_table :groups do |t|
-      t.string :name
+      t.text :name
       t.references :users, index: true
       t.references :groups, index: true 
-      t.string :grouptype
+      t.text :grouptype
       t.timestamps
     end
   end

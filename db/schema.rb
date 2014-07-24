@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20140706195240) do
 
   create_table "active_admin_comments", force: true do |t|
-    t.string   "namespace"
+    t.text     "namespace"
     t.text     "body"
-    t.string   "resource_id",   null: false
-    t.string   "resource_type", null: false
+    t.text     "resource_id",   null: false
+    t.text     "resource_type", null: false
     t.integer  "author_id"
     t.string   "author_type"
     t.datetime "created_at"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20140706195240) do
   create_table "attendances", force: true do |t|
     t.boolean  "absent"
     t.integer  "user_id"
-    t.string   "event"
+    t.text     "event"
     t.integer  "tracker_id"
     t.integer  "groups_id"
     t.datetime "created_at"
@@ -41,10 +41,10 @@ ActiveRecord::Schema.define(version: 20140706195240) do
   add_index "attendances", ["user_id"], name: "index_attendances_on_user_id"
 
   create_table "groups", force: true do |t|
-    t.string   "name"
+    t.text     "name"
     t.integer  "users_id"
     t.integer  "groups_id"
-    t.string   "grouptype"
+    t.text     "grouptype"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -67,10 +67,10 @@ ActiveRecord::Schema.define(version: 20140706195240) do
     t.integer  "users_id"
     t.boolean  "confirmed"
     t.datetime "confirm_date"
-    t.string   "messageconfirmtoken"
+    t.text     "messageconfirmtoken"
     t.datetime "confirmtoken_sent_at"
     t.string   "original_message"
-    t.string   "entered_message"
+    t.text     "entered_message"
     t.datetime "confirmed_time"
     t.boolean  "confirmed_recall"
     t.datetime "created_at"
@@ -81,14 +81,14 @@ ActiveRecord::Schema.define(version: 20140706195240) do
   add_index "message_lists", ["users_id"], name: "index_message_lists_on_users_id"
 
   create_table "messages", force: true do |t|
-    t.string   "messages"
+    t.text     "messages"
     t.integer  "groups_id"
-    t.string   "confirm"
+    t.text     "confirm"
     t.boolean  "all_confirm"
     t.datetime "all_confirm_time"
-    t.string   "delivery_method"
-    t.string   "notify"
-    t.string   "notification_method"
+    t.text     "delivery_method"
+    t.text     "notify"
+    t.text     "notification_method"
     t.integer  "users_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -98,21 +98,21 @@ ActiveRecord::Schema.define(version: 20140706195240) do
   add_index "messages", ["users_id"], name: "index_messages_on_users_id"
 
   create_table "users", force: true do |t|
-    t.string   "email",                            default: "", null: false
-    t.string   "encrypted_password",               default: "", null: false
-    t.string   "unique_session_id",      limit: 1
-    t.string   "reset_password_token"
+    t.text     "email",                            default: "", null: false
+    t.text     "encrypted_password",               default: "", null: false
+    t.text     "unique_session_id",      limit: 1
+    t.text     "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",                    default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "fname"
-    t.string   "lname"
-    t.string   "phone"
-    t.string   "carrier"
+    t.text     "current_sign_in_ip"
+    t.text     "last_sign_in_ip"
+    t.text     "fname"
+    t.text     "lname"
+    t.text     "phone"
+    t.text     "carrier"
     t.boolean  "leader"
     t.boolean  "tracker"
     t.datetime "created_at"

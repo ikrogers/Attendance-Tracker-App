@@ -1,5 +1,8 @@
 class GroupsController < InheritedResources::Base
+  before_action :authenticate_user!
     layout 'application1'
+    
+    
 
   def create
     @group = Group.new(group_params)
@@ -21,10 +24,12 @@ class GroupsController < InheritedResources::Base
     respond_to do |format|
       if @group.save
         format.html { redirect_to groups_path, notice: 'Group was successfully created.' }
+        format.mobile{ redirect_to groups_path, notice: 'Group was successfully created.' }
         format.js
         format.json { render action: 'show', status: :created, location: @group }
       else
         format.html { render action: 'new' }
+        format.mobile { render action: 'new' }
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end

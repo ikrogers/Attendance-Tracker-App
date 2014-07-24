@@ -35,6 +35,11 @@ gem 'simple_form'
 gem 'xkimo'
 
 
+#Mobile related gems
+gem 'mobylette'
+gem 'jquery_mobile_rails'
+
+
 group :development do
 gem'better_errors'
 gem'binding_of_caller',:platforms=>[:mri_19,:mri_20,:rbx]

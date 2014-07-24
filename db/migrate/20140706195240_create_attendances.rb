@@ -3,7 +3,7 @@ class CreateAttendances < ActiveRecord::Migration
     create_table :attendances do |t|
       t.boolean :absent
       t.references :user, index: true
-      t.string :event
+      t.text :event
       t.integer :tracker_id
       t.integer :groups_id
       t.timestamps

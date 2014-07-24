@@ -1,4 +1,5 @@
 class InGroupsController < InheritedResources::Base
+  before_action :authenticate_user!
     layout 'application1'
 
   before_action :set_group, :only => [:show_members]
