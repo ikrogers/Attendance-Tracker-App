@@ -1,4 +1,4 @@
-class Devise::SessionsController < DeviseController
+class SessionsController < Devise::SessionsController
   prepend_before_filter :require_no_authentication, only: [ :new, :create ]
   prepend_before_filter :allow_params_authentication!, only: :create
   prepend_before_filter :verify_signed_out_user, only: :destroy
@@ -13,11 +13,14 @@ class Devise::SessionsController < DeviseController
 
   # POST /resource/sign_in
   def create
-    self.resource = warden.authenticate!(auth_options)
-    set_flash_message(:notice, :signed_in) if is_flashing_format?
+    resource = warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#new")
+    set_flash_message(:notice, :signed_in) if is_navigational_format?
     sign_in(resource_name, resource)
-    yield resource if block_given?
-    respond_with resource, location: after_sign_in_path_for(resource)
+    if mobile_device?
+      redirect_to authenticated_root_path
+    else
+      respond_with resource, :location => authenticated_root_path(resource_name, resource)
+    end
   end
 
   # DELETE /resource/sign_out
@@ -70,6 +73,7 @@ class Devise::SessionsController < DeviseController
     # support returning empty response on GET request
     respond_to do |format|
       format.all { head :no_content }
+      format.mobile{redirect_to after_sign_out_path_for(resource_name), notice: 'Successfully signed out' }
       format.any(*navigational_formats) { redirect_to after_sign_out_path_for(resource_name) }
     end
   end

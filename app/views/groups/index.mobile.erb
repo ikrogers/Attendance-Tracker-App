@@ -26,10 +26,10 @@
 				<% if current_user.admin == nil || current_user.admin == false%>
 				<tr>
 					<td><%= group.name %></td>
-					<td><%= link_to 'Show Members', group ,:class=>'btn btn-info'%></td>
+					<td><%= link_to 'Show', group ,:class=>'btn btn-info'%></td>
 					<% if current_user.tracker == true%>
 					<% if group.grouptype == 'Attendance' %>
-					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
+					<td><%= link_to 'Attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
 					<% end %>
 
 					<% end %>
@@ -41,11 +41,11 @@
 				<%if  current_user.admin == true %>
 				<tr>
 					<td><%= group.name %></td>
-					<td><%= link_to 'Show Members', group, :class => 'btn btn-info' %></td>
+					<td><%= link_to 'Show', group, :class => 'btn btn-info' %></td>
 					<% if group.grouptype == 'Attendance'%>
-					<td><%= link_to 'Take Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary' %></td>
+					<td><%= link_to 'Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary' %></td>
 					<% else %>
-					<td><%= link_to 'Take Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary', :disabled => true %></td>
+					<td><%= link_to 'Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary', :disabled => true %></td>
 					<td></td>
 					<%end%>
 					<% end %>
