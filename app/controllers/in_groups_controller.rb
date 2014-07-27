@@ -10,7 +10,7 @@ class InGroupsController < InheritedResources::Base
   
   
   def group_params
-    params.require(:in_group).permit(:name, :users_id, :groups_id)
+    params.require(:in_group).permit(:name, :user_id, :groups_id)
   end
   private
     def show_members

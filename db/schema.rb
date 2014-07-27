@@ -53,14 +53,14 @@ ActiveRecord::Schema.define(version: 20140706195240) do
   add_index "groups", ["users_id"], name: "index_groups_on_users_id"
 
   create_table "in_groups", force: true do |t|
-    t.integer  "users_id"
+    t.integer  "user_id"
     t.integer  "groups_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "in_groups", ["groups_id"], name: "index_in_groups_on_groups_id"
-  add_index "in_groups", ["users_id"], name: "index_in_groups_on_users_id"
+  add_index "in_groups", ["user_id"], name: "index_in_groups_on_user_id"
 
   create_table "message_lists", force: true do |t|
     t.integer  "messages_id"

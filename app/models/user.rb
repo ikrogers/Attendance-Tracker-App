@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :session_limitable
          
-  has_many :in_group
+  has_many :in_group, :dependent => :delete_all
   
 
   has_many :messages 
