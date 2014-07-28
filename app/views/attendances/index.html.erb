@@ -25,7 +25,11 @@
 					<td><%= User.find_by_id(attendance.user_id).email %></td>
 					<td><%= attendance.event %></td>
 					<td><%= attendance.created_at.to_datetime.to_formatted_s(:long) %></td>
+					<%if attendance.tracker_id==nil%>
+					<td>Tracker account was destroyed</td>
+					<%else%>
 					<td><%= User.find_by_id(attendance.tracker_id).email %></td>
+					<%end%>
 					<td><%= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?' }, :class=>'btn btn-danger' %></td>
 				</tr>
 				<% end %>
