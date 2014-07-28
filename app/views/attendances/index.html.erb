@@ -3,9 +3,10 @@
 		<h3 class="panel-title">Attendance Records</h3>
 	</div>
 	<div class="panel-body">
-		<% @currentgroup = Group.find_by_id(params[:attgroup_id])%>
-		<% @currentuserattendance = Attendance.where(groups_id: @currentgroup.id)%>
-		<h1>Absence Records For Group: <%= @currentgroup.name%></h1>
+		<% @currentgroup = Group.find_by_id(params[:attgroup_id]) rescue nil %>
+		<% if @currentgroup != nil %>
+		<% @currentuserattendance = Attendance.where(groups_id: @currentgroup.id) rescue nil %>
+		<h1>Absence Records For Group: <%= @currentgroup.name %></h1>
 
 		<table class='table'>
 			<thead>
@@ -35,7 +36,40 @@
 				<% end %>
 			</tbody>
 		</table>
+		<% else %>
+		<% @currentuserattendance = Attendance.where(groups_id: nil) rescue nil %>
+		<h1>Absence Records For Group: Deleted!</h1>
+		<table class='table'>
+			<thead>
+				<tr>
+					<th> Absent user </th>
+					<th> Event </th>
+					<th> Recorded Date </th>
+					<th> Tracker </th>
+					<th> Assign Group</th>
+					<th> Remove Record </th>
+				</tr>
+			</thead>
 
+			<tbody>
+				<% @currentuserattendance.each do |attendance| %>
+
+				<tr>
+					<td><%= User.find_by_id(attendance.user_id).email %></td>
+					<td><%= attendance.event %></td>
+					<td><%= attendance.created_at.to_datetime.to_formatted_s(:long) %></td>
+					<%if attendance.tracker_id==nil%>
+					<td>Tracker account was destroyed</td>
+					<%else%>
+					<td><%= User.find_by_id(attendance.tracker_id).email %></td>
+					<%end%>
+					<td><%= link_to 'Update', edit_attendance_path(attendance), :class => 'btn btn-warning'%></td>
+					<td><%= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?' }, :class=>'btn btn-danger' %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<% end %>
 		<br>
 	</div>
 </div>

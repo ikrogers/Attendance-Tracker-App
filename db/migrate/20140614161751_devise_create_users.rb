@@ -34,7 +34,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.text :phone
       t.text :carrier
       t.boolean :leader
-      t.boolean :tracker    
+      t.boolean :tracker  
+      t.boolean :uberadmin  
       t.timestamps
     end
 

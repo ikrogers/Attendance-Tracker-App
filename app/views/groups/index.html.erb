@@ -45,9 +45,9 @@
 				<%if  current_user.admin == true %>
 				<%if group.users_id ==  nil%>
 				<tr bgcolor="#FFFF19">
-				<%else%>
+					<%else%>
 				<tr>
-				<%end%>
+					<%end%>
 					<td><%= group.name %></td>
 					<td><%= group.grouptype %></td>
 					<%if group.users_id ==  nil%>
@@ -72,8 +72,13 @@
 				<% end %>
 			</tbody>
 		</table>
+		<% @att = Attendance.where(groups_id: nil) rescue nil%>
 		<% if current_user.admin == true %>
+
 		<%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %>
+		<% if @att.count >= 1%>
+		<%= link_to 'Non-group attendance found! Click here!', attendances_path, :class => 'btn btn-danger'%>
+		<%end%>
 		<% end %>
 	</div>
 </div>

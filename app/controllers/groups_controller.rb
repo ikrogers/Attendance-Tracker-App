@@ -98,8 +98,51 @@ class GroupsController < InheritedResources::Base
       end
     end
   end
+  
+  
+ 
+  
+  def destroy
+    @group = Group.find_by_id(params[:id]) rescue nil
+    @leader = User.find_by_id(@group.users_id) rescue nil
+    #If group is deleted reset user status depending on grouptype
+    if (@group.grouptype == "Attendance")
+      @leader.update_attributes(:tracker => false)
+    else
+      @leader.update_attributes(:leader => false)
+    end
+    
+    #If group is deleted remove all users from the group
+    @all = InGroup.where(groups_id: @group.id) rescue nil
+    if @all != nil
+      @all.destroy_all
+    end
+    
+    #Message sent to will update to -1 
+    @allmsg = Messages.where(groups_id: @group.id) rescue nil
+    if @allmsg != nil
+      @allmsg.each do |m|
+        m.update_attributes(:groups_id => -1)
+      end
+    end
+    
+    #Attendance records will be nullified and would be adjusted by a fake group interface
+    @allatt = Attendance.where(groups_id: @group.id) rescue nil
+    if @allatt!= nil
+      @allatt.each do |at|
+        at.update_attributes(:groups_id => nil)
+      end
+    end
+    
+    
+    respond_to do |format|
+      format.html { redirect_to groups_path }
+    end
+  end
 
   def group_params
     params.require(:group).permit(:name, :grouptype, :users_id, :groups_id)
   end
+  
+  
 end

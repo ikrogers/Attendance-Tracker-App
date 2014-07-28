@@ -50,8 +50,32 @@ class AttendancesController < InheritedResources::Base
       redirect_to groups_path, notice: 'Attendance recorded!'
     end
   end
+  
+  
+  
+  
+  def update
+    @attendance = Attendance.find_by_id(params[:id])
+    @isnil = Attendance.where(groups_id: nil) rescue nil
+
+    @gr = Group.find(params[:project][:group_id]) rescue nil
+    @gr.each do |g|
+      @group = Group.find_by_id(g.id)
+    end
+    @attendance.update_attributes(groups_id: @group.id)
+     if @isnil.count >= 1
+       redirect_to attendances_path, notice: 'Record was successfully updated.' 
+     end
+    if @isnill == nil
+      redirect_to groups_path, notice: 'Record was successfully updated.' 
+    end
+   
+  end
+
+
+
 
   def attendance_params
-    params.require(:attendance).permit(:event,:absent,:user_id,:tracker_id, :groups_id)
+    params.require(:attendance).permit(:event, :absent, :user_id, :tracker_id, :groups_id)
   end
 end
