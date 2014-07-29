@@ -350,8 +350,17 @@ class MessagesController < InheritedResources::Base
   
   def destroy
     @message = Message.find_by_id(params[:id]) rescue nil
+    
+    #When a message is deleted, all messagelists are removed
+    @msglist = MessageList.where(messages_id: @message.id) rescue nil
+    if @msglist != nil
+      @msglist.destroy_all
+    end
+    
+    @message.destroy
+    
     respond_to do |format|
-      format.html { redirect_to messages_path }
+      format.html { redirect_to messages_path, notice: "Message removed!" }
   end
 
 

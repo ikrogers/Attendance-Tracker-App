@@ -136,7 +136,7 @@ class GroupsController < InheritedResources::Base
     
     
     respond_to do |format|
-      format.html { redirect_to groups_path }
+      format.html { redirect_to groups_path, notice: 'Group removed!' }
     end
   end
 
