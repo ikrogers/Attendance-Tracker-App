@@ -54,7 +54,12 @@ ActiveAdmin.register User do
       end
       
       #Destroy the user
-      User.find_by_id(object.id).destroy
+      
+      @user = User.find_by_id(object.id).destroy
+      if @user.uberadmin != true
+        @user.destroy
+      else
+      end
     end
 
   end

@@ -347,6 +347,22 @@ class MessagesController < InheritedResources::Base
       redirect_to confirmation_path, :notice => "Messages did not match. Please try again."
     end
   end
+  
+  def destroy
+    @message = Message.find_by_id(params[:id]) rescue nil
+    respond_to do |format|
+      format.html { redirect_to messages_path }
+  end
+
+
+
+
+
+
+
+
+
+  end
 
   private
 

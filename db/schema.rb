@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20140706195240) do
     t.text     "carrier"
     t.boolean  "leader"
     t.boolean  "tracker"
+    t.boolean  "uberadmin"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"
