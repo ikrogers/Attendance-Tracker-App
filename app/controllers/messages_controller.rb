@@ -278,8 +278,13 @@ class MessagesController < InheritedResources::Base
     end #If group was selected
   end #end create
 
-  def confirmation
+
+  def received
     
+  end
+
+
+  def confirmation
     @user = MessageList.find_by_messageconfirmtoken!(params[:id])
   end
 
@@ -383,7 +388,7 @@ class MessagesController < InheritedResources::Base
   # Never trust parameters from the scary internet, only allow the white list through.
 
   def message_params
-    params.require(:message).permit(:confirm, :messages, :delivery_method, :groups_id, :notify, :notification_method, :users_id)
+    params.require(:message).permit(:confirm, :messages, :delivery_method, :groups_id, :notify, :notification_method, :users_id, :subject)
   end
 
 end

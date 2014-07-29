@@ -11,7 +11,11 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-
+<header>
+	<%if mobile_device?%>
+			<%= render 'layouts/navmobile' %>
+	<%end%>
+</header>
     <main role="main">
        <%= render 'layouts/messages' %>
        <%= yield %>

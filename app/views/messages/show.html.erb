@@ -21,13 +21,14 @@
 		<h3 class="panel-title">Details</h3>
 	</div>
 	<div class="panel-body">
-		<h1> Message Content:
-		<%= @message.messages%> </h1>
+		<h1>Subject: <%=@message.subject%></h1>
+		<h2> Message Content:
+		<%= @message.messages%> </h2>
 
 		<% if @message.all_confirm == true %>
-		<h2>Time taken: <%= (@message.all_confirm_time - @message.created_at).to_s.to_time.strftime("%H:%M:%S")%></h2>
+		<h3>Time taken: <%= (@message.all_confirm_time - @message.created_at).to_s.to_time.strftime("%H:%M:%S")%></h3>
 		<%else%>
-		<h2>Confirmation in progress...</h2>
+		<h3>Confirmation in progress...</h3>
 
 		<% end %>
 

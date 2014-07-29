@@ -1,0 +1,46 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Message History</h3>
+	</div>
+	<div class="panel-body">
+		<table class="table">
+			<% @messagelist = MessageList.where(users_id: current_user.id)%>
+			<thead>
+				<tr>
+					<th>Subject</th>
+					<th>Confirmation status</th>
+					<th>Date Received</th>
+					<th>Message Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%@messagelist.each do |ml|%>
+				<%@message = Message.find_by_id(ml.messages_id)%>
+				<tr>
+					<td><%=@message.subject%></td>
+					<%conf = ml.confirmed_recall%>
+					<%if conf == true%>
+					<td>Confirmed</td>
+					<%else%>
+					<td>Not confirmed</td>
+					<%end%>
+					<td><%=ml.created_at.to_date.to_formatted_s(:long)%></td>
+					<td><%= link_to 'Details',  '#', 'data-target' => "#myModal_#{@message.id}", 'data-toggle' => 'modal',:class => 'btn btn-primary' %>
+					<div class="modal fade" id='<%= "myModal_#{@message.id}" %>' tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="myModalLabel" style="color: black">Message Details</h2>
+								</div>
+								<div class="modal-body">
+									<%= render 'messages/message_details_modal', message: @message %>
+								</div>
+							</div>
+						</div>
+					</div></td>
+				</tr>
+				<%end%>
+			</tbody>
+		</table>
+	</div>
+</div>

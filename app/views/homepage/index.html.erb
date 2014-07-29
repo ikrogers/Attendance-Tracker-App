@@ -34,6 +34,37 @@
 						<% end %>
 					</tbody>
 				</table>
+				<br>
+				<h2>Notifications:</h2>
+				<% @unconfirmed = MessageList.where(users_id: current_user.id, confirmed_recall: false)%>
+				<%if @unconfirmed.count >=1 %>
+				<h4>You have <%= @unconfirmed.count%> unconfirmed messages!</h4>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Subject</th>
+							<th>Date sent</th>
+							<th>Confirm</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%@unconfirmed.each do |a|%>
+						<%if a.confirmed_recall == false%>
+						<% @message = Message.find_by_id(a.messages_id)%>
+						<tr>
+							<td><%=@message.subject%></td>
+							<td> <%= @message.created_at.to_date.to_formatted_s(:long)%> </td>
+							<% conf = a.confirmed_recall%>
+							<td>Not confirmed</td>
+							<td><%= button_to 'Confirm Now', confirmation_path(a.messageconfirmtoken), :method=>:get, :class => 'btn btn-primary'%></td>
+						</tr>
+						<% end %>
+						<% end %>
+					</tbody>
+				</table>
+				<%else%>
+				<h4>No notifications!</h4>
+				<%end%>
 			</div>
 		</div>
 	</div>
@@ -62,7 +93,8 @@
 				<br>
 				<%end%>
 				<% end %>
-
+				<%= button_to "Message History", received_messages_path, :method => :get,:class => 'btn btn-primary btn-lg btn-block' %>
+				<br>
 				<%= button_to "Edit Profile", edit_user_registration_path, :method => :get,:class => 'btn btn-primary btn-lg btn-block' %>
 				<br>
 				<%= button_to "Log Out", destroy_user_session_path, :method => :delete,:class => 'btn btn-primary btn-lg btn-block'%>

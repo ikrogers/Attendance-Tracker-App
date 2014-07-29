@@ -11,11 +11,11 @@ Rails.application.routes.draw do
   get "/confirmation/:id" , :to => "messages#confirmation", :as => 'confirmation'
   get "/user_confirmations" => "messages#user_confirmations"
   post "/validate_message/:id" , :to => "messages#validate_message", :as => 'validate_message'
-  
+  get "/received_messages/", :to => "messages#received_messages", :as => 'received_messages'
+
   get "/update_attendance_form/:id", :to => "attendances#update_attendance_form", :as => 'update_attendance_form'
   post "/updateattendance/:id" , :to => "attendances#updateattendance", :as => 'update_attendance'
 
-  
   get "/show_members/:id", :to => "in_groups#show_members", :as => 'show_members'
 
   resources :groups

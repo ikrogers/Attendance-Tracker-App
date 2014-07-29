@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20140706195240) do
 
   create_table "messages", force: true do |t|
     t.text     "messages"
+    t.text     "subject"
     t.integer  "groups_id"
     t.text     "confirm"
     t.boolean  "all_confirm"
