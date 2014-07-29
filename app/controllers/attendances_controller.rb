@@ -51,29 +51,29 @@ class AttendancesController < InheritedResources::Base
     end
   end
   
-  
-  
-  
-  def update
+  def updateattendance
     @attendance = Attendance.find_by_id(params[:id])
     @isnil = Attendance.where(groups_id: nil) rescue nil
 
     @gr = Group.find(params[:project][:group_id]) rescue nil
+    if @gr != nil
     @gr.each do |g|
       @group = Group.find_by_id(g.id)
     end
+    
     @attendance.update_attributes(groups_id: @group.id)
+    end
      if @isnil.count >= 1
        redirect_to attendances_path, notice: 'Record was successfully updated.' 
-     end
-    if @isnill == nil
+     else
+   
       redirect_to groups_path, notice: 'Record was successfully updated.' 
     end
-   
   end
 
-
-
+  def update_attendance_form
+    @attendance = Attendance.find_by_id(params[:id])
+  end
 
   def attendance_params
     params.require(:attendance).permit(:event, :absent, :user_id, :tracker_id, :groups_id)
