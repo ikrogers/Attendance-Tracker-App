@@ -27,20 +27,20 @@
 %>
 
 			<div>
-				<%= f.label "Give group a name" %>
+				<%= f.label "Name" %><i>  ~Name your group</i>
 			</div>
 			<div>
 				<%= f.text_field :name, :class => 'form-control'%>
 			</div>
 			<div>
-				<%= f.label "Select group type" %>
+				<%= f.label "Select group type" %><i>  ~Attendance is for attendance tracking and Non-Attendance is everything else</i>
 			</div>
 
 			<div>
 				<%= f.select(:grouptype, options_for_select([["Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control'})%>
 			</div>
 			<div>
-				<%= f.label "Select group leader" %>
+				<%= f.label "Group leader" %><i>  ~Select group leader</i>
 			</div>
 			<div>
 				<%= select_tag(:user_ids, options_for_select(User.all.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => false, :name=>'project[user_ids][]'}) %>

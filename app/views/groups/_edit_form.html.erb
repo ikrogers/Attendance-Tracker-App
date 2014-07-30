@@ -37,27 +37,27 @@
 %>
 
 		<div>
-			<%= f.label "Name" %>
+			<%= f.label "Name" %><i>  ~Leave it be if not updating it</i>
 			<br>
 			<%= f.text_field :name, :class=>'form-control'%>
 		</div>
 		<div>
 			<%if @group.grouptype=='Attendance'%>
-			<%= f.label "Select days for which attendance is to be taken" %>
+			<%= f.label "Select days for which attendance is to be taken" %><i>  ~You will not be able to take attendance otherwise</i>
 			<br>
 			<%= select_tag(:event_days, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[event_days][]',  :multiple => true})%>
 			<br>
 			<%end%>
-			<%= f.label "Select Users to add (users outside of this group)" %>
+			<%= f.label "Select Users to add" %> <i>  ~Will allow you to add users that are not in this group</i>
 			<br>
 			<%= select_tag(:user_ids, options_for_select(@usersnotingroup.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 			<br>
-			<%= f.label "Select Users to remove (users in this group)" %>
+			<%= f.label "Select Users to remove (users in this group)" %> <i>  ~Will allow you to remove users from this group</i>
 			<br>
 			<%= select_tag(:user_remove, options_for_select(@usersingroup.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_remove][]'}) %>
 			<br>
 
-			<%= f.label "Change group leader (User must already be in group)" %>
+			<%= f.label "Change group leader (User must already be in group)" %> <i>  ~Has to be a member already. Leave blank if not updating</i>
 			<br />
 			<%= select_tag(:user_id, options_for_select(@usersingroup.collect {|u| [u.email, u.id]}),{:class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
 

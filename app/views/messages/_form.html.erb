@@ -8,18 +8,18 @@
 				<%= form_for(@message) do |f| %>
 
 				<div class="field">
-					<%= f.label "Recipients (All or a specific group)" %>
+					<%= f.label "Recipients" %><i>  ~Either select a group from drop-down or send message to everyone</i>
 					<br>
 					<%= select_tag(:groups_id, options_for_select(Group.all.collect {|u| [u.name, u.id]}), {:class => 'form-control', :multiple => false, :prompt => 'All', :name=>'project[groups_id][]'})%>
 				</div>
 				<div class="field">
-					<%= f.label "Subject" %>
+					<%= f.label "Subject" %><i>  ~Enter your message subject here</i>
 					<br>
 					<%= f.text_field :subject, :placeholder => 'Please keep it short', :class => 'form-control' %>
 				</div>
 
 				<div class="field">
-					<%= f.label "Message Content" %>
+					<%= f.label "Message Content" %><i>  ~Message goes here</i>
 					<br>
 					<%= f.text_area :messages, :placeholder => "If you intend to send this message via SMS please keep message and subject under 160 characters", :class => 'form-control' %>
 				</div>
@@ -30,10 +30,9 @@
 					<table class="table">
 						<thead>
 							<tr>
-
 								<th>Message delivery method</th>
 								<th>Enable email confirmation</th>
-								<th>All confirmed notification method</th>
+								<th>Everyone confirmed notification method</th>
 								<th>Notify me when confirmation recall is finished</th>
 							</tr>
 						</thead>

@@ -27,11 +27,11 @@
 
 		<% end %>
 
-		<%= f.label "Select Event" %>
+		<%= f.label "Select Event" %><i>  ~Either PT or LLAB</i>
 		<br>
 		<%= f.select(:event, options_for_select([["PT"], ["LLAB"]]),{}, { :class => 'form-control'})%>
 		<br>
-		<%= f.label "Absent Users" %>
+		<%= f.label "Absent Users" %><i>  ~Only select absent users</i>
 		<br>
 		<%= f.hidden_field :groups_id, :value=>@group%>
 		<%= select_tag(:user_ids, options_for_select(@userarray.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
