@@ -5,6 +5,7 @@
 	<div class="panel-body">
 
 		<%= form_for(@attendance) do |f| %>
+
 		<% if @attendance.errors.any? %>
 		<div id="error_explanation">
 			<h2><%= pluralize(@attendance.errors.count, "error") %> prohibited this attendance from being saved:</h2>
@@ -24,14 +25,35 @@
 		<% @usersingroup.each do |u| %>
 		<% @us = User.find_by_id(u.users_id) %>
 		<% @userarray << @us %>
-
 		<% end %>
 
-		<%= f.label "Select Event" %><i>  ~Either PT or LLAB</i>
+
+
+
+		<%if is_today_llab(@group)==true && is_today_pt(@group)==false%>
+		<%= f.label "Select Event" %><i> ~Can only record LLAB attendance today</i>
 		<br>
-		<%= f.select(:event, options_for_select([["PT"], ["LLAB"]]),{}, { :class => 'form-control'})%>
+		<%= f.select(:event, options_for_select([["LLAB"]]),{}, { :class => 'form-control'})%>
 		<br>
-		<%= f.label "Absent Users" %><i>  ~Only select absent users</i>
+		<%elsif is_today_llab(@group)==false && is_today_pt(@group)==true%>
+		<%= f.label "Select Event" %><i> ~Can only record PT attendance today</i>
+		<br>
+		<%= f.select(:event, options_for_select([["PT"]]),{}, { :class => 'form-control'})%>
+		<br>
+		<%elsif is_today_llab(@group)==false && is_today_pt(@group)==false%>	
+		
+		<%else%>
+		<label>TODO!!! WHEN ATTENDANCE HAS ALREADY BEEN RECORDED</label>
+		<%end%>
+
+
+
+
+
+
+
+
+		<%= f.label "Absent Users" %><i> ~Only select absent users. If user is excused do not mark them as absent</i>
 		<br>
 		<%= f.hidden_field :groups_id, :value=>@group%>
 		<%= select_tag(:user_ids, options_for_select(@userarray.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
@@ -43,9 +65,8 @@
 	</div>
 </div>
 
-
 <script>
-$(document).ready(function(){
-    $('select').selectpicker();
-});
+	$(document).ready(function() {
+		$('select').selectpicker();
+	}); 
 </script>

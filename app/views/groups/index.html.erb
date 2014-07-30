@@ -1,18 +1,3 @@
-<%
- def today(group) #Script that determines if today is one of the days attendance is allowed to be taken on
-    @availabledays = group.event_days.split("::")
-    @flag = false
-    @availabledays.each do |a|
-      if Time.now.strftime("%A") == a
-        @flag = false
-      break
-      else
-        @flag = true
-      end
-    end
-    return @flag
-  end
-%>
 
 <div class="panel panel-primary">
 	<div class="panel-heading">
@@ -78,13 +63,13 @@
 					<td><%= link_to 'Manage Group', edit_group_path(group), :class => 'btn btn-warning' %></td>
 					<td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %></td>
 					<% if group.grouptype == 'Attendance'%>
-					<td><%= link_to 'Take Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary' %></td>
+					<td><%= link_to 'Take PT Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary' %></td>
 					<td><%= link_to 'Adjust Attendance', attendances_path(:attgroup_id => group.id), :class => 'btn btn-danger' %></td>
 					<% else %>
 					<td><%= link_to 'Take Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary', :disabled => true %></td>
 					<td><%= link_to 'Adjust Attendance', attendances_path(:attgroup_id => group.id), :class => 'btn btn-danger', :disabled => true %></td>
 					<td></td>
-					<%end%>
+					<% end %>
 					<% end %>
 
 				</tr>

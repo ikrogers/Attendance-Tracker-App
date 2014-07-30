@@ -43,9 +43,13 @@
 		</div>
 		<div>
 			<%if @group.grouptype=='Attendance'%>
-			<%= f.label "Select days for which attendance is to be taken" %><i>  ~You will not be able to take attendance otherwise</i>
+			<%= f.label "Select days for which PT attendance is to be taken" %><i>  ~You will not be able to take PT attendance otherwise</i>
 			<br>
-			<%= select_tag(:event_days, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[event_days][]',  :multiple => true})%>
+			<%= select_tag(:ptdays, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[ptdays][]',  :multiple => true})%>
+			<br>
+			<%= f.label "Select days for which LLAB attendance is to be taken" %><i>  ~You will not be able to take LLAB attendance otherwise</i>
+			<br>
+			<%= select_tag(:llabdays, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[llabdays][]',  :multiple => true})%>
 			<br>
 			<%end%>
 			<%= f.label "Select Users to add" %> <i>  ~Will allow you to add users that are not in this group</i>

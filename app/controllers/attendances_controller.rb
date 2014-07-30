@@ -33,23 +33,26 @@ class AttendancesController < InheritedResources::Base
         end
       end
     end
-
+    
     respond_to do |format|
-      if @attendance.save
-        format.html { redirect_to groups_path, notice: 'Attendance recorded successfully!' }
-        format.mobile { redirect_to groups_path, notice: 'Attendance recorded successfully!' }
-        format.js
-        format.json { render action: 'show', status: :created, location: @attendance }
+      
+     if @attendance.save
+      if @attendance.event == nil
+          @attendance.destroy
+          format.html { redirect_to groups_path, alert: 'Stop trying to hack amateur!' }
+          format.mobile { redirect_to groups_path, alert: 'Stop trying to hack amateur!' }
       else
-        format.html { render action: 'new' }
-        format.mobile { render action: 'new' }
-        format.json { render json: @attendance.errors, status: :unprocessable_entity }
+         format.html { redirect_to groups_path, notice: 'Attendance recorded successfully!' }
+          format.mobile { redirect_to groups_path, notice: 'Attendance recorded successfully!' }
+         format.js
+         format.json { render action: 'show', status: :created, location: @attendance }
+         end
       end
     end
-    else
-      redirect_to groups_path, notice: 'Attendance recorded!'
-    end
+   end
   end
+  
+  
   
   def updateattendance
     @attendance = Attendance.find_by_id(params[:id])

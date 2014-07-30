@@ -1,28 +1,21 @@
 <% attendancept = Attendance.where(user_id: @user.id, event: "PT")%>
 <% attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")%>
 
-
 <%if @event == "PT"%>
-	<%if attendancept.count == 9 %>
-You have used all of your <%=@event%> absences please contact your leadership ASAP
-Please contact your attendance tracker if you feel you have received this in error
-	<% end %>
-	<%if attendancept.count <= 8 %>
-You now have <%=attendancept.count%>/8 PT absences
-Please contact your attendance tracker if you feel you have received this in error
-	<% end %>
+<%if attendancept.count == 9 %>
+You have used all of your <%= @event%>
 <% end %>
-
+<%if attendancept.count <= 8 %>
+You now have <%= attendancept.count%>/8 PT absences
+<% end %>
+<% end %>
 
 <%if @event == "LLAB"%>
-	<%if attendancellab.count == 4 %>
-You have used all of your <%=@event%> absences please contact your leadership ASAP
-Please contact your attendance tracker if you feel you have received this in error
-	<% end %>
-	<%if attendancellab.count <= 3 %>
-You now have <%=attendancellab.count%>/3 LLAB absences
-Please contact your attendance tracker if you feel you have received this in error
-	<% end %>
+<%if attendancellab.count == 4 %>
+You have used all of your <%= @event%> absences
 <% end %>
-
+<%if attendancellab.count <= 3 %>
+You now have <%= attendancellab.count%>/3 LLAB absences
+<% end %>
+<% end %>
 

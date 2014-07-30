@@ -42,7 +42,8 @@ ActiveRecord::Schema.define(version: 20140706195240) do
 
   create_table "groups", force: true do |t|
     t.text     "name"
-    t.text     "event_days"
+    t.text     "ptdays"
+    t.text     "llabdays"
     t.integer  "users_id"
     t.integer  "groups_id"
     t.text     "grouptype"

@@ -11,7 +11,7 @@ class GroupsController < InheritedResources::Base
       @u.update_attributes(:leader => true)
     end
 
-    @group.update_attributes(:users_id => @u.id, :event_days => '')
+    @group.update_attributes(:users_id => @u.id, :ptdays => '', :llabdays => '')
 
     @in_group = InGroup.new
     @in_group.update_attributes(:groups_id => @group.id)
@@ -36,13 +36,21 @@ class GroupsController < InheritedResources::Base
     respond_to do |format|
 
       @group= Group.find params[:id]
-      @days = params[:project][:event_days] rescue nil
-      if @days != nil
-        @day_string = ''
-        @days.each do |d|
-          @day_string = @day_string+'::'+d
+      @ptdays = params[:project][:ptdays] rescue nil
+      @llabdays = params[:project][:llabdays] rescue nil
+      if @ptdays != nil
+        @ptday_string = ''
+        @ptdays.each do |d|
+          @ptday_string = @ptday_string+'::'+d
         end
-        @group.update_attributes(:event_days => @day_string)
+        @group.update_attributes(:ptdays => @ptday_string)
+      end
+      if @llabdays != nil
+        @llabday_string = ''
+        @llabdays.each do |d|
+          @llabday_string = @llabday_string+'::'+d
+        end
+        @group.update_attributes(:llabdays => @llabday_string)
       end
 
       @users = User.find(params[:project][:user_ids]) rescue nil
