@@ -33,6 +33,7 @@
       @ingroup.each do |ig|
         @usersingroup << User.find_by_id(ig.users_id)
       end
+
 %>
 
 		<div>
@@ -41,16 +42,22 @@
 			<%= f.text_field :name, :class=>'form-control'%>
 		</div>
 		<div>
-			<%= f.label "Select Users to add" %>
+			<%if @group.grouptype=='Attendance'%>
+			<%= f.label "Select days for which attendance is to be taken" %>
+			<br>
+			<%= select_tag(:event_days, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[event_days][]',  :multiple => true})%>
+			<br>
+			<%end%>
+			<%= f.label "Select Users to add (users outside of this group)" %>
 			<br>
 			<%= select_tag(:user_ids, options_for_select(@usersnotingroup.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 			<br>
-			<%= f.label "Select Users to remove" %>
+			<%= f.label "Select Users to remove (users in this group)" %>
 			<br>
 			<%= select_tag(:user_remove, options_for_select(@usersingroup.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_remove][]'}) %>
 			<br>
 
-			<%= f.label "Change group leader" %>
+			<%= f.label "Change group leader (User must already be in group)" %>
 			<br />
 			<%= select_tag(:user_id, options_for_select(@usersingroup.collect {|u| [u.email, u.id]}),{:class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
 

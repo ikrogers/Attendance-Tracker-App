@@ -1,3 +1,18 @@
+<%
+ def today(group) #Script that determines if today is one of the days attendance is allowed to be taken on
+    @availabledays = group.event_days.split("::")
+    @flag = false
+    @availabledays.each do |a|
+      if Time.now.strftime("%A") == a
+        @flag = false
+      break
+      else
+        @flag = true
+      end
+    end
+    return @flag
+  end
+%>
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">Groups</h3>
@@ -8,14 +23,14 @@
 				<% if current_user.admin == nil || current_user.admin == false%>
 				<th>Group Name</th>
 				<th>Show</th>
-				<th>Attendance</th>
+				<th>Record Attendance</th>
 
 				<% end %>
 
 				<%if  current_user.admin == true %>
 				<th>Group Name</th>
 				<th>Show</th>
-				<th>Attendance</th>
+				<th>Record Attendance</th>
 
 				<%end%>
 			</thead>
@@ -29,7 +44,13 @@
 					<td><%= link_to 'Show', group ,:class=>'btn btn-info'%></td>
 					<% if current_user.tracker == true%>
 					<% if group.grouptype == 'Attendance' %>
-					<td><%= link_to 'Attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
+
+					<%if today(group) == false%>
+					<td><%= link_to 'Record', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
+					<%else%>
+					<td><%= link_to 'Not Today', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary', :disabled => true %></td>
+					<% end %>
+
 					<% end %>
 
 					<% end %>

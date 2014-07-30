@@ -368,14 +368,6 @@ class MessagesController < InheritedResources::Base
       format.html { redirect_to messages_path, notice: "Message removed!" }
   end
 
-
-
-
-
-
-
-
-
   end
 
   private

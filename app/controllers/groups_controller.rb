@@ -3,8 +3,7 @@ class GroupsController < InheritedResources::Base
   layout 'application1'
   def create
     @group = Group.new(group_params)
-    @user = User.find(params[:project][:user_ids]) rescue []
-
+    @user = User.find(params[:project][:user_ids]) rescue nil
     @u = User.find_by_id(@user[0])
     if @group.grouptype == "Attendance"
       @u.update_attributes(:tracker => true)
@@ -12,7 +11,7 @@ class GroupsController < InheritedResources::Base
       @u.update_attributes(:leader => true)
     end
 
-    @group.update_attributes(:users_id => @u.id)
+    @group.update_attributes(:users_id => @u.id, :event_days => '')
 
     @in_group = InGroup.new
     @in_group.update_attributes(:groups_id => @group.id)
@@ -33,9 +32,19 @@ class GroupsController < InheritedResources::Base
   end
 
   def update
-    @group= Group.find params[:id]
 
     respond_to do |format|
+
+      @group= Group.find params[:id]
+      @days = params[:project][:event_days] rescue nil
+      if @days != nil
+        @day_string = ''
+        @days.each do |d|
+          @day_string = @day_string+'::'+d
+        end
+        @group.update_attributes(:event_days => @day_string)
+      end
+
       @users = User.find(params[:project][:user_ids]) rescue nil
       @removeusers = User.find(params[:project][:user_remove]) rescue nil
 
@@ -98,10 +107,7 @@ class GroupsController < InheritedResources::Base
       end
     end
   end
-  
-  
- 
-  
+
   def destroy
     @group = Group.find_by_id(params[:id]) rescue nil
     @leader = User.find_by_id(@group.users_id) rescue nil
@@ -111,21 +117,21 @@ class GroupsController < InheritedResources::Base
     else
       @leader.update_attributes(:leader => false)
     end
-    
+
     #If group is deleted remove all users from the group
     @all = InGroup.where(groups_id: @group.id) rescue nil
     if @all != nil
-      @all.destroy_all
+    @all.destroy_all
     end
-    
-    #Message sent to will update to -1 
+
+    #Message sent to will update to -1
     @allmsg = Messages.where(groups_id: @group.id) rescue nil
     if @allmsg != nil
       @allmsg.each do |m|
         m.update_attributes(:groups_id => -1)
       end
     end
-    
+
     #Attendance records will be nullified and would be adjusted by a fake group interface
     @allatt = Attendance.where(groups_id: @group.id) rescue nil
     if @allatt!= nil
@@ -133,8 +139,7 @@ class GroupsController < InheritedResources::Base
         at.update_attributes(:groups_id => nil)
       end
     end
-    
-    
+
     respond_to do |format|
       format.html { redirect_to groups_path, notice: 'Group removed!' }
     end
@@ -143,6 +148,5 @@ class GroupsController < InheritedResources::Base
   def group_params
     params.require(:group).permit(:name, :grouptype, :users_id, :groups_id)
   end
-  
-  
+
 end
