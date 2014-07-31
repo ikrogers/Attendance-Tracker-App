@@ -8,6 +8,11 @@ ActiveAdmin.register User do
       object.send(update_method, *attributes)
 
     end
+    
+    
+    
+    
+    
     alias_method :destroy_user, :destroy
 
     #Custom cascading destroy action where it will delete everything that belongs to the user then deletes the actual user

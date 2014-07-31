@@ -44,7 +44,9 @@ ActiveRecord::Schema.define(version: 20140731035910) do
     t.integer  "users_id"
     t.integer  "groups_id"
     t.boolean  "excused_pt"
+    t.text     "excused_pt_day"
     t.boolean  "excused_llab"
+    t.text     "excused_llab_day"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
