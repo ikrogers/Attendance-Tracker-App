@@ -63,7 +63,7 @@
 					<td><%= link_to 'Manage Group', edit_group_path(group), :class => 'btn btn-warning' %></td>
 					<td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %></td>
 					<% if group.grouptype == 'Attendance'%>
-					<td><%= link_to 'Take PT Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary' %></td>
+					<td><%= link_to 'Take Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary' %></td>
 					<td><%= link_to 'Adjust Attendance', attendances_path(:attgroup_id => group.id), :class => 'btn btn-danger' %></td>
 					<% else %>
 					<td><%= link_to 'Take Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary', :disabled => true %></td>
@@ -80,7 +80,7 @@
 		<% if current_user.admin == true %>
 
 		<%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %>
-		<%= link_to 'Manage Excused Users', excused_users_path, :class => 'btn btn-primary' %>
+		<%= link_to 'Manage Excused Users', new_excused_user_path, :class => 'btn btn-primary' %>
 		<% if @att.count >= 1%>
 		<%= link_to 'Non-group attendance found! Click here!', attendances_path, :class => 'btn btn-danger'%>
 		<%end%>

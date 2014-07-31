@@ -38,9 +38,11 @@ class AttendancesController < InheritedResources::Base
       
      if @attendance.save
       if @attendance.event == nil
+        if current_user_admin == false && current_user.uberadmin == false
           @attendance.destroy
           format.html { redirect_to groups_path, alert: 'Stop trying to hack amateur!' }
           format.mobile { redirect_to groups_path, alert: 'Stop trying to hack amateur!' }
+        end
       else
          format.html { redirect_to groups_path, notice: 'Attendance recorded successfully!' }
           format.mobile { redirect_to groups_path, notice: 'Attendance recorded successfully!' }
