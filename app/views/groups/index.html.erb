@@ -80,7 +80,6 @@
 		<% if current_user.admin == true %>
 
 		<%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %>
-		<%= link_to 'Manage Excused Users', new_excused_user_path, :class => 'btn btn-primary' %>
 		<% if @att.count >= 1%>
 		<%= link_to 'Non-group attendance found! Click here!', attendances_path, :class => 'btn btn-danger'%>
 		<%end%>

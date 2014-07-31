@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :excused_users
-
   resources :attendances
 
   resources :in_groups
