@@ -20,18 +20,23 @@
 						</tr>
 					</thead>
 					<tbody>
-
-						<% @attendancept.each do |a|%>
 						<tr>
-							<td> <%= a.created_at.to_date.to_formatted_s(:long)%> </td>
+							<td>
+							<table>
+								<% @attendancept.each do |a|%>
+								<tr>
+									<td> <%= a.created_at.to_date.to_formatted_s(:long)%> </td>
+								</tr>
+								<% end %>
+							</table></td><td>
+							<table>
+								<% @attendancellab.each do |a|%>
+								<tr>
+									<td> <%= a.created_at.to_date.to_formatted_s(:long)%> </td>
+								</tr>
+								<% end %>
+							</table></td>
 						</tr>
-						<% end %>
-
-						<% @attendancellab.each do |a|%>
-						<tr>
-							<td> <%= a.created_at.to_date.to_formatted_s(:long)%> </td>
-						</tr>
-						<% end %>
 					</tbody>
 				</table>
 				<br>
@@ -52,7 +57,7 @@
 						<%if a.confirmed_recall == false%>
 						<% @message = Message.find_by_id(a.messages_id)%>
 						<tr>
-							<td><%=@message.subject%></td>
+							<td><%= @message.subject%></td>
 							<td> <%= @message.created_at.to_date.to_formatted_s(:long)%> </td>
 							<% conf = a.confirmed_recall%>
 							<td>Not confirmed</td>
