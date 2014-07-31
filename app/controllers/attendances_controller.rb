@@ -6,25 +6,38 @@ class AttendancesController < InheritedResources::Base
     @users = User.find(params[:project][:user_ids]) rescue nil
     @carrier = {"Verizon"=>"@vtext.com", "AT&T"=>"@txt.att.net","Boost Mobile" => "@myboostmobile.com", "Cellular One"=>"@mobile.celloneusa.com","Metro PCS"=>"@mymetropcs.com","Nextel"=>"@messaging.nextel.com","Sprint"=>"@messaging.sprintpcs.com","T-Mobile"=>"@tmomail.net","Tracfone"=>"@txt.att.net"}
     if @users != nil
+      
+      @group = InGroup.where(groups_id: params[:groups_id])
+      @group.each do |g|
+        
+        
+        
+        
+        
+        
+        @time = Time.now.strftime("%D")
+      @att = Attendance.where(user_id: g.users_id, event: @attendance.event) rescue nil
+      if @att != nil
+        @att.each do |a|
+          @taken = a.created_at.strftime("%D")
+           if @time == @taken
+            @record = Attendance.find_by(user_id: u.id, created_at: a.created_at) rescue nil
+            @record.destroy
+            break
+           end
+         end
+      end
+      end
+      
+      
     @users.each do |u|
       attendancept = Attendance.where(user_id: u.id, event: "PT")
       attendancellab = Attendance.where(user_id: u.id, event: "LLAB")
       @attendance = Attendance.new(attendance_params)
       @attendance.update_attributes(:tracker_id => current_user.id)
   
-    @time = Time.now.strftime("%D")
-    @att = Attendance.where(user_id: u.id, event: @attendance.event) rescue nil
-    if @att != nil
-      @att.each do |a|
-        @taken = a.created_at.strftime("%D")
-        if @time == @taken
-          @record = Attendance.find_by(user_id: u.id, created_at: a.created_at) rescue nil
-          @record.destroy
-          break
-        end
-      end
-    end
-
+      
+  
       if @attendance.event == "PT"
         @attendance.update_attributes(:absent => true)
         @attendance.update_attributes(:user_id => u.id)
