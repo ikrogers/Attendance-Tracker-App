@@ -1,0 +1,23 @@
+<h1>Listing excused_users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @excused_users.each do |excused_user| %>
+      <tr>
+        <td><%= link_to 'Show', excused_user %></td>
+        <td><%= link_to 'Edit', edit_excused_user_path(excused_user) %></td>
+        <td><%= link_to 'Destroy', excused_user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Excused user', new_excused_user_path %>
