@@ -5,53 +5,13 @@ class AttendancesController < InheritedResources::Base
   def create
     @users = User.find(params[:project][:user_ids]) rescue nil
     @carrier = {"Verizon"=>"@vtext.com", "AT&T"=>"@txt.att.net","Boost Mobile" => "@myboostmobile.com", "Cellular One"=>"@mobile.celloneusa.com","Metro PCS"=>"@mymetropcs.com","Nextel"=>"@messaging.nextel.com","Sprint"=>"@messaging.sprintpcs.com","T-Mobile"=>"@tmomail.net","Tracfone"=>"@txt.att.net"}
-    if @users != nil
-    @users.each do |u|
-      attendancept = Attendance.where(user_id: u.id, event: "PT")
-      attendancellab = Attendance.where(user_id: u.id, event: "LLAB")
-      @attendance = Attendance.new(attendance_params)
-      @attendance.update_attributes(:tracker_id => current_user.id)
-      
-      
-      if @attendance.event == "PT"
-        @attendance.update_attributes(:absent => true)
-        @attendance.update_attributes(:user_id => u.id)
-        @attendance.update_attributes(:event=> @attendance.event)
-        if attendancept.count <= 9
-        UserMailer.absence_notify(u, @attendance.event).deliver
-        UserMailer.absence_notify_text(u, [u.phone, @carrier[u.carrier]].join(""), @attendance.event).deliver
-        end
-      end
-      
-      if @attendance.event == "LLAB"
-        @attendance.update_attributes(:absent => true)
-        @attendance.update_attributes(:user_id => u.id)
-        @attendance.update_attributes(:event=> @attendance.event)
-        if attendancellab.count <= 4
-        UserMailer.absence_notify_text(u, [u.phone, @carrier[u.carrier]].join(""), @attendance.event).deliver
-        UserMailer.absence_notify(u, @attendance.event).deliver
-        end
-      end
-    end
-    
-    respond_to do |format|
-      
-     if @attendance.save
-      if @attendance.event == nil
-        if current_user_admin == false && current_user.uberadmin == false
-          @attendance.destroy
-          format.html { redirect_to groups_path, alert: 'Stop trying to hack amateur!' }
-          format.mobile { redirect_to groups_path, alert: 'Stop trying to hack amateur!' }
-        end
-      else
-         format.html { redirect_to groups_path, notice: 'Attendance recorded successfully!' }
-          format.mobile { redirect_to groups_path, notice: 'Attendance recorded successfully!' }
-         format.js
-         format.json { render action: 'show', status: :created, location: @attendance }
-         end
-      end
-    end
-   end
+   
+   
+   
+   
+   
+   
+   
   end
   
   
