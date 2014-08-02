@@ -13,7 +13,9 @@
   <body>
 <header>
 	<%if mobile_device?%>
+	<%if params[:action] != 'new'%>
 			<%= render 'layouts/navmobile' %>
+			<%end%>
 	<%end%>
 </header>
     <main role="main">

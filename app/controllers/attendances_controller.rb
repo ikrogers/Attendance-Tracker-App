@@ -88,6 +88,7 @@ class AttendancesController < InheritedResources::Base
 
     respond_to do |format|
       format.html { redirect_to groups_path, notice: 'Attendance records updated' }
+      format.mobile { redirect_to groups_path, notice: 'Attendance records updated' }
     end
   end
 
