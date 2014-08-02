@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20140706195240) do
     t.text     "event"
     t.integer  "tracker_id"
     t.integer  "groups_id"
+    t.text     "date_recorded"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
