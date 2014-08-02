@@ -12,21 +12,48 @@ class AttendancesController < InheritedResources::Base
     @users_in_group.each do |user|
       @user = User.find_by_id(user.users_id)
       @att = Attendance.find_by(user_id: @user.id, event: attendance_params[:event], date_recorded: @today) rescue nil
-
       if @att == nil 
         if @users==nil
           else
           @users.each do |u|
+            attendancept = Attendance.where(user_id: u.id, event: "PT")
+            attendancellab = Attendance.where(user_id: u.id, event: "LLAB")
             if u.id == @user.id
               @attendance = Attendance.new(attendance_params)
               @attendance.update_attributes(:absent => true, :user_id => @user.id, :date_recorded => @today, :tracker_id => current_user.id)
+              if @attendance.event == "PT"
+                if attendancept.count <= 9
+                   UserMailer.absence_notify(u, attendance_params[:event]).deliver
+                   UserMailer.absence_notify_text(u, [u.phone, @carrier[u.carrier]].join(""), attendance_params[:event]).deliver
+                end
+              end   
+              if @attendance.event == "LLAB"
+                 if attendancellab.count <= 4
+                    UserMailer.absence_notify_text(u, [u.phone, @carrier[u.carrier]].join(""), attendance_params[:event]).deliver
+                    UserMailer.absence_notify(u, attendance_params[:event]).deliver
+                 end
+              end
               @attendance.save
             end
           end
         end
       else #if user has no record for today
         if @users == nil 
-        @att.destroy
+           attendancept = Attendance.where(user_id: @user.id, event: "PT")
+            attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")
+            @att.destroy
+            if attendance_params[:event] == "PT"
+                if attendancept.count <= 9
+                   UserMailer.absence_removed_notify(@user, attendance_params[:event]).deliver
+                   UserMailer.absence_removed_notify_text(@user, [@user.phone, @carrier[@user.carrier]].join(""), attendance_params[:event]).deliver
+                end
+              end   
+              if attendance_params[:event]== "LLAB"
+                 if attendancellab.count <= 4
+                    UserMailer.absence_removed_notify_text(@user, [@user.phone, @carrier[@user.carrier]].join(""), attendance_params[:event]).deliver
+                    UserMailer.absence_removed_notify(@user, attendance_params[:event]).deliver
+                 end
+              end  
         else #checks if user is selected in absent array. if present does nothing if not present deletes the record
           @users.each do |u|
             @flag = false
@@ -39,6 +66,20 @@ class AttendancesController < InheritedResources::Base
           end
           if @flag == false
           @att.destroy
+          attendancept = Attendance.where(user_id: @user.id, event: "PT")
+            attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")
+            if attendance_params[:event] == "PT"
+                if attendancept.count <= 9
+                   UserMailer.absence_removed_notify(@user, @attendance.event).deliver
+                   UserMailer.absence_removed_notify_text(@user, [@user.phone, @carrier[@user.carrier]].join(""), @attendance.event).deliver
+                end
+              end   
+              if attendance_params[:event] == "LLAB"
+                 if attendancellab.count <= 4
+                    UserMailer.absence_removed_notify_text(@user, [@user.phone, @carrier[@user.carrier]].join(""), @attendance.event).deliver
+                    UserMailer.absence_removed_notify(@user, @attendance.event).deliver
+                 end
+              end
           end
         end
       end
