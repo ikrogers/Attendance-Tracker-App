@@ -147,6 +147,8 @@ class GroupsController < InheritedResources::Base
         at.update_attributes(:groups_id => nil)
       end
     end
+    
+    @group.destroy
 
     respond_to do |format|
       format.html { redirect_to groups_path, notice: 'Group removed!' }
