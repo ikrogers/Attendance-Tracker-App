@@ -79,6 +79,7 @@
 				<h3 class="panel-title">Navigation</h3>
 			</div>
 			<div class="panel-body" align="center">
+				<%if current_user != nil%>
 				<% if current_user.admin == true %>
 				<% if current_user.uberadmin == true%>
 				<%= button_to "Active Admin Interface", admin_root_path, :method => :get,:class => 'btn btn-primary btn-lg btn-block' %>
@@ -103,6 +104,7 @@
 				<%= button_to "Edit Profile", edit_user_registration_path, :method => :get,:class => 'btn btn-primary btn-lg btn-block' %>
 				<br>
 				<%= button_to "Log Out", destroy_user_session_path, :method => :delete,:class => 'btn btn-primary btn-lg btn-block'%>
+				<%end%>
 				<br>
 			</div>
 		</div>
