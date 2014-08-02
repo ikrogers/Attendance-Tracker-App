@@ -17,7 +17,7 @@
 				<li>
 					<%= link_to "Home", authenticated_root_path%>
 				</li>
-				<% if current_user.admin == true %>
+				<% if current_user.admin == true || if current_user.uberadmin == true%>
 				<li >
 					<%= link_to "Take/View Attendance", groups_path %>
 				</li>

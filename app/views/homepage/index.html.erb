@@ -79,7 +79,6 @@
 				<h3 class="panel-title">Navigation</h3>
 			</div>
 			<div class="panel-body" align="center">
-				<%if current_user != nil%>
 				<% if current_user.admin == true %>
 				<% if current_user.uberadmin == true%>
 				<%= button_to "Active Admin Interface", admin_root_path, :method => :get,:class => 'btn btn-primary btn-lg btn-block' %>
