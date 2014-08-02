@@ -6,6 +6,7 @@ class CreateAttendances < ActiveRecord::Migration
       t.text :event
       t.integer :tracker_id
       t.integer :groups_id
+      t.text :date_recorded
       t.timestamps
     end
   end

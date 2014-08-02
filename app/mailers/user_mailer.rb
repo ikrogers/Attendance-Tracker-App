@@ -47,13 +47,13 @@ default from: 'automatedsystem@do-not-reply.com'
   def absence_notify(user,event)
     @user = user
     @event = event
-    mail :to => user.email, :subject => "You have new "+@event+" absence"
+    mail :to => user.email, :subject => "You have new "+@event+" absence/Your attendance record has been updated"
   end
   
   def absence_notify_text(user,phone,event)
     @user = user
     @event = event
-    mail :to => phone, :subject => "New "+@event+" absence"
+    mail :to => phone, :subject => "New/fixed "+@event+" absence"
   end
   
   

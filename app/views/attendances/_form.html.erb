@@ -26,44 +26,58 @@
 		<% @us = User.find_by_id(u.users_id) %>
 		<% @userarray << @us %>
 		<% end %>
-
-		<%if current_user.admin == false || current_user.uberadmin == false%>
+		<i>Special Instructions:</i>
+		<br>
+		<i>~You are only allowed to record attendance on the day PT or LLAB is on. If you made a mistake, resubmit the form with your adjustments</i>
+		<br>
+		<i>~You have unlimited number of submissions, however, you are limited to the day the PT or LLAB is on</i>
+		<br>
+		<br>
 
 		<%if is_today_llab(@group)==true && is_today_pt(@group)==false%>
 		<%= f.label "Select Event" %><i> ~Can only record LLAB attendance today</i>
 		<br>
 		<%= f.select(:event, options_for_select([["LLAB"]]),{}, { :class => 'form-control'})%>
 		<br>
-		<%elsif is_today_llab(@group)==false && is_today_pt(@group)==true%>
-		<%= f.label "Select Event" %><i> ~Can only record PT attendance today</i>
-		<br>
-		<%= f.select(:event, options_for_select([["PT"]]),{}, { :class => 'form-control'})%>
-		<br>
-		<%elsif is_today_llab(@group)==true && is_today_pt(@group)==true%>
-		<%= f.label "Select Event" %><i> ~Can only record PT attendance today</i>
-		<br>
-		<%= f.select(:event, options_for_select([["PT"],["LLAB"]]),{}, { :class => 'form-control'})%>
-
-		<%elsif is_today_llab(@group)==false && is_today_pt(@group)==false%>
-
-		<%else%>
-		<label>TODO!!! WHEN ATTENDANCE HAS ALREADY BEEN RECORDED</label>
-		<%end%>
-		<%else%>
-		<%= f.label "Select Event" %><i> ~Can only record PT attendance today</i>
-		<br>
-		<%= f.select(:event, options_for_select([["PT"],["LLAB"]]),{}, { :class => 'form-control'})%>
-		<%end%>
-
-		<%= f.label "Absent Users" %><i> ~Only select absent users. If user is excused do not mark them as absent</i>
-		<br>
+		<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
 		<%= f.hidden_field :groups_id, :value=>@group%>
 		<%= select_tag(:user_ids, options_for_select(@userarray.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
 		<br>
 		<div class="actions">
 			<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
 		</div>
-		<% end %>
+		<%elsif is_today_llab(@group)==false && is_today_pt(@group)==true%>
+		<%= f.label "Select Event" %><i> ~Can only record PT attendance today</i>
+		<br>
+		<%= f.select(:event, options_for_select([["PT"]]),{}, { :class => 'form-control'})%>
+		<br>
+		<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
+		<%= f.hidden_field :groups_id, :value=>@group%>
+		<%= select_tag(:user_ids, options_for_select(@userarray.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
+		<br>
+		<div class="actions">
+			<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
+		</div>
+		<%elsif is_today_llab(@group)==true && is_today_pt(@group)==true%>
+		<%= f.label "Select Event" %><i> ~Select either PT or LLAB</i>
+		<br>
+		<%= f.select(:event, options_for_select([["PT"],["LLAB"]]),{}, { :class => 'form-control'})%>
+		<br<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
+		<%= f.hidden_field :groups_id, :value=>@group%>
+			<%= select_tag(:user_ids, options_for_select(@userarray.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
+			<br>
+			<div class="actions">
+				<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
+			</div>
+			<%elsif is_today_llab(@group)==false && is_today_pt(@group)==false%>
+			<i>****You are not supposed to be here! Please navigate back. You will not be able to take attendance today! Contact site admin if you receive this in error.****</i>
+			<br>
+			<i>~If today is attendance day please be sure correct attendance recording days were selected for this group!</i>
+			<%else%>
+			<%end%>
+
+			<% end %>
+
 	</div>
 </div>
 

@@ -5,12 +5,13 @@ module GroupsHelper
     @flag = false
     @availabledays.each do |a|
       if Time.now.strftime("%A") == a
-        @flag = false
+        @flag = true
       break
       else
-        @flag = true
+        @flag = false
       end
     end
     return @flag
   end
+  
 end

@@ -45,14 +45,10 @@
 					<% if current_user.tracker == true%>
 					<% if group.grouptype == 'Attendance' %>
 
-					<%if today(group) == false%>
-					<%if is_today_llab(group)!=true && is_today_pt(group)!=true%>
+					<%if today(group) == true%>
 					<td><%= link_to 'Record', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
 					<%else%>
-					<td><%= link_to 'Already Recorded', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary', :disabled => true %></td>
-					<%end%>
-					<%else%>
-					<td><%= link_to 'Not Today', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary', :disabled => true %></td>
+					<td><%= link_to 'Not Today!', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
 					<% end %>
 
 					<% end %>
@@ -63,12 +59,16 @@
 					<% end %>
 					<% end %>
 				</tr>
-				<%if  current_user.admin == true %>
+				<%if  current_user.admin == true || current_user.uberadmin==true %>
 				<tr>
 					<td><%= group.name %></td>
 					<td><%= link_to 'Show', group, :class => 'btn btn-info' %></td>
 					<% if group.grouptype == 'Attendance'%>
-					<td><%= link_to 'Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary' %></td>
+<%if today(group) == true%>
+					<td><%= link_to 'Record', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
+					<%else%>
+					<td><%= link_to 'Not Today!', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+					<% end %>
 					<% else %>
 					<td><%= link_to 'Attendance', authenticated_root_path, :class => 'btn btn-primary', :disabled => true %></td>
 					<td></td>

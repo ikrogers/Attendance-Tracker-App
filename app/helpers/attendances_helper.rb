@@ -1,4 +1,8 @@
-module AttendancesHelper
+module AttendancesHelper 
   
-
+  
+ 
+  
+  
+  
 end

@@ -1,13 +1,7 @@
 ActiveAdmin.register User do
 
 
-   batch_action :pt_excuse do |selection|
-      User.find(selection).each do |post|
-        post.ptexcuse = true
-        v.save
-      end
-      redirect_to collection_path, :alert => "Users are updated successfully"
-    end
+   
 
 
   controller do
