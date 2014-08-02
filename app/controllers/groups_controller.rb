@@ -133,7 +133,7 @@ class GroupsController < InheritedResources::Base
     end
 
     #Message sent to will update to -1
-    @allmsg = Messages.where(groups_id: @group.id) rescue nil
+    @allmsg = Message.where(groups_id: @group.id) rescue nil
     if @allmsg != nil
       @allmsg.each do |m|
         m.update_attributes(:groups_id => -1)
