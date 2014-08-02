@@ -20,7 +20,7 @@ class AttendancesController < InheritedResources::Base
             attendancellab = Attendance.where(user_id: u.id, event: "LLAB")
             if u.id == @user.id
               @attendance = Attendance.new(attendance_params)
-              @attendance.update_attributes(:absent => true, :user_id => @user.id, :date_recorded => @today, :tracker_id => current_user.id)
+              @attendance.update_attributes(:absent => true, :user_id => @user.id, :date_recorded => @today, :tracker_id => current_user.id, :groups_id => attendance_params[:groups_id])
               if @attendance.event == "PT"
                 if attendancept.count <= 9
                    UserMailer.absence_notify(u, attendance_params[:event]).deliver

@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :messages 
   validates :fname, :presence => true
   validates :lname, :presence => true
+  validates_uniqueness_of :email, :scope => [:email]
   validates :email, :presence => true,
                     :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "is in invalid format" } 
   validates :phone, :format => { :with => /\A(\+1)?[0-9]{10}\z/, :message => "not a valid 10-digit telephone number" } 
