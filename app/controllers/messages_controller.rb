@@ -218,7 +218,7 @@ class MessagesController < InheritedResources::Base
             @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
             phone = user.phone
             carrier = user.carrier
-          @msgl.send_confirm_message_text(@msgl, @message.messages,[phone, @carrier[carrier]].join(""))
+          @msgl.send_confirm_message_text(@msgl, @message,[phone, @carrier[carrier]].join(""))
           end
         end
 
@@ -229,7 +229,7 @@ class MessagesController < InheritedResources::Base
             @msgl.gentoken
             @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
             
-          @msgl.send_confirm_message(@msgl, @message.messages, user.email)
+          @msgl.send_confirm_message(@msgl, @message, user.email)
           end
         end
 
@@ -244,7 +244,7 @@ class MessagesController < InheritedResources::Base
             @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
             phone = user.phone
             carrier = user.carrier
-          @msgl.send_confirm_message_text(@msgl, @message.messages,[phone, @carrier[carrier]].join(""))
+          @msgl.send_confirm_message_text(@msgl, @message,[phone, @carrier[carrier]].join(""))
           end
         end
       end
@@ -257,7 +257,7 @@ class MessagesController < InheritedResources::Base
             @msgl.gentoken
             @msgl.update_attributes(:original_message => @message.messages, :confirmed_recall => false, :confirmed_time => nil)
             
-          @msgl.send_confirm_message(@msgl, @message.messages, user.email)
+          @msgl.send_confirm_message(@msgl, @message, user.email)
           end
         end
       end

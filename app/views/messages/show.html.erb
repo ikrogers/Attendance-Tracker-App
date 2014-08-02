@@ -26,7 +26,7 @@
 		<%= @message.messages%> </h2>
 
 		<% if @message.all_confirm == true %>
-		<h3>Time taken: <%= (@message.all_confirm_time - @message.created_at).to_s.to_time.strftime("%H:%M:%S")%></h3>
+		<h3>Time taken: <%= Time.at(@message.all_confirm_time - @message.created_at).utc.strftime("%H:%M:%S")%></h3>
 		<%else%>
 		<h3>Confirmation in progress...</h3>
 

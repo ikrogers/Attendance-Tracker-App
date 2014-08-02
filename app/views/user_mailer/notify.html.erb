@@ -1,1 +1,1 @@
-All Confirmed Time: <%= @message.all_confirm_time - @message.created_at%>
+All Confirmed Time: <%= Time.at(@message.all_confirm_time - @message.created_at).utc.strftime("%H:%M:%S")%>
