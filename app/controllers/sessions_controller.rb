@@ -17,7 +17,7 @@ class SessionsController < Devise::SessionsController
     set_flash_message(:notice, :signed_in) if is_navigational_format?
     sign_in(resource_name, resource)
     if mobile_device?
-      redirect_to authenticated_root_path
+      respond_with resource, :location => authenticated_root_path(resource_name, resource)
     else
       respond_with resource, :location => authenticated_root_path(resource_name, resource)
     end
