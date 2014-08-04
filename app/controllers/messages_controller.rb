@@ -349,7 +349,7 @@ class MessagesController < InheritedResources::Base
        end
       redirect_to authenticated_root_path, :notice => "Recall message confirmed successfully. Thank you and have a good day!"
     else
-      redirect_to confirmation_path, :notice => "Messages did not match. Please try again."
+      redirect_to confirmation_path, :alert => "Messages did not match. Please try again."
     end
   end
   
