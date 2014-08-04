@@ -3,7 +3,7 @@ default from: 'automatedsystem@do-not-reply.com'
  @msg = ""
   def recall_email(email, message)
     @email = email
-    @msg = message.messages
+    @msg = message
     @url  = 'http://example.com/login'
     mail(to: @email, 
     subject: @msg.subject
@@ -11,7 +11,7 @@ default from: 'automatedsystem@do-not-reply.com'
   end
   def recall_email_text(phone, message)
     @phone = phone
-    @msg = message.messages
+    @msg = message
     mail(to: @phone, 
     subject: @msg.subject,
    )

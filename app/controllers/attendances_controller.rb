@@ -70,14 +70,14 @@ class AttendancesController < InheritedResources::Base
             attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")
             if attendance_params[:event] == "PT"
                 if attendancept.count <= 9
-                   UserMailer.absence_removed_notify(@user, @attendance.event).deliver
-                   UserMailer.absence_removed_notify_text(@user, [@user.phone, @carrier[@user.carrier]].join(""), @attendance.event).deliver
+                   UserMailer.absence_removed_notify(@user, attendance_params[:event]).deliver
+                   UserMailer.absence_removed_notify_text(@user, [@user.phone, @carrier[@user.carrier]].join(""), attendance_params[:event]).deliver
                 end
               end   
               if attendance_params[:event] == "LLAB"
                  if attendancellab.count <= 4
-                    UserMailer.absence_removed_notify_text(@user, [@user.phone, @carrier[@user.carrier]].join(""), @attendance.event).deliver
-                    UserMailer.absence_removed_notify(@user, @attendance.event).deliver
+                    UserMailer.absence_removed_notify_text(@user, [@user.phone, @carrier[@user.carrier]].join(""), attendance_params[:event]).deliver
+                    UserMailer.absence_removed_notify(@user, attendance_params[:event]).deliver
                  end
               end
           end
