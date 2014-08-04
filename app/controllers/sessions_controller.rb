@@ -1,4 +1,5 @@
 class SessionsController < Devise::SessionsController
+
   prepend_before_filter :require_no_authentication, only: [ :new, :create ]
   prepend_before_filter :allow_params_authentication!, only: :create
   prepend_before_filter :verify_signed_out_user, only: :destroy
@@ -8,7 +9,11 @@ class SessionsController < Devise::SessionsController
   def new
     self.resource = resource_class.new(sign_in_params)
     clean_up_passwords(resource)
+    if mobile_device?
     respond_with(resource, serialize_options(resource))
+    else
+          respond_with(resource, serialize_options(resource))
+end
   end
 
   # POST /resource/sign_in
@@ -17,7 +22,7 @@ class SessionsController < Devise::SessionsController
     set_flash_message(:notice, :signed_in) if is_navigational_format?
     sign_in(resource_name, resource)
     if mobile_device?
-      respond_with resource, :location => authenticated_root_path(resource_name, resource)
+      redirect_to authenticated_root_path
     else
       respond_with resource, :location => authenticated_root_path(resource_name, resource)
     end

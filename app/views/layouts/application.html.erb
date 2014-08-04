@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-	
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "T" %></title>
@@ -14,8 +13,10 @@
 <header>
 	<%if mobile_device?%>
 	<%if params[:action] != 'new'%>
+		<%if params[:action] != 'create'&& params[:controller] != 'registrations'%>
 			<%= render 'layouts/navmobile' %>
-			<%end%>
+			<% end %>
+		<%end%>
 	<%end%>
 </header>
     <main role="main">
