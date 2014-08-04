@@ -69,15 +69,14 @@
 
 		<table class='table'>
 			<th> Recipients: </th>
-			<th>Time sent:</th>
 			
 			<%@users.each do |user|%>
 			<% @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id) %>
 			<tr>
 				<td> <%= user.email%> </td>
-				<td><%= msgl.confirmed_at.to_datetime.to_formatted_s(:long)%></td>
 			</tr>
 			
+			<%end%>
 			<%end%>
 		</table>
 	</div>
