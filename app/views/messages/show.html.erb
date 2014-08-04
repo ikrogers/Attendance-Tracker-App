@@ -21,6 +21,7 @@
 		<h3 class="panel-title">Details</h3>
 	</div>
 	<div class="panel-body">
+		<%if @message.confirm != 'No Confirmation'%>
 		<h1>Subject: <%=@message.subject%></h1>
 		<h2> Message Content:
 		<%= @message.messages%> </h2>
@@ -56,6 +57,27 @@
 				<%end%>
 				<% end %>
 			</tr>
+			<%end%>
+			<%else%>
+			
+			
+			
+			
+			<h1>Subject: <%=@message.subject%></h1>
+		<h2> Message Content:
+		<%= @message.messages%> </h2>
+
+		<table class='table'>
+			<th> Recipients: </th>
+			<th>Time sent:</th>
+			
+			<%@users.each do |user|%>
+			<% @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id) %>
+			<tr>
+				<td> <%= user.email%> </td>
+				<td><%= msgl.confirmed_at.to_datetime.to_formatted_s(:long)%></td>
+			</tr>
+			
 			<%end%>
 		</table>
 	</div>
