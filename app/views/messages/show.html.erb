@@ -41,8 +41,6 @@
 			<% end %>
 			<%@users.each do |user|%>
 			<% @msgl = MessageList.find_by(users_id: user.id, messages_id: @message.id) %>
-			<%if @msgl == nil%>
-			<%else%>
 			<tr>
 				<td> <%= user.email%> </td>
 				<%if @message.confirm == "Confirmation"%>
@@ -80,7 +78,7 @@
 			
 			<%end%>
 			<%end%>
-			<%end%>
+			
 		</table>
 	</div>
 </div>
