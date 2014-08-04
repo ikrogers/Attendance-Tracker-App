@@ -1,5 +1,4 @@
 class MessagesController < InheritedResources::Base
-  before_action :authenticate_user!
   
   
   layout 'application1'
