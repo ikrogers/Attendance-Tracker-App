@@ -13,8 +13,5 @@ class AddConfirmableToDevise < ActiveRecord::Migration
     User.update_all(:confirmed_at => Time.now)
     # All existing user accounts should be able to log in after this.
   
-
- 
-
   end
 end
