@@ -14,8 +14,16 @@ class ConfirmationsController < Devise::ConfirmationsController
           respond_with_navigational(resource){ redirect_to unauthenticated_root_path }
         end
     else
-      flash[:alert] = 'Something went wrong! Resend confirmation link here.'
+      flash[:alert] = 'Something went wrong! Your confirmation token either have been used or has expired. Try to log in first, then use resent confirmation token option.'
       respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :new }
     end
+  end
+  
+  
+  def after_inactive_sign_up_path_for(resource)
+    scope = Devise::Mapping.find_scope!(resource)
+    router_name = Devise.mappings[scope].router_name
+    context = router_name ? send(router_name) : self
+    context.respond_to?(:root_path) ? context.root_path : "/"
   end
 end

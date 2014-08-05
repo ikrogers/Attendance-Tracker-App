@@ -1,5 +1,5 @@
-<p>Welcome <%= @resource.fname+" "@resource.lname %>!</p>
+<h3>Welcome <%= @resource.fname+" "+@resource.lname %>!</h3>
 
-<p>You can confirm your account email through the link below:</p>
+<h3>You can confirm your account email through the link below:</h3>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<h3><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></h3>

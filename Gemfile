@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'devise'
+gem 'devise', '3.2.4'
 gem 'devise_security_extension'
 gem 'activeadmin', github: 'gregbell/active_admin'
 
