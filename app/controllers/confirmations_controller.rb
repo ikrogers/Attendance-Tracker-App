@@ -9,13 +9,13 @@ class ConfirmationsController < Devise::ConfirmationsController
     if resource.errors.empty?
       set_flash_message(:notice, :confirmed) if is_flashing_format?
       respond_to do |format|
-        format.html{super}
-        format.mobile {redirect_to unauthenticated_root_path, notice: 'Success'}
+        format.html{redirect_to unauthenticated_root_path}
+        format.mobile {redirect_to unauthenticated_root_path, notice: 'Confirmation success!'}
       end   
     else
       respond_to do |format|
-        format.html{super}
-        format.mobile {redirect_to unauthenticated_root_path, notice: 'Failure'}
+        format.html{render :new, alert: 'asd'}
+        format.mobile {redirect_to unauthenticated_root_path, alert: 'Failure,already confirmed'}
       end
     end
   end
