@@ -27,35 +27,20 @@
 %>
 
 			<div>
-				<%= f.label "Name" %><i> ~Name your group</i>
+				<%= f.label "Name" %><br><i> ~Name your group</i>
 			</div>
 			<div>
 				<%= f.text_field :name, :class => 'form-control'%>
 			</div>
 			<div>
-				<%= f.label "Select group type" %><i> ~Attendance is for attendance tracking and Non-Attendance is everything else</i>
+				<%= f.label "Select group type" %><br><i> ~Attendance is for attendance tracking and Non-Attendance is everything else</i>
 			</div>
 
 			<div>
 				<%= f.select(:grouptype, options_for_select([["Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control', :id => 'type_dd'})%>
 			</div>
-			<div>
-				<%= f.label "Group leader" %><i> ~Select group leader</i>
-			</div>
 
-			<div>
 
-				<%if @group.grouptype != 'Attendance'%>
-
-				<%= select_tag(:user_ids, options_for_select(User.all.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => false, :name=>'project[user_ids][]'}) %>
-
-				<%else%>
-
-				<%= select_tag(:user_ids, options_for_select(not_assigned_to_attendance_group.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => false, :name=>'project[user_ids][]'}) %>
-
-				<%end%>
-
-			</div>
 			<br>
 
 			<div class="actions">

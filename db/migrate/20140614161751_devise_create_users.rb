@@ -33,6 +33,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.text :lname
       t.text :phone
       t.text :carrier
+      t.boolean :in_attendance_group
       t.boolean :leader
       t.boolean :tracker  
       t.boolean :uberadmin  

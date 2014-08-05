@@ -54,7 +54,7 @@
 					<td><%= group.name %></td>
 					<td><%= group.grouptype %></td>
 					<%if group.users_id ==  nil%>
-					<td>Leader account has been destroyed! Add new one please!</td>
+					<td>This group does not have a leader. Please add some users to the group then assign one under "Manage Group".</td>
 					<%else%>
 					<td><%= User.find_by_id(group.users_id).email %></td>
 					<%end%>

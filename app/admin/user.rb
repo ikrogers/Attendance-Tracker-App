@@ -88,7 +88,7 @@ ActiveAdmin.register User do
     f.actions
   end
 
-  permit_params :email, :password, :password_confirmation, :admin, :tracker, :fname, :lname, :carrier
+  permit_params :email, :password, :password_confirmation, :admin, :tracker, :fname, :lname, :carrier, :in_attendance_group
 
 # See permitted parameters documentation:
 # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

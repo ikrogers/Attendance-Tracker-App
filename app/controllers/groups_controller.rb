@@ -3,19 +3,10 @@ class GroupsController < InheritedResources::Base
   layout 'application1'
   def create
     @group = Group.new(group_params)
-    @user = User.find(params[:project][:user_ids]) rescue nil
-    @u = User.find_by_id(@user[0])
-    if @group.grouptype == "Attendance"
-      @u.update_attributes(:tracker => true)
-    else
-      @u.update_attributes(:leader => true)
-    end
+   
 
-    @group.update_attributes(:users_id => @u.id, :ptdays => '', :llabdays => '')
+    @group.update_attributes(:ptdays => '', :llabdays => '')
 
-    @in_group = InGroup.new
-    @in_group.update_attributes(:groups_id => @group.id)
-    @in_group.update_attributes(:users_id => @u.id)
 
     respond_to do |format|
       if @group.save
@@ -34,7 +25,7 @@ class GroupsController < InheritedResources::Base
   def update
 
     respond_to do |format|
-
+    # This block sets PT and LLAB days for the group
       @group= Group.find params[:id]
       @ptdays = params[:project][:ptdays] rescue nil
       @llabdays = params[:project][:llabdays] rescue nil
@@ -52,30 +43,39 @@ class GroupsController < InheritedResources::Base
         end
         @group.update_attributes(:llabdays => @llabday_string)
       end
-
+    #-----------------------------------------
+    #This block adds users to group
       @users = User.find(params[:project][:user_ids]) rescue nil
       @removeusers = User.find(params[:project][:user_remove]) rescue nil
 
       if @users != nil
         @users.each do |u|
-
+          if @group.grouptype == 'Attendance'
+          @user = User.find_by_id(u.id)
+          @user.update_attributes(:in_attendance_group => true)
+          end
           @in_group = InGroup.new
 
           @in_group.update_attributes(:groups_id => @group.id)
           @in_group.update_attributes(:users_id => u.id)
         end
       end
-
+ #--------------------------------------------------------
+ #This block removes users from the group
       if @removeusers != nil
         @removeusers.each do |u|
           @kill = InGroup.find_by_users_id(u.id)
           @ug = Group.find_by(users_id: u.id, id: @group.id) rescue nil
           if @ug == nil
+          @user = User.find_by_id(u.id)
+          @user.update_attributes(:in_attendance_group => false)
           @kill.destroy
           end
         end
       end
+#-----------------------------------------------------------
 
+#This block assigns an re assigns group leader
       @user = User.find(params[:project][:user_id]) rescue nil
       if @user!=nil
         if @group.users_id != nil
@@ -121,7 +121,7 @@ class GroupsController < InheritedResources::Base
     @leader = User.find_by_id(@group.users_id) rescue nil
     #If group is deleted reset user status depending on grouptype
     if (@group.grouptype == "Attendance")
-      @leader.update_attributes(:tracker => false)
+      @leader.update_attributes(:tracker => false, :in_attendance_group => false)
     else
       @leader.update_attributes(:leader => false)
     end
@@ -129,6 +129,12 @@ class GroupsController < InheritedResources::Base
     #If group is deleted remove all users from the group
     @all = InGroup.where(groups_id: @group.id) rescue nil
     if @all != nil
+      if @group.grouptype = 'Attendance'
+      @all.each do |a|
+        @user = User.find_by_id(a.users_id)
+        @user.update_attributes(:in_attendance_group => false)
+        end
+      end
     @all.destroy_all
     end
 
