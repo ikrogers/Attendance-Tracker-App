@@ -9,8 +9,12 @@ class ConfirmationsController < Devise::ConfirmationsController
     if resource.errors.empty?
       set_flash_message(:notice, :confirmed) if is_flashing_format?
       if mobile_device?
-          respond_with_navigational(resource){ redirect_to unauthenticated_root_path }
-        else
+        respond_to do |format|
+          format.mobile {redirect_to unauthenticated_root_path}
+        
+        end
+        
+          else
           respond_with_navigational(resource){ redirect_to unauthenticated_root_path }
         end
     else
