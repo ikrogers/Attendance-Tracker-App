@@ -18,7 +18,7 @@ class ConfirmationsController < Devise::ConfirmationsController
     else
       if mobile_device?
           flash[:notice] = 'Something went wrong! Your confirmation token either have been used or has expired. Try to log in first, then use resent confirmation token option.'
-      respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :show }
+      respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :new }
         else
           flash[:alert] = 'Something went wrong! Your confirmation token either have been used or has expired. Try to log in first, then use resent confirmation token option.'
       respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :new }

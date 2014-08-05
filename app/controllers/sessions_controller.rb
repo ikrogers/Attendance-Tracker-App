@@ -61,7 +61,7 @@ end
   # to the after_sign_out path.
   def verify_signed_out_user
     if all_signed_out?
-      set_flash_message :notice, :already_signed_out if is_flashing_format?
+      flash[:alert] = "User is already signed out."
 
       respond_to_on_destroy
     end
