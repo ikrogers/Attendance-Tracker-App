@@ -1,3 +1,3 @@
 class ConfirmationsController < Devise::ConfirmationsController
-  layout 'application1'
+  layout 'application'
 end
