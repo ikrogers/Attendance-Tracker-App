@@ -1,11 +1,34 @@
-<h2>Resend confirmation instructions</h2>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		Resend Confirmation Instructions
+	</div>
+	<div class="panel-body">
+		<body id="content" role="main">
+			<div class="container">
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+				<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
+				<div>
 
-  <div><%= f.submit "Resend confirmation instructions" %></div>
-<% end %>
+					<%= f.text_field :email, :class => 'form-control', :placeholder => 'Email (Must be deliverable)'%>
+					<%if devise_error_messages!(:email) !=nil%>
+					<%= devise_error_messages!(:email) %>
+					<%end%>
+					<br>
+				</div>
 
-<%= render "devise/shared/links" %>
+				<div>
+					<%= f.submit "Submit",:class => 'btn btn-primary btn-lg custombtnblock' %>
+					<br>
+					<br>
+					<%= link_to "Front Page", new_session_path(resource_name),:class => 'btn btn-default btn-lg custombtnblock' %>
+					<br />
+				</div>
+				<% end %>
+
+				</br>
+			</div>
+		</body>
+	</div>
+</div>
+
