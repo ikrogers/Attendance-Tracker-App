@@ -1,0 +1,63 @@
+<div class="row">
+	<div class="panel-body" align="center">
+		<h2>Your Attendance Statistics:</h2>
+		<% @attendancept = Attendance.where(user_id: current_user.id, event: "PT")%>
+		<% @attendancellab = Attendance.where(user_id: current_user.id, event: "LLAB")%>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Missed PT: <%= @attendancept.count %></th>
+					<th>Missed LLAB: <%= @attendancellab.count %></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+					<table>
+						<% @attendancept.each do |a|%>
+						<tr>
+							<td> <%= a.created_at.to_date.to_formatted_s(:long)%> </td>
+						</tr>
+						<% end %>
+					</table></td><td>
+					<table>
+						<% @attendancellab.each do |a|%>
+						<tr>
+							<td> <%= a.created_at.to_date.to_formatted_s(:long)%> </td>
+						</tr>
+						<% end %>
+					</table></td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+		<h2>Notifications:</h2>
+		<% @unconfirmed = MessageList.where(users_id: current_user.id, confirmed_recall: false)%>
+		<%if @unconfirmed.count >=1 %>
+		<h4>You have <%= @unconfirmed.count%> unconfirmed messages!</h4>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Subject</th>
+					<th>Confirm</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%@unconfirmed.each do |a|%>
+				<%if a.confirmed_recall == false%>
+				<% @message = Message.find_by_id(a.messages_id)%>
+				<tr>
+					<td><%= @message.subject%></td>
+					<% conf = a.confirmed_recall%>
+					<td>Not confirmed</td>
+					<td><%= button_to 'Confirm Now', confirmation_path(a.messageconfirmtoken), :method=>:get, :class => 'btn btn-primary'%></td>
+				</tr>
+				<% end %>
+				<% end %>
+			</tbody>
+		</table>
+		<%else%>
+		<h4>No notifications!</h4>
+		<%end%>
+	</div>
+
