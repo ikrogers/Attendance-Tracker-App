@@ -14,7 +14,7 @@ class ConfirmationsController < Devise::ConfirmationsController
           respond_with_navigational(resource){ redirect_to unauthenticated_root_path }
         end
     else
-      flash_alert 'Something went wrong! Resend confirmation link here.'
+      flash[:alert] = 'Something went wrong! Resend confirmation link here.'
       respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :new }
     end
   end
