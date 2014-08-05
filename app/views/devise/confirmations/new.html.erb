@@ -1,3 +1,5 @@
+<br>
+
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		Resend Confirmation Instructions
@@ -10,7 +12,7 @@
 
 				<div>
 
-					<%= f.text_field :email, :class => 'form-control', :placeholder => 'Email (Must be deliverable)'%>
+					<%= f.text_field :email, :class => 'form-control', :placeholder => 'Enter the email you have registered with'%>
 					<%if devise_error_messages!(:email) !=nil%>
 					<%= devise_error_messages!(:email) %>
 					<%end%>
