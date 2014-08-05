@@ -1,25 +1,4 @@
 Rails.application.routes.draw do
-  resources :attendances
-
-  resources :in_groups
-
-  resources :message_lists
-
-  resources :messages
-  
-
-  get "/confirmation/:id" , :to => "messages#confirmation", :as => 'confirmation'
-  get "/user_confirmations" => "messages#user_confirmations"
-  post "/validate_message/:id" , :to => "messages#validate_message", :as => 'validate_message'
-  get "/received_messages/", :to => "messages#received_messages", :as => 'received_messages'
-
-  get "/update_attendance_form/:id", :to => "attendances#update_attendance_form", :as => 'update_attendance_form'
-  post "/updateattendance/:id" , :to => "attendances#updateattendance", :as => 'update_attendance'
-
-  get "/show_members/:id", :to => "in_groups#show_members", :as => 'show_members'
-
-  resources :groups
-
   ActiveAdmin.routes(self)
   #devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
@@ -40,6 +19,28 @@ devise_scope :user do
     root :to => 'devise/sessions#new', as: :unauthenticated_root
   end
 end
+  resources :attendances
+
+  resources :in_groups
+
+  resources :message_lists
+
+  resources :messages
+  
+
+  get "/message_confirmation/:id" , :to => "messages#message_confirmation", :as => 'message_confirmation'
+  get "/user_message_confirmations" => "messages#user_message_confirmations"
+  post "/validate_message/:id" , :to => "messages#validate_message", :as => 'validate_message'
+  get "/received_messages/", :to => "messages#received_messages", :as => 'received_messages'
+
+  get "/update_attendance_form/:id", :to => "attendances#update_attendance_form", :as => 'update_attendance_form'
+  post "/updateattendance/:id" , :to => "attendances#updateattendance", :as => 'update_attendance'
+
+  get "/show_members/:id", :to => "in_groups#show_members", :as => 'show_members'
+
+  resources :groups
+
+  
 
 
   # You can have the root of your site routed with "root"

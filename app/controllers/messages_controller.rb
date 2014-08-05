@@ -283,11 +283,11 @@ class MessagesController < InheritedResources::Base
   end
 
 
-  def confirmation
+  def message_confirmation
     @user = MessageList.find_by_messageconfirmtoken!(params[:id])
   end
 
-  def user_confirmations
+  def user_message_confirmations
     @users = User.all
   end
 

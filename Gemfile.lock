@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/gregbell/active_admin.git
-  revision: 27360996837146ebbbf3b3597049b1586542fbeb
+  revision: efe5a86968c81fd12244e6c4b6957d93d0a4b7ee
   specs:
     activeadmin (1.0.0.pre)
       arbre (~> 1.0)
@@ -51,7 +51,7 @@ GEM
     better_errors (1.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
-    bootstrap-sass (3.2.0.0)
+    bootstrap-sass (3.2.0.1)
       sass (~> 3.2)
     bourbon (3.2.3)
       sass (~> 3.2)
