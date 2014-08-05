@@ -1,0 +1,67 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Alternate PT/LLAB User From</h3>
+	</div>
+	<div class="panel-body">
+		<body>
+			<div>
+				<i>Instructions:</i>
+				<br>
+				<i>~This form will update selected users excused property</i>
+				<br>
+				<i>~To mark someone as excused simply select the days they are excused for the appropriate event</i>
+
+				<br>
+				<i>~To update or add the excuse, select names you want to update excuse for a specific event, select add option.</i>
+				<br>
+				<i>~To remove the excuse, select names you want to remove excuse from a specific event, select remove option.</i>
+
+				<br>
+				<br>
+				<%= form_tag(create_excused_users_path) do%>
+				<div>
+					<%= label_tag "Action to be taken" %>
+					<br>
+					<i> ~Either Add or Remove</i>
+					<br>
+					<%= select_tag(:processaction, options_for_select([["Add"], ["Remove"]]), { :class => 'form-control', :name => 'project[processaction][]',  :multiple => false})%>
+				</div>
+				<div>
+					<%= label_tag 'Sect users'%>
+					<br>
+					<i>~Select one or more users. Only select multiple users if they are excused for same PT/LLAB days.</i>
+					<%= select_tag(:user_ids, options_for_select(User.all.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				</div>
+
+				<div>
+					<%= label_tag "Select PT days" %>
+					<br>
+					<i> ~Select which days user is excused for and will not show up on regular attendance tracking form.</i>
+					<br>
+
+					<%= select_tag(:ptdays, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"],["Remove"]]), { :class => 'form-control', :name => 'project[ptdays][]',  :multiple => true})%>
+					<div>
+						<%= label_tag "Select LLAB days" %>
+						<br>
+						<i> ~Select which days user is excused for and will not show up on regular attendance tracking form.</i>
+						<br>
+						<%= select_tag(:llabdays, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[llabdays][]',  :multiple => true})%>
+					</div>
+				</div>
+
+				<div class="actions">
+					<%= submit_tag "Submit", :class => 'btn btn-primary custombtnblock'  %>
+					<%= link_to 'Manage Alternane PT and LLAB Users', excused_users_path, :class => 'btn btn-default' %>
+				</div>
+
+				<% end %>
+			</div>
+		</body>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+		$('select').selectpicker();
+	}); 
+</script>

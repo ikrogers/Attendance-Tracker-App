@@ -1,0 +1,2 @@
+module AlternateHelper
+end

@@ -81,12 +81,16 @@
 			</tbody>
 		</table>
 		<% @att = Attendance.where(groups_id: nil) rescue nil%>
-		<% if current_user.admin == true %>
+		<% if current_user.admin == true || current_user.uberdamin == true%>
 
 		<%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %>
+		
+						<%= link_to 'Manage Alternane PT and LLAB Users', excused_users_path, :class => 'btn btn-default'%>
+
 		<% if @att.count >= 1%>
 		<%= link_to 'Non-group attendance found! Click here!', attendances_path, :class => 'btn btn-danger'%>
 		<%end%>
+
 		<% end %>
 	</div>
 </div>

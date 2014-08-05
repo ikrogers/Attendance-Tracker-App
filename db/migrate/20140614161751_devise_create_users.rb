@@ -37,6 +37,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.boolean :leader
       t.boolean :tracker  
       t.boolean :uberadmin  
+      t.text :excused_pt_days
+      t.text :excused_llab_days
       t.boolean :ptexcuse
       t.boolean :llabexcuse
       t.timestamps
