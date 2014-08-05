@@ -1,25 +1,7 @@
 class ConfirmationsController < Devise::ConfirmationsController
   layout 'application'
   
-   # POST /resource/confirmation
-  def create
-    self.resource = resource_class.send_confirmation_instructions(resource_params)
-    yield resource if block_given?
-
-    if successfully_sent?(resource)
-      if mobile_device?
-      respond_with({}, location: after_resending_confirmation_instructions_path_for(resource_name))
-        else
-      respond_with({}, location: after_resending_confirmation_instructions_path_for(resource_name))
-        end
-    else
-       if mobile_device?
-      respond_with(resource)
-        else
-      respond_with(resource)
-        end
-    end
-  end
+  
   
   # GET /resource/confirmation?confirmation_token=abcdef
   def show
@@ -35,8 +17,8 @@ class ConfirmationsController < Devise::ConfirmationsController
         end
     else
       if mobile_device?
-          flash[:alert] = 'Something went wrong! Your confirmation token either have been used or has expired. Try to log in first, then use resent confirmation token option.'
-      respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :new }
+          flash[:notice] = 'Something went wrong! Your confirmation token either have been used or has expired. Try to log in first, then use resent confirmation token option.'
+      respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :show }
         else
           flash[:alert] = 'Something went wrong! Your confirmation token either have been used or has expired. Try to log in first, then use resent confirmation token option.'
       respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :new }
