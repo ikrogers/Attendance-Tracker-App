@@ -16,6 +16,9 @@
 					<%if devise_error_messages!(:email) !=nil%>
 					<%= devise_error_messages!(:email) %>
 					<%end%>
+					<%if devise_error_messages!(:confirmation_token) !=nil%>
+					<%= devise_error_messages!(:confirmation_token) %>
+					<%end%>
 					<br>
 				</div>
 
