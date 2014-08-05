@@ -14,8 +14,8 @@ class ConfirmationsController < Devise::ConfirmationsController
       end   
     else
       respond_to do |format|
-        format.html{render :new, alert: 'asd'}
-        format.mobile {redirect_to unauthenticated_root_path, alert: 'Failure,already confirmed'}
+        format.html{render :new}
+        format.mobile {redirect_to unauthenticated_root_path, alert: 'Failure, already confirmed'}
       end
     end
   end
