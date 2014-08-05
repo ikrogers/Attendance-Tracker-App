@@ -52,14 +52,21 @@
 			<%= select_tag(:llabdays, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[llabdays][]',  :multiple => true})%>
 			<br>
 			<%end%>
+			<%if @group.grouptype != 'Attendance'%>
 			<%= f.label "Select Users to add" %> <i>  ~Will allow you to add users that are not in this group</i>
 			<br>
 			<%= select_tag(:user_ids, options_for_select(@usersnotingroup.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 			<br>
+			<%else%>
+			<%= f.label "Select Users to add" %> <i>  ~Will allow you to add users that are not in this group</i>
+			<br>
+			<%= select_tag(:user_ids, options_for_select(not_assigned_to_attendance_group.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+			<%end%>
 			<%= f.label "Select Users to remove (users in this group)" %> <i>  ~Will allow you to remove users from this group</i>
 			<br>
 			<%= select_tag(:user_remove, options_for_select(@usersingroup.collect {|u| [u.email, u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_remove][]'}) %>
 			<br>
+
 
 			<%= f.label "Change group leader (User must already be in group)" %> <i>  ~Has to be a member already. Leave blank if not updating</i>
 			<br />
