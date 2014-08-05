@@ -8,12 +8,15 @@ class ConfirmationsController < Devise::ConfirmationsController
 
     if resource.errors.empty?
       set_flash_message(:notice, :confirmed) if is_flashing_format?
-      
-          respond_with_navigational(resource){ redirect_to unauthenticated_root_path }
-        
+      respond_to do |format|
+        format.html{super}
+        format.mobile {redirect_to unauthenticated_root_path, notice: 'Success'}
+      end   
     else
-      flash[:alert] = 'Something went wrong! Your confirmation token either have been used or has expired. Try to log in first, then use resent confirmation token option.'
-      respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :new }
+      respond_to do |format|
+        format.html{super}
+        format.mobile {redirect_to unauthenticated_root_path, notice: 'Failure'}
+      end
     end
   end
   
