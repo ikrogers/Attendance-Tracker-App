@@ -43,7 +43,7 @@
 					<td><%= group.name %></td>
 					<td><%= link_to 'Show', group ,:class=>'btn btn-info'%></td>
 					<% if current_user.tracker == true%>
-					<% if group.grouptype == 'Attendance' %>
+          <%if (group.grouptype.include? "Non-Attendance") == false%>
 
 					<%if today(group) == true%>
 					<td><%= link_to 'Record', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
@@ -63,7 +63,7 @@
 				<tr>
 					<td><%= group.name %></td>
 					<td><%= link_to 'Show', group, :class => 'btn btn-info' %></td>
-					<% if group.grouptype == 'Attendance'%>
+          <%if (group.grouptype.include? "Non-Attendance") == false%>
 <%if today(group) == true%>
 					<td><%= link_to 'Record', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
 					<%else%>

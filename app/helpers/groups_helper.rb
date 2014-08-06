@@ -23,22 +23,26 @@ module GroupsHelper
     return @notin
 
   end
-  
-  def excused_pt_group
+
+  def excused_pt_group(group)
     @ptgroup = Array.new
     User.all.each do |u|
-      if u.ptexcuse == true
+      @in = InGroup.find_by(groups_id: group.id, users_id: u.id) rescue nil
+      if u.ptexcuse == true && @in == nil
       @ptgroup << u
       end
     end
     return @ptgroup
   end
-  
-  def excused_llab_group
+
+  def excused_llab_group(group)
     @llabgroup = Array.new
     User.all.each do |u|
+      @in = InGroup.find_by(groups_id: group.id, users_id: u.id) rescue nil
       if u.llabexcuse == true
-      @llabgroup << u
+        if @in == nil
+          @llabgroup << u
+        end
       end
     end
     return @llabgroup

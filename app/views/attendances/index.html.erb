@@ -64,12 +64,14 @@
 					<td><%= User.find_by_id(attendance.tracker_id).email %></td>
 					<%end%>
 					<td><%= link_to 'Update', update_attendance_form_path(attendance.id), :class => 'btn btn-warning'%></td>
-					<td><%= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?' }, :class=>'btn btn-danger' %></td>
+					<td><%= link_to 'Destroy', attendance(:id => attendance.id, :attgroup_id => @currentgroup.id), method: :delete, data: { confirm: 'Are you sure?' }, :class=>'btn btn-danger' %></td>
 				</tr>
 				<% end %>
 			</tbody>
 		</table>
+		
 		<% end %>
+		<%= link_to 'Insert Attendance Record', insert_attendance_path(Group.find_by_id(params[:attgroup_id]).id), :class => 'btn btn-primary' %>
 		<br>
 	</div>
 </div>

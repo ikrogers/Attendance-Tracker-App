@@ -38,6 +38,8 @@ Rails.application.routes.draw do
 
   get "/update_attendance_form/:id", :to => "attendances#update_attendance_form", :as => 'update_attendance_form'
   post "/updateattendance/:id" , :to => "attendances#updateattendance", :as => 'update_attendance'
+  get "/insert_attendance/:id", :to => "attendances#insert_attendance", :as => 'insert_attendance'
+  post "/process_insert_attendance/:id" , :to => "attendances#process_insert_attendance", :as => 'process_insert_attendance'
 
   get "/show_members/:id", :to => "in_groups#show_members", :as => 'show_members'
 

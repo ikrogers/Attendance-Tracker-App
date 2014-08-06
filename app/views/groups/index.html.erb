@@ -32,7 +32,7 @@
 					<td><%= User.find_by_id(group.users_id).email %></td>
 					<td><%= link_to 'Show Members', group ,:class=>'btn btn-info'%></td>
 					<% if current_user.tracker == true%>
-					<% if group.grouptype == 'Attendance' %>
+          <%if (group.grouptype.include? "Non-Attendance") == false%>
 					<%if today(group) == true%>
 					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
 					<%else%>
@@ -60,7 +60,7 @@
 					<%end%>
 					<td><%= link_to 'Show Members', group, :class => 'btn btn-info' %></td>
 					<td><%= link_to 'Manage Group', edit_group_path(group), :class => 'btn btn-warning' %></td>
-					<% if group.grouptype == 'Attendance'%>
+          <%if (group.grouptype.include? "Non-Attendance") == false%>
 					<%if today(group) == true%>
 					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
 					<%else%>

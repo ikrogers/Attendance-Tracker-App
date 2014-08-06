@@ -71,13 +71,13 @@
 			<br>
 			<i> ~Will only allow to add users that are allowed to attend alternate PT sessions</i>
 			<br>
-			<%= select_tag(:user_ids, options_for_select(excused_pt_group.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+			<%= select_tag(:user_ids, options_for_select(excused_pt_group(@group).collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 			<%elsif (@group.grouptype.include? "Alternate LLAB") == true %>
 			<%= f.label "Select Users to add" %>
 			<br>
 			<i> ~Will only allow to add users that are allowed to attend alternate LLAB sessions</i>
 			<br>
-			<%= select_tag(:user_ids, options_for_select(excused_llab_group.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+			<%= select_tag(:user_ids, options_for_select(excused_llab_group(@group).collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 			<%else%>
 			<%= f.label "Select Users to add" %>
 			<br>

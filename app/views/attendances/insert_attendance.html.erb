@@ -1,0 +1,55 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Insert Attendance From</h3>
+	</div>
+	<div class="panel-body">
+		<body>
+			<div>
+				<i>Instructions:</i>
+				<%@currentgroup = Group.find_by_id(params[:id])%>
+				<br>
+				<br>
+				<%= form_tag(process_insert_attendance_path(@currentgroup.id)) do%>
+				<div>
+					<%= label_tag "Select user" %>
+					<br>
+					<i> ~User only from this group are shown</i>
+					<br>
+					<%= select_tag(:user_ids, options_for_select(users_in_group(@currentgroup).collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				</div>
+				<div>
+					<%= label_tag 'Select event'%>
+					<br>
+					<i>~Either PT or LLAB</i>
+				<%= select_tag :event, options_for_select([["PT"],["LLAB"]]), :class => 'form-control', :id => 'event'%>
+				</div>
+
+				<div>
+					<%= label_tag "Select date" %>
+					<br>
+					<i> ~Use the date picker(Click on the field. If you have problems try to click anywhere on the page then click the field again) to select which date you want to mark user as absent. Note: You cannot type dates in, but you can use picker.</i>
+					<br>
+					<%= text_field_tag "date", nil, {:class => 'form-control', :id => 'date', :readonly => true}%>
+					
+				</div>
+<br>
+				<div class="actions">
+					<%= submit_tag "Submit", :class => 'btn btn-primary custombtnblock'  %>
+					<%= link_to 'Adjust Attendance', attendances_path(:attgroup_id => @currentgroup.id), :class => 'btn btn-default' %>
+				</div>
+
+				<% end %>
+			</div>
+		</body>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('#date').datetimepicker({pickTime: false});
+	}); 
+</script>
+<script>
+	$(document).ready(function() {
+		$('select').selectpicker();
+	}); 
+</script>

@@ -53,6 +53,8 @@ GEM
       erubis (>= 2.6.6)
     bootstrap-sass (3.2.0.1)
       sass (~> 3.2)
+    bootstrap3-datetimepicker-rails (3.0.2.1)
+      momentjs-rails (>= 2.8.1)
     bourbon (3.2.3)
       sass (~> 3.2)
       thor
@@ -111,6 +113,8 @@ GEM
     minitest (5.4.0)
     mobylette (3.5)
       actionpack (>= 3.0)
+    momentjs-rails (2.8.1)
+      railties (>= 3.1)
     multi_json (1.10.1)
     orm_adapter (0.5.0)
     pg (0.15.1-x86-mingw32)
@@ -203,6 +207,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass
+  bootstrap3-datetimepicker-rails (~> 3.0.2)
   coffee-rails (~> 4.0.0)
   devise (= 3.2.4)
   devise_security_extension
@@ -212,6 +217,7 @@ DEPENDENCIES
   jquery-rails
   jquery_mobile_rails
   mobylette
+  momentjs-rails (>= 2.8.1)
   pg (= 0.15.1)
   quiet_assets
   rails (= 4.1.1)

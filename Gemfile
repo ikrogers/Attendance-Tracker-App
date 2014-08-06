@@ -39,6 +39,10 @@ gem 'xkimo'
 gem 'mobylette'
 gem 'jquery_mobile_rails'
 
+#Datetime picker
+gem 'momentjs-rails', '>= 2.8.1'
+gem 'bootstrap3-datetimepicker-rails', '~> 3.0.2'
+
 
 group :development do
 gem'better_errors'
