@@ -44,8 +44,7 @@
 			<%= f.text_field :name, :class=>'form-control'%>
 		</div>
 		<div>
-			<%if (@group.grouptype.include? "Non-Attendance") == false
-			%>
+			<%if (@group.grouptype.include? "Non-Attendance") == false%>
 			<%= f.label "Select days for which PT attendance is to be taken" %>
 			<br>
 			<i> ~No one will be able to take PT attendance otherwise</i>
@@ -59,8 +58,7 @@
 			<%= select_tag(:llabdays, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[llabdays][]',  :multiple => true})%>
 			<br>
 			<%end%>
-			<%if (@group.grouptype.include? "Non-Attendance") == true
-			%>
+			<%if (@group.grouptype.include? "Non-Attendance") == true%>
 			<%= f.label "Select Users to add" %>
 			<br>
 			<i> ~Will allow you to add users that are not in this group</i>
@@ -68,11 +66,25 @@
 			<%= select_tag(:user_ids, options_for_select(@usersnotingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 			<br>
 			<%else%>
+			<%if (@group.grouptype.include? "Alternate PT") == true%>
+			<%= f.label "Select Users to add" %>
+			<br>
+			<i> ~Will only allow to add users that are allowed to attend alternate PT sessions</i>
+			<br>
+			<%= select_tag(:user_ids, options_for_select(excused_pt_group.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+			<%elsif (@group.grouptype.include? "Alternate LLAB") == true %>
+			<%= f.label "Select Users to add" %>
+			<br>
+			<i> ~Will only allow to add users that are allowed to attend alternate LLAB sessions</i>
+			<br>
+			<%= select_tag(:user_ids, options_for_select(excused_llab_group.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+			<%else%>
 			<%= f.label "Select Users to add" %>
 			<br>
 			<i> ~Will allow you to add users that are not in this group and if they are already in another attendance group</i>
 			<br>
 			<%= select_tag(:user_ids, options_for_select(not_assigned_to_attendance_group.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+			<%end%>
 			<%end%>
 			<%= f.label "Select Users to remove (users in this group)" %>
 			<br>

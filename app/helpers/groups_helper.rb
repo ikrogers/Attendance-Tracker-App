@@ -17,11 +17,31 @@ module GroupsHelper
     @notin = Array.new
     User.all.each do |u|
       if u.in_attendance_group == false || u.in_attendance_group == nil
-        @notin << u
+      @notin << u
       end
     end
-   return @notin
+    return @notin
 
+  end
+  
+  def excused_pt_group
+    @ptgroup = Array.new
+    User.all.each do |u|
+      if u.ptexcuse == true
+      @ptgroup << u
+      end
+    end
+    return @ptgroup
+  end
+  
+  def excused_llab_group
+    @llabgroup = Array.new
+    User.all.each do |u|
+      if u.llabexcuse == true
+      @llabgroup << u
+      end
+    end
+    return @llabgroup
   end
 
 end
