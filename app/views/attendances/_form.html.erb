@@ -24,6 +24,7 @@
 		<% @userarray = Array.new %>
 		<% @usersingroup.each do |u| %>
 		<% @us = User.find_by_id(u.users_id) %>
+		
 		<% @userarray << @us %>
 		<% end %>
 		<i>Instructions:</i>
