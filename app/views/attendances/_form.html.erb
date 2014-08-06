@@ -19,13 +19,33 @@
 			</ul>
 		</div>
 		<% end %>
-		<% @group = params[:group_id] %>
-		<% @usersingroup = InGroup.where(groups_id: @group) %>
-		<% @userarray = Array.new %>
-		<% @usersingroup.each do |u| %>
-		<% @us = User.find_by_id(u.users_id) %>
+		<%
+		@group = params[:group_id]
+		@usersingroup = InGroup.where(groups_id: @group)
+		@userarray = Array.new
+		@usersingroup.each do |u|
+		@us = User.find_by_id(u.users_id)
+		@userarray << @us
+		@pt = Array.new
+		@llab = Array.new
+		@userarray.each do |u|
+		if u.ptexcuse == nil || u.ptexcuse == false
+		@pt << u
+		else
+		if is_today_excused_pt(u) == false
+		@pt<<u
+		end
+		end
+		if u.llabexcuse == nil || u.llabexcuse == false
+		@llab << u
+		else
+		if is_today_excused_llab(u) == false
+		@llab<<u
+		end
+		end
+		end
 
-		<% @userarray << @us %>
+		%>
 		<% end %>
 		<i>Instructions:</i>
 		<br>
@@ -34,6 +54,10 @@
 		<i>~You have unlimited number of submissions, however, you are limited to the day the PT or LLAB is on</i>
 		<br>
 		<i>~An SMS and email will be sent to a user once the form is submitted. Please keep submissions to a minimum for everyones sanity :)</i>
+		<br>
+		<i>~Lists are dynamically updated based on excused users. If user has alternate PT but not LLAB then user will only show up for attendance if you select LLAB and this group is not an alternate PT/LLAB group.</i>
+		<br>
+		<i>~Due to this site is still under development please double check with your paper rosters. If you find a discreptancy, report the bug to the site admin under "Help"</i>
 		<br>
 		<br>
 
@@ -44,75 +68,62 @@
 		<br>
 		<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
 		<%= f.hidden_field :groups_id, :value=>@group%>
-		<%= select_tag(:user_ids, options_for_select(@userarray.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
-		<br>
-		<div class="actions">
-			<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
-		</div>
-		<%elsif is_today_llab(@group)==false && is_today_pt(@group)==true%>
-		<%= f.label "Select Event" %><i> ~Can only record PT attendance today</i>
-		<br>
-		<%= f.select(:event, options_for_select([["PT"]]),{}, { :class => 'form-control', :id => 'event'})%>
-		<br>
-		<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
-		<%= f.hidden_field :groups_id, :value=>@group%>
-		<%= select_tag(:user_ids, options_for_select(@userarray.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
-		<br>
-		<div class="actions">
-			<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
-		</div>
-
-		<%elsif is_today_llab(@group)==true && is_today_pt(@group)==true%>
-		<%= f.label "Select Event" %><i> ~Select either PT or LLAB</i>
-		<br>
-		<div id="selection">
-		<%= f.select(:event, options_for_select([["PT"],["LLAB"]]),{}, { :class => 'form-control', :id => 'event'})%>
-		<br<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
-		<%= f.hidden_field :groups_id, :value=>@group%>
-		</div>
-		<div id="pt">
-			<%= select_tag(:user_ids, options_for_select([["pt"],["j"]]),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
-		</div>
-		<div id="llab">
-			<%= select_tag(:user_ids, options_for_select([["h"],["j"]]),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
-		</div>
+		<%= select_tag(:user_ids, options_for_select(@llab.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
 			<br>
-
 			<div class="actions">
 				<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
-			</div>
-			<%elsif is_today_llab(@group)==false && is_today_pt(@group)==false%>
-			<i>****You are not supposed to be here! Please navigate back. You will not be able to take attendance today! Contact site admin if you receive this in error.****</i>
+			</div> <%elsif is_today_llab(@group)==false && is_today_pt(@group)==true%>
+			<%= f.label "Select Event" %><i> ~Can only record PT attendance today</i>
 			<br>
-			<i>~If today is attendance day please be sure correct attendance recording days were selected for this group!</i>
-			<%else%>
+			<%= f.select(:event, options_for_select([["PT"]]),{}, { :class => 'form-control', :id => 'event'})%>
+			<br>
+			<%= f.label "Absent Users" %><i> ~Only select absent users.</i> <%= f.hidden_field :groups_id, :value=>@group%>
+			<%= select_tag(:user_ids, options_for_select(@pt.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
+			<br>
+			<div class="actions">
+				<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
+			</div> <%elsif is_today_llab(@group)==true && is_today_pt(@group)==true%>
+			<%= f.label "Select Event" %><i> ~Select either PT or LLAB</i>
+			<br>
+			<div id="selection">
+				<%= f.select(:event, options_for_select([["PT"],["LLAB"]]),{}, { :class => 'form-control', :id => 'event'})%>
+				<br<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
+				<%= f.hidden_field :groups_id, :value=>@group%>
+			</div>
+			<div id="pt">
+				<%= select_tag(:user_ids, options_for_select(@pt.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
+			</div>
+			<div id="llab">
+				<%= select_tag(:user_ids, options_for_select(@llab.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
+			</div>
+			<br>
+			<div class="actions">
+				<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
+			</div> <%elsif is_today_llab(@group)==false && is_today_pt(@group)==false%> <i>****You are not supposed to be here! Please navigate back. You will not be able to take attendance today! Contact site admin if you receive this in error.****</i>
+			<br>
+			<i>~If today is attendance day please be sure correct attendance recording days were selected for this group!</i> <%else%>
 			<%end%>
 
 			<% end %>
-
 	</div>
 </div>
 
+<!-- JQuery code to  show the form -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("div#llab").hide();
+		$("select#event").bind("change", function() {
+			if ($(this).val() == "PT") {
+				$("div#pt").show();
+				$("div#llab").hide();
+			} else {
+				$("div#llab").show();
+				$("div#pt").hide();
+			}
+		})
+	})
 
-
-
-   <!-- JQuery code to  show the form -->
-  <script type="text/javascript">
-    $(document).ready(function() {
-    $("div#llab").hide(); 
-       $("select#event").bind("change",function() {
-         if ($(this).val() == "PT") {
-          $("div#pt").show(); 
-          $("div#llab").hide(); 
-         }
-         else{
-			$("div#llab").show(); 
-            $("div#pt").hide();
-            }  
-         })
-   })
-
-  </script>
+</script>
 
 <script>
 	$(document).ready(function() {
