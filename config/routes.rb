@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   resources :message_lists
 
   resources :messages
+  
+    
 
   get "/new" , :to => "alternate#new", :as => 'new_excused_users'
   post "/create" , :to => "alternate#create", :as => 'create_excused_users'

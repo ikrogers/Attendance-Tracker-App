@@ -115,6 +115,8 @@ class AttendancesController < InheritedResources::Base
   def update_attendance_form
     @attendance = Attendance.find_by_id(params[:id])
   end
+  
+
 
   def attendance_params
     params.require(:attendance).permit(:event, :absent, :user_id, :tracker_id, :groups_id)
