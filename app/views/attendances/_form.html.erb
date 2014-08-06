@@ -49,6 +49,8 @@
 		<% end %>
 		<i>Instructions:</i>
 		<br>
+		<i>~Make sure you have no javascript blockers active if you are to use this page! You should only see 1 "Select Event" and 1 "Absent Users" box each. If you see 2 enable javascript and reload/refresh the page.</i>
+		<br>
 		<i>~You are only allowed to record attendance on the day PT or LLAB is on. If you made a mistake, resubmit the form with your adjustments</i>
 		<br>
 		<i>~You have unlimited number of submissions, however, you are limited to the day the PT or LLAB is on</i>
@@ -87,7 +89,7 @@
 			<br>
 			<div id="selection">
 				<%= f.select(:event, options_for_select([["PT"],["LLAB"]]),{}, { :class => 'form-control', :id => 'event'})%>
-				<br<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
+				<br><%= f.label "Absent Users" %> <i> ~Only select absent users.</i>
 				<%= f.hidden_field :groups_id, :value=>@group%>
 			</div>
 			<div id="pt">

@@ -50,7 +50,7 @@ class GroupsController < InheritedResources::Base
 
       if @users != nil
         @users.each do |u|
-          if @group.grouptype == 'Attendance'
+          if (@group.grouptype.include? "Non-Attendance") == false
           @user = User.find_by_id(u.id)
           @user.update_attributes(:in_attendance_group => true)
           end
@@ -83,7 +83,7 @@ class GroupsController < InheritedResources::Base
             @u = User.find_by_id(u.id)
             @oldu = User.find_by_id(@group.users_id)
             if @oldu != @u
-              if @group.grouptype =="Attendance"
+          if (@group.grouptype.include? "Non-Attendance") == false
                 @oldu.update_attributes(:tracker => false)
                 @u.update_attributes(:tracker => true)
               else
@@ -95,7 +95,7 @@ class GroupsController < InheritedResources::Base
         else
           @user.each do |u|
             @u = User.find_by_id(u.id)
-            if @group.grouptype =="Attendance"
+          if (@group.grouptype.include? "Non-Attendance") == false
               @u.update_attributes(:tracker => true)
             else
               @u.update_attributes(:leader => true)
@@ -120,16 +120,17 @@ class GroupsController < InheritedResources::Base
     @group = Group.find_by_id(params[:id]) rescue nil
     @leader = User.find_by_id(@group.users_id) rescue nil
     #If group is deleted reset user status depending on grouptype
-    if (@group.grouptype == "Attendance")
+    if @leader != nil
+          if (@group.grouptype.include? "Non-Attendance") == false
       @leader.update_attributes(:tracker => false, :in_attendance_group => false)
     else
       @leader.update_attributes(:leader => false)
     end
-
+    end
     #If group is deleted remove all users from the group
     @all = InGroup.where(groups_id: @group.id) rescue nil
     if @all != nil
-      if @group.grouptype = 'Attendance'
+          if (@group.grouptype.include? "Non-Attendance") == false
       @all.each do |a|
         @user = User.find_by_id(a.users_id)
         @user.update_attributes(:in_attendance_group => false)
