@@ -43,6 +43,9 @@ gem 'jquery_mobile_rails'
 gem 'momentjs-rails', '>= 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 3.0.2'
 
+#Heroku addons
+gem 'newrelic_rpm'
+
 
 group :development do
 gem'better_errors'
