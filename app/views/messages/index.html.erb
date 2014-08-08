@@ -7,6 +7,7 @@
 			<thead>
 				<tr>
 					<th>Sent To</th>
+					<th>Subject</th>
 					<th>Type of Message</th>
 					<th>Delivery Method</th>
 					<th>Confirmation status</th>
@@ -32,6 +33,7 @@
 					<%else%>
 					<td><%= @g.name %></td>
 					<%end%>
+					<td><%= message.subject %></td>
 					<td><%= message.confirm%></td>
 					<td><%= message.delivery_method%></td>
 					<% if message.all_confirm == true%>
