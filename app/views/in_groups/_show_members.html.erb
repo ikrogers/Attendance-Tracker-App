@@ -18,10 +18,9 @@
 
 					<tr>
 						<%if @u != nil%>
-						<th><%= @user.email %>(Leader)</th>
+						<th><%= @user.fname+ " " +@user.lname %><br><%= @user.email %><br>(Leader)</th>
 						<%else%>
-						<th><%= @user.email %>(Member)</th>
-						<%end%>
+						<th><%= @user.fname+ " " +@user.lname %><br><%= @user.email %><br>(Member)</th>						<%end%>
 
 					</tr>
 

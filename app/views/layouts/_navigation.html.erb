@@ -14,7 +14,7 @@
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">				
+			<ul class="nav navbar-nav">
 				<% if current_user.admin == true || current_user.uberadmin == true%>
 				<% if current_user.uberadmin == true%>
 				<li>
@@ -22,11 +22,10 @@
 				</li>
 				<% end %>
 				<li >
-					<%= link_to "Send Group Messages", new_message_path %>
-				</li>
-
-				<li >
 					<%= link_to "Group and Attendace Management", groups_path %>
+				</li>
+				<li >
+					<%= link_to "Send Group Messages", new_message_path %>
 				</li>
 
 				<li >
@@ -43,7 +42,9 @@
 
 				<%end%>
 				<% end %>
-				<li><%= link_to "Message History", received_messages_path, :method => :get %></li>
+				<li>
+					<%= link_to "Message History", received_messages_path, :method => :get %>
+				</li>
 
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

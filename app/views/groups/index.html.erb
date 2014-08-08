@@ -29,7 +29,7 @@
 				<tr>
 					<td><%= group.name %></td>
 					<td><%= group.grouptype %></td>
-					<td><%= User.find_by_id(group.users_id).email %></td>
+					<td><%= User.find_by_id(group.users_id).fname+ " " +User.find_by_id(group.users_id).lname %></td>
 					<td><%= link_to 'Show Members', group ,:class=>'btn btn-info'%></td>
 					<% if current_user.tracker == true%>
           <%if (group.grouptype.include? "Non-Attendance") == false%>
@@ -56,7 +56,7 @@
 					<%if group.users_id ==  nil%>
 					<td>This group does not have a leader. Please add some users to the group then assign one under "Manage Group".</td>
 					<%else%>
-					<td><%= User.find_by_id(group.users_id).email %></td>
+					<td><%= User.find_by_id(group.users_id).fname+ " " +User.find_by_id(group.users_id).lname %></td>
 					<%end%>
 					<td><%= link_to 'Show Members', group, :class => 'btn btn-info' %></td>
 					<td><%= link_to 'Manage Group', edit_group_path(group), :class => 'btn btn-warning' %></td>
