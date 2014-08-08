@@ -62,7 +62,7 @@
 							<td> <%= @message.created_at.to_date.to_formatted_s(:long)%> </td>
 							<% conf = a.confirmed_recall%>
 							<td>Not confirmed</td>
-							<td><%= button_to 'Confirm Now', confirmation_path(a.messageconfirmtoken), :method=>:get, :class => 'btn btn-primary'%></td>
+							<td><%= button_to 'Confirm Now', message_confirmation_path(a.messageconfirmtoken), :method=>:get, :class => 'btn btn-primary'%></td>
 						</tr>
 						<% end %>
 						<% end %>

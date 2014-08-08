@@ -28,7 +28,7 @@
 
 				<div>
 				
-					<%= f.text_field :email, :class => 'form-control', :placeholder => 'Email (Must be deliverable)'%>
+					<%= f.text_field :email, :class => 'form-control', :placeholder => 'Email (You will have to confirm the email address before logging in, so be sure it is a real one!)'%>
 						<%if devise_error_messages!(:email) !=nil%>
 					<%= devise_error_messages!(:email) %>
 					<%end%>

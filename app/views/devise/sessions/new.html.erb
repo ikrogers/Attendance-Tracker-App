@@ -3,16 +3,40 @@
 <br>
 <div class="panel panel-primary">
 	<div class="panel-body">
-<body id="content" role="main">
-	<div class="container">
-		<h1>Welcome to ATI</h1>
-		<h2>Attendance Trackeing Interface plus (Alpha)</h2>
-		<!-- <h1>Bootstrap</h1> -->
-		<p id="action" class="lead">
-			<a href="#newsessionmodal-form" class="btn btn-primary btn-lg custombtnblock"data-toggle="modal">Start</a>	
-		</p>			
-</body>
+		<body id="content" role="main">
+			<div class="container">
+				<h1>Welcome to ATI</h1>
+				<h2>Attendance Tracking Interface plus (Alpha)</h2>
+				<!-- <h1>Bootstrap</h1> -->
+				<p id="action" class="lead">
+					<a href="#newsessionmodal-form" class="btn btn-primary btn-lg custombtnblock"data-toggle="modal">Start</a>
+				</p>
+				<a data-toggle="collapse" class='text-muted' data-parent="#accordion" href="#accordionThree">
+				<p class='text-muted'>
+					About the application
+				</p></a>
+				<div id="accordionThree" class="panel-collapse collapse">
+					<div class="panel-body">
+						<h4>	General help: </h4>
+						<p>	~To login, register, reset password, or to resend email confirmation instructions click the big blue "Start" button.</p>
+						<p> ~If something is not loading or submitting right please refresh the page.</p>
+					</div>
+					<div class="panel-body">
+						<h4>About: </h4>
+						<p>~This application is designed by Ilya Rogers. The purpose of this application is to assist attendance tracking at the VSU Blazer Corps of Cadets.
+						This application is for the exclusive use of VSU Blazer Corps of Cadets only, and should not be replicated without the consent of the owner.
+						Please keep in mind that this system is still under development so expect some bugs to occur. For any questions, bugs, errors, or general comments you may reach the owner via email at ikrogers92@gmail.com. Thank you, and have a nice day!
+						</p>
+					</div>
+					<div class="panel-body">
+						<h4>Acknowledgements:</h4> 
+						<p>~Special thanks to Travis Gibson for helping me with the database design, as well as, Sanket Patel and David DeMeritt for testing!</p>
+					</div>
+				</div>
+
+		</body>
+	</div>
 </div>
-</div>
+
 <%= render :partial => 'new' %>
 
