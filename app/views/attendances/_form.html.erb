@@ -4,31 +4,40 @@
 	</div>
 	<div class="panel-body">
 		<div class="container">
-<a data-toggle="collapse" class='text-muted' data-parent="#accordion" href="#accordionThree">
-				<p class='text-muted'>
-					Detailed Instructions (Please read first if doing this first time!)
-				</p></a>
-				<div id="accordionThree" class="panel-collapse collapse">
-					<div class="panel-body">
-						<h4> Before you start: </h4>
-			<p>~Make sure you have no javascript blockers active if you are to use this page! You should only see 1 "Select Event" and 1 "Absent Users" box each. If you see 2 enable javascript and reload/refresh the page.</p>
-			<p>~You are only allowed to record attendance on the day PT or LLAB is on. If you made a mistake, resubmit the form with your adjustments</p>
-			<p>~You have unlimited number of submissions, however, you are limited to the day the PT or LLAB is on</p>
-			<p>~An SMS and email will be sent to a user once the form is submitted. Please keep submissions to a minimum for everyones sanity :)</p>
-			<p>~Lists are dynamically updated based on excused users. If user has alternate PT but not LLAB then user will only show up for attendance if you select LLAB and this group is not an alternate PT/LLAB group.</p>
-			<p>~Due to this site is still under development please double check with your paper rosters. If you find a discreptancy, report the bug to the site admin under "Help"</p>
-					</div>
-					<div class="panel-body">
-						<h4> Field and Options Definitions: </h4>
-			<p>~Make sure you have no javascript blockers active if you are to use this page! You should only see 1 "Select Event" and 1 "Absent Users" box each. If you see 2 enable javascript and reload/refresh the page.</p>
-			<p>~You are only allowed to record attendance on the day PT or LLAB is on. If you made a mistake, resubmit the form with your adjustments</p>
-			<p>~You have unlimited number of submissions, however, you are limited to the day the PT or LLAB is on</p>
-			<p>~An SMS and email will be sent to a user once the form is submitted. Please keep submissions to a minimum for everyones sanity :)</p>
-			<p>~Lists are dynamically updated based on excused users. If user has alternate PT but not LLAB then user will only show up for attendance if you select LLAB and this group is not an alternate PT/LLAB group.</p>
-			<p>~Due to this site is still under development please double check with your paper rosters. If you find a discreptancy, report the bug to the site admin under "Help"</p>
-					</div>
-
+			<a data-toggle="collapse" class='text-muted' data-parent="#accordion" href="#accordionThree">
+			<p class='text-muted'>
+				Detailed Instructions (Please read first if doing this first time!)
+			</p></a>
+			<div id="accordionThree" class="panel-collapse collapse">
+				<div class="panel-body">
+					<h4> Before you start: </h4>
+					<p>
+						~Make sure you have no javascript blockers active if you are to use this page! You should only see 1 "Select Event" and 1 "Absent Users" box each. If you see 2 enable javascript and reload/refresh the page.
+					</p>
+					<p>
+						~You are only allowed to record attendance on the day PT or LLAB is on. If you made a mistake, resubmit the form with your adjustments
+					</p>
+					<p>
+						~You have unlimited number of submissions, however, you are limited to the day the PT or LLAB is on
+					</p>
+					<p>
+						~An SMS and email will be sent to a user once the form is submitted. Please keep submissions to a minimum for everyones sanity :)
+					</p>
+					<p>
+						~Lists are dynamically updated based on excused users. If user has alternate PT but not LLAB then user will only show up for attendance if you select LLAB and this group is not an alternate PT/LLAB group.
+					</p>
 				</div>
+				<div class="panel-body">
+					<h4> Field and Options Definitions: </h4>
+					<p>
+						~Event - Select whether you are taking attendance for PT or LLAB. This list is updated dynamically so you will not get an option to take attendance for PT if today is not a PT day etc.
+					</p>
+					<p>
+						~Absent users - Select users that are absent. List populates dynamically based on which user is excused on which day. If today is both PT and LLAB day list will update itself based on what is selected in event menu. If you see 2 boxes instead on 1 please enable javascript. 
+					</p>
+				</div>
+
+			</div>
 			<%= form_for(@attendance) do |f| %>
 
 			<% if @attendance.errors.any? %>
