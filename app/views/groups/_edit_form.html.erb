@@ -3,123 +3,152 @@
 		Edit Group
 	</div>
 	<div class="panel-body">
-		<%= form_for(@group) do |f| %>
-		<% if @group.errors.any? %>
-		<div id="error_explanation">
-			<h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+		<div class="container">
+			<br>
+			<a data-toggle="collapse" class='text-muted' data-parent="#accordion" href="#accordionThree">
+			<p class='text-muted'>
+				Detailed Instructions
+			</p></a>
+			<div id="accordionThree" class="panel-collapse collapse">
+				<div class="panel-body">
+					<h4> Field and Options Definitions: </h4>
+					<p>
+						~Name - Update name of the group here.
+					</p>
+					<p>
+						~Select days for which pt and llab attendance is to be taken(Attendance group specific) - Indicate which days is PT attendance is to be taken for this group. If none selected, the app will not allow anyone to take attendance. This is done in case some days change if the future and to add more flexibility as well as to lock out any unauthorised attendance entries. To update the days you will have to re-enter the days of the week again.
+					</p>
+					<p>
+						~Select users to add  - For attendance groups you may only add users that are not in other attendance groups. Field will appear blank if there are no more users to add. This is done so that no attendance records are overidden by accident. For non-attendance groups you may add any user but only 1 per group.
+					</p>
+					<p>
+						~Select users to remove - Select users to remove from the group that are in this group. You may not remove a group leader. To do that you have to assign a new one or delete the group altogether.
+					</p>
+					<p>
+						~Select group leader - User must be in the group first. Then you may assign a group leader to this group. If this is an attendance group, the leader becomes a tracker and is able to record attendance. If this is non-attendance group leader will see this group on their account as will only be able to check attendance stats.
+					</p>
 
-			<ul>
-				<% @group.errors.full_messages.each do |message| %>
-				<li>
-					<%= message %>
-				</li>
-				<% end %>
-			</ul>
-		</div>
-		<% end %>
+				</div>
+			</div>
+			<%= form_for(@group) do |f| %>
+			<% if @group.errors.any? %>
+			<div id="error_explanation">
+				<h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
 
-		<%
+				<ul>
+					<% @group.errors.full_messages.each do |message| %>
+					<li>
+						<%= message %>
+					</li>
+					<% end %>
+				</ul>
+			</div>
+			<% end %>
+
+			<%
  @group= Group.find params[:id]
-      @ingroup = InGroup.where(groups_id: @group.id)
-      @users = User.all
-      @usersnotingroup = Array.new
-      @users.each do |u|
-        @notin = InGroup.find_by(users_id: u.id, groups_id: @group.id) rescue nil
-        if @notin == nil
-          @usersnotingroup << User.find_by_id(u.id)
+        @ingroup = InGroup.where(groups_id: @group.id)
+        @users = User.all
+        @usersnotingroup = Array.new
+        @users.each do |u|
+          @notin = InGroup.find_by(users_id: u.id, groups_id: @group.id) rescue nil
+          if @notin == nil
+            @usersnotingroup << User.find_by_id(u.id)
+          end
         end
-      end
-      @usersingroup= Array.new
-      @ingroup.each do |ig|
-        @usersingroup << User.find_by_id(ig.users_id)
-      end
+        @usersingroup= Array.new
+        @ingroup.each do |ig|
+          @usersingroup << User.find_by_id(ig.users_id)
+        end
 
 %>
 
-		<div>
-			<%= f.label "Name" %>
-			<br>
-			<i> ~Leave it be if not updating it</i>
-			<br>
-			<%= f.text_field :name, :class=>'form-control'%>
-		</div>
-		<div>
-			<%if (@group.grouptype.include? "Non-Attendance") == false%>
-			<%= f.label "Select days for which PT attendance is to be taken" %>
-			<br>
-			<i> ~No one will be able to take PT attendance otherwise</i>
-			<br>
-			<%= select_tag(:ptdays, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[ptdays][]',  :multiple => true})%>
-			<br>
-			<%= f.label "Select days for which LLAB attendance is to be taken" %>
-			<br>
-			<i> ~No one will be able to take LLAB attendance otherwise</i>
-			<br>
-			<%= select_tag(:llabdays, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[llabdays][]',  :multiple => true})%>
-			<br>
-			<%end%>
-			<%if (@group.grouptype.include? "Non-Attendance") == true%>
-			<%= f.label "Select Users to add" %>
-			<br>
-			<i> ~Will allow you to add users that are not in this group</i>
-			<br>
-			<%= select_tag(:user_ids, options_for_select(@usersnotingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
-			<br>
-			<%else%>
-			<%if (@group.grouptype.include? "Alternate PT") == true%>
-			<%= f.label "Select Users to add" %>
-			<br>
-			<i> ~Will only allow to add users that are allowed to attend alternate PT sessions</i>
-			<br>
-			<%= select_tag(:user_ids, options_for_select(excused_pt_group(@group).collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
-			<%elsif (@group.grouptype.include? "Alternate LLAB") == true %>
-			<%= f.label "Select Users to add" %>
-			<br>
-			<i> ~Will only allow to add users that are allowed to attend alternate LLAB sessions</i>
-			<br>
-			<%= select_tag(:user_ids, options_for_select(excused_llab_group(@group).collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
-			<%else%>
-			<%= f.label "Select Users to add" %>
-			<br>
-			<i> ~Will allow you to add users that are not in this group and if they are already in another attendance group</i>
-			<br>
-			<%= select_tag(:user_ids, options_for_select(not_assigned_to_attendance_group.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
-			<%end%>
-			<%end%>
-			<%= f.label "Select Users to remove (users in this group)" %>
-			<br>
-			<i> ~Will allow you to remove users from this group</i>
-			<br>
-			<%= select_tag(:user_remove, options_for_select(@usersingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_remove][]'}) %>
-			<br>
-			<% if (@group.grouptype.include? "Alternate") == true%>
-			<%= f.label "Change group leader (User must already be in group)" %>
-			<br>
-			<i> ~Has to be a member already. Leave blank if not updating. If assigning new one add some people, click "Update" button, then leader drop-down will be populated.</i>
-			<br>
-			<i>~You may not remove a group leader from the group. You can reassign group leader position to another user in the group, or if leader is the only remaining user destroy the entire group.</i>
-			<br />
-			<%= select_tag(:user_id, options_for_select(User.all.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:include_blank => true, :class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
-			
-			<%else%>
-			<%= f.label "Change group leader (User must already be in group)" %>
-			<br>
-			<i> ~Has to be a member already. Leave blank if not updating. If assigning new one add some people, click "Update" button, then leader drop-down will be populated.</i>
-			<br>
-			<i>~You may not remove a group leader from the group. You can reassign group leader position to another user in the group, or if leader is the only remaining user destroy the entire group.</i>
-			<br />
-			<%= select_tag(:user_id, options_for_select(@usersingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:include_blank => true,:class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
-			
-			<%end%>
-			<div class="actions">
-				<%= f.submit "Update Group", :class=>'btn btn-primary' %>
+			<div>
+				<%= f.label "Name" %>
+				<br>
+				<i> ~Leave it be if not updating it</i>
+				<br>
+				<%= f.text_field :name, :class=>'form-control'%>
 			</div>
-			<% end %>
+			<div>
+				<%if (@group.grouptype.include? "Non-Attendance") == false%>
+				<%= f.label "Select days for which PT attendance is to be taken" %>
+				<br>
+				<i> ~No one will be able to take PT attendance otherwise</i>
+				<br>
+				<%= select_tag(:ptdays, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[ptdays][]',  :multiple => true})%>
+				<br>
+				<%= f.label "Select days for which LLAB attendance is to be taken" %>
+				<br>
+				<i> ~No one will be able to take LLAB attendance otherwise</i>
+				<br>
+				<%= select_tag(:llabdays, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[llabdays][]',  :multiple => true})%>
+				<br>
+				<%end%>
+				<%if (@group.grouptype.include? "Non-Attendance") == true%>
+				<%= f.label "Select Users to add" %>
+				<br>
+				<i> ~Will allow you to add users that are not in this group</i>
+				<br>
+				<%= select_tag(:user_ids, options_for_select(@usersnotingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				<br>
+				<%else%>
+				<%if (@group.grouptype.include? "Alternate PT") == true%>
+				<%= f.label "Select Users to add" %>
+				<br>
+				<i> ~Will only allow to add users that are allowed to attend alternate PT sessions</i>
+				<br>
+				<%= select_tag(:user_ids, options_for_select(excused_pt_group(@group).collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				<%elsif (@group.grouptype.include? "Alternate LLAB") == true %>
+				<%= f.label "Select Users to add" %>
+				<br>
+				<i> ~Will only allow to add users that are allowed to attend alternate LLAB sessions</i>
+				<br>
+				<%= select_tag(:user_ids, options_for_select(excused_llab_group(@group).collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				<%else%>
+				<%= f.label "Select Users to add" %>
+				<br>
+				<i> ~Will allow you to add users that are not in this group and if they are already in another attendance group</i>
+				<br>
+				<%= select_tag(:user_ids, options_for_select(not_assigned_to_attendance_group.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				<%end%>
+				<%end%>
+				<%= f.label "Select Users to remove (users in this group)" %>
+				<br>
+				<i> ~Will allow you to remove users from this group</i>
+				<br>
+				<%= select_tag(:user_remove, options_for_select(@usersingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_remove][]'}) %>
+				<br>
+				<% if (@group.grouptype.include? "Alternate") == true%>
+				<%= f.label "Change group leader (User must already be in group)" %>
+				<br>
+				<i> ~Has to be a member already. Leave blank if not updating. If assigning new one add some people, click "Update" button, then leader drop-down will be populated.</i>
+				<br>
+				<i>~You may not remove a group leader from the group. You can reassign group leader position to another user in the group, or if leader is the only remaining user destroy the entire group.</i>
+				<br />
+				<%= select_tag(:user_id, options_for_select(User.all.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:include_blank => true, :class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
+
+				<%else%>
+				<%= f.label "Change group leader (User must already be in group)" %>
+				<br>
+				<i> ~Has to be a member already. Leave blank if not updating. If assigning new one add some people, click "Update" button, then leader drop-down will be populated.</i>
+				<br>
+				<i>~You may not remove a group leader from the group. You can reassign group leader position to another user in the group, or if leader is the only remaining user destroy the entire group.</i>
+				<br />
+				<%= select_tag(:user_id, options_for_select(@usersingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:include_blank => true,:class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
+
+				<%end%>
+				<div class="actions">
+					<%= f.submit "Update Group", :class=>'btn btn-primary' %>
+				</div>
+				<% end %>
+
+			</div>
 		</div>
 	</div>
-
-	<script>
-		$(document).ready(function() {
-			$('select').selectpicker();
-		});
-	</script>
+</div>
+<script>
+	$(document).ready(function() {
+		$('select').selectpicker();
+	}); 
+</script>

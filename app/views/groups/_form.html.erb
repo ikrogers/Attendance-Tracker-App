@@ -4,54 +4,87 @@
 	</div>
 	<div class="panel-body">
 		<body id="content" role="main">
-			<%= form_for(@group) do |f| %>
-			<% if @group.errors.any? %>
-			<div id="error_explanation">
-				<h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+			<div class="container">
 
-				<ul>
-					<% @group.errors.full_messages.each do |message| %>
-					<li>
-						<%= message %>
-					</li>
-					<% end %>
-				</ul>
-			</div>
-			<% end %>
+				<a data-toggle="collapse" class='text-muted' data-parent="#accordion" href="#accordionThree">
+				<p class='text-muted'>
+					Detailed Instructions
+				</p></a>
+				<div id="accordionThree" class="panel-collapse collapse">
+					<div class="panel-body">
+						<h4> Field and Options Definitions: </h4>
+						<p>
+							~Name - Input group name here. If left blank the group will not have a name. You may update it at any time.
+						</p>
+						<p>
+							~Group type - Select what kind of group you are creating.
+						</p>
+						<p>
+							~~Attendance - Standard attendance group.
+						</p>
+						<p>
+							~~Alternate PT or LLAB - Special type attendance group for alternate PT/LLAB authorised users.
+						</p>
+						<p>
+							~~Non attendance - Group type for users that have nothing to do with taking attendance but need to be able to see attendance of certain users. Example can be a FLT/CC or SQ/CC etc.
+						</p>
 
-			<% @users = User.all
+					</div>
+
+				</div>
+				<%= form_for(@group) do |f| %>
+				<% if @group.errors.any? %>
+				<div id="error_explanation">
+					<h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
+
+					<ul>
+						<% @group.errors.full_messages.each do |message| %>
+						<li>
+							<%= message %>
+						</li>
+						<% end %>
+					</ul>
+				</div>
+				<% end %>
+
+				<% @users = User.all
   @array = Array.new
   @users.each do |user|
     @array << user.email
   end
 %>
 
-			<div>
-				<%= f.label "Name" %><br><i> ~Name your group</i>
-			</div>
-			<div>
-				<%= f.text_field :name, :class => 'form-control'%>
-			</div>
-			<div>
-				<%= f.label "Select group type" %><br><i> ~Attendance is for attendance tracking and Non-Attendance is everything else</i>
-			</div>
+				<div>
+					<%= f.label "Name" %>
+					<br>
+					<i> ~Name your group</i>
+				</div>
+				<div>
+					<%= f.text_field :name, :class => 'form-control'%>
+				</div>
+				<div>
+					<%= f.label "Select group type" %>
+					<br>
+					<i> ~Attendance is for attendance tracking and Non-Attendance is everything else</i>
+				</div>
 
-			<div>
-				<%= f.select(:grouptype, options_for_select([["Attendance"], ["Alternate LLAB Attendance"], ["Alternate PT Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control', :id => 'type_dd'})%>
+				<div>
+					<%= f.select(:grouptype, options_for_select([["Attendance"], ["Alternate LLAB Attendance"], ["Alternate PT Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control', :id => 'type_dd'})%>
+				</div>
+
+				<br>
+
+				<div class="actions">
+					<%= f.submit "Create Group", :class=>'btn btn-primary' %>
+				</div>
+				<% end %>
+				<br>
+
 			</div>
-
-
-			<br>
-
-			<div class="actions">
-				<%= f.submit "Create Group", :class=>'btn btn-primary' %>
-			</div>
-			<% end %>
 	</div>
-</div>
 
-<script>
-	$(document).ready(function() {
-		$('select').selectpicker();
-	}); 
-</script>
+	<script>
+		$(document).ready(function() {
+			$('select').selectpicker();
+		});
+	</script>

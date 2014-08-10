@@ -45,7 +45,7 @@
 
 				<div>
 
-					<%= f.select(:carrier, options_for_select([["AT&T"], ["Verizon"], ["Boost Mobile"],["Cellular One"],["Nextel"],["Sprint"],["T-Mobile"],["Tracfone"],["Metro PCS"] ]),{}, { :class => 'form-control'})%>
+					<%= f.select(:carrier, options_for_select([["AT&T"], ["Verizon"], ["Boost Mobile"],["Cellular One"],["Nextel"],["Sprint"],["T-Mobile"],["Tracfone"],["Metro PCS"] ]),{:include_blank => true}, { :class => 'form-control'})%>
 					<%if devise_error_messages!(:carrier) != nil%>
 					<%= devise_error_messages!(:carrier) %>
 					<%end%>
@@ -94,3 +94,9 @@
 		</body>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		$('select').selectpicker();
+	}); 
+</script>
