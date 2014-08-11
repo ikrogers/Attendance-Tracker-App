@@ -60,7 +60,7 @@ class AlternateController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html{redirect_to excused_users_path, notice: 'Users have been successfully added/updated. You may now add them to alternate PT or LLAB groups for attendance tracking!'}
+        format.html{redirect_to excused_users_path, notice: 'Users have been successfully added/updated. You may now add them to alternate PT or LLAB groups for attendance tracking! If you do not see any records, you must have selected wrong days for the wrong event: ex: PT days for LLAB event'}
       end
     end
   end

@@ -3,27 +3,29 @@
 		<h3 class="panel-title">Edit Record</h3>
 	</div>
 	<div class="panel-body">
+		<div class="container">
+			<body>
+				<%= form_tag(update_attendance_path) do %>
 
-		<%= form_tag(update_attendance_path) do %>
-		
-		
-		<% @group = Group.where(grouptype: "Attendance") %>
+				<% @group = Group.where(grouptype: "Attendance") %>
 
-		<br>
-		<%= label_tag "Select group to assign this record to" %>
-		<br>
-		<%= select_tag(:group_id, options_for_select(@group.collect {|u| [u.name, u.id]}),{:id=>"sel",:class => 'form-control', :multiple => false, :name=>'project[group_id][]'}) %>
-		<br>
-		<div class="actions">
-			<%= submit_tag 'Submit', :class=>'btn btn-primary' %>
+				<br>
+				<%= label_tag "Select group to assign this record to" %>
+				<br>
+				<i> ~If the field is empty then you do not have any attendance groups in existence.</i>
+				<%= select_tag(:group_id, options_for_select(@group.collect {|u| [u.name, u.id]}),{:id=>"sel",:class => 'form-control', :multiple => false, :name=>'project[group_id][]'}) %>
+				<br>
+				<div class="actions">
+					<%= submit_tag 'Submit', :class=>'btn btn-primary' %>
+				</div>
+				<% end %>
+			<body>
 		</div>
-		<% end %>
 	</div>
 </div>
 
-
 <script>
-$(document).ready(function(){
-    $('select').selectpicker();
-});
+	$(document).ready(function() {
+		$('select').selectpicker();
+	}); 
 </script>

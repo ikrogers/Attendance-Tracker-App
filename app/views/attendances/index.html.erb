@@ -23,7 +23,7 @@
 				<% @currentuserattendance.each do |attendance| %>
 
 				<tr>
-					<td><%= User.find_by_id(attendance.user_id).email %></td>
+					<td><%= (User.find_by_id(attendance.user_id).fname+" "+User.find_by_id(attendance.user_id).lname) %></td>
 					<td><%= attendance.event %></td>
 					<td><%= attendance.created_at.to_datetime.to_formatted_s(:long) %></td>
 					<%if attendance.tracker_id==nil%>
@@ -31,11 +31,14 @@
 					<%else%>
 					<td><%= User.find_by_id(attendance.tracker_id).email %></td>
 					<%end%>
-					<td><%= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?' }, :class=>'btn btn-danger' %></td>
+										<td><%= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?' }, :class=>'btn btn-danger' %></td>
+
 				</tr>
 				<% end %>
 			</tbody>
 		</table>
+				<%= link_to 'Insert Attendance Record', insert_attendance_path(Group.find_by_id(params[:attgroup_id]).id), :class => 'btn btn-primary' %>
+
 		<% else %>
 		<% @currentuserattendance = Attendance.where(groups_id: nil) rescue nil %>
 		<h1>Absence Records For Group: Deleted!</h1>
@@ -64,14 +67,14 @@
 					<td><%= User.find_by_id(attendance.tracker_id).email %></td>
 					<%end%>
 					<td><%= link_to 'Update', update_attendance_form_path(attendance.id), :class => 'btn btn-warning'%></td>
-					<td><%= link_to 'Destroy', attendance(:id => attendance.id, :attgroup_id => @currentgroup.id), method: :delete, data: { confirm: 'Are you sure?' }, :class=>'btn btn-danger' %></td>
+										<td><%= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?' }, :class=>'btn btn-danger' %></td>
+
 				</tr>
 				<% end %>
 			</tbody>
 		</table>
 		
 		<% end %>
-		<%= link_to 'Insert Attendance Record', insert_attendance_path(Group.find_by_id(params[:attgroup_id]).id), :class => 'btn btn-primary' %>
 		<br>
 	</div>
 </div>

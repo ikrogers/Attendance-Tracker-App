@@ -88,7 +88,7 @@
 			<br>
 			<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
 			<%= f.hidden_field :groups_id, :value=>@group%>
-			<%= select_tag(:user_ids, options_for_select(@llab.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
+			<%= select_tag(:user_ids, options_for_select(@llab.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
 				<br>
 				<div class="actions">
 					<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
@@ -98,7 +98,7 @@
 				<%= f.select(:event, options_for_select([["PT"]]),{}, { :class => 'form-control', :id => 'event'})%>
 				<br>
 				<%= f.label "Absent Users" %><i> ~Only select absent users.</i> <%= f.hidden_field :groups_id, :value=>@group%>
-				<%= select_tag(:user_ids, options_for_select(@pt.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
+				<%= select_tag(:user_ids, options_for_select(@pt.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
 				<br>
 				<div class="actions">
 					<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
@@ -112,10 +112,10 @@
 					<%= f.hidden_field :groups_id, :value=>@group%>
 				</div>
 				<div id="pt">
-					<%= select_tag(:user_ids, options_for_select(@pt.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
+					<%= select_tag(:user_ids, options_for_select(@pt.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
 				</div>
 				<div id="llab">
-					<%= select_tag(:user_ids, options_for_select(@llab.collect {|u| [u.email, u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
+					<%= select_tag(:user_ids, options_for_select(@llab.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
 				</div>
 				<br>
 				<div class="actions">
