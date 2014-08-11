@@ -9,6 +9,7 @@
 			<a data-toggle="collapse" class='text-muted' data-parent="#accordion" href="#accordionThree">
 			<p class='text-muted'>
 				Detailed Instructions (Please read first if doing this first time!)
+
 			</p></a>
 			<div id="accordionThree" class="panel-collapse collapse">
 				<div class="panel-body">
@@ -22,8 +23,8 @@
 					<p>
 						~Select PT/LLAB days - Select the days user or a group of users are excused for. If you choose PT excuse from add excuse panel only select PT days otherwise no excuse will be added.
 					</p>
-				</div>
 
+				</div>
 			</div>
 					<%= form_tag(create_excused_users_path) do%>
 					<div>
@@ -35,6 +36,7 @@
 					</div>
 					<div>
 						<%= label_tag 'Select users'%>
+
 						<br>
 						<i>~Select one or more users. Only select multiple users if they are excused for same PT/LLAB days.</i>
 						<%= select_tag(:user_ids, options_for_select(User.all.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
@@ -51,6 +53,7 @@
 							<%= label_tag "Select LLAB days" %>
 							<br>
 							<i> ~Select which days user is excused for and will not show up on regular attendance tracking form.</i>
+
 							<br>
 							<%= select_tag(:excused_llab_days, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[excused_llab_days][]',  :multiple => true})%>
 						</div>
