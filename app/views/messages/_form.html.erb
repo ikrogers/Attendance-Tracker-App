@@ -5,28 +5,46 @@
 	<div class="panel-body">
 		<body id="content" role="main">
 			<div class="container">
-<a data-toggle="collapse" class='text-muted' data-parent="#accordion" href="#accordionThree">
+				<a data-toggle="collapse" class='text-muted' data-parent="#accordion" href="#accordionThree">
 				<p class='text-muted'>
 					Detailed Instructions
 				</p></a>
 				<div id="accordionThree" class="panel-collapse collapse">
 					<div class="panel-body">
 						<h4> Important Notes: </h4>
-						<p>	~Using this function - This function is only reserved for admin users. Please use this for official notifications only.</p>
-						<p>	~Sending messages - Depending on the amount of users selected processing all the messages may take some time. DO NOT navigate from the page once you hit the "Send" button. Page may appear unresponsive because server is processing each user individually (Privacy function where other users will not see who else the message was sent to)</p>
+						<p>
+							~Using this function - This function is only reserved for admin users. Please use this for official notifications only.
+						</p>
+						<p>
+							~Sending messages - Depending on the amount of users selected processing all the messages may take some time. DO NOT navigate from the page once you hit the "Send" button. Page may appear unresponsive because server is processing each user individually (Privacy function where other users will not see who else the message was sent to)
+						</p>
 					</div>
 					<div class="panel-body">
 						<h4> Field Definitions: </h4>
-						<p>	~Recipients - Will allow you send the message to either every registered user or if there are any groups to the group of your choosing.</p>
-						<p>	~Subject - Subject goes here. You may leave it blank, but that would make the message more obscure.</p>
-						<p>	~Message content - Your message here. If you plan on sending it via SMS please keep it short. Definition of short is subject + message should be less than 160 characters including spaces, otherwise your message will be cut off in the SMS</p>
+						<p>
+							~Recipients - Will allow you send the message to either every registered user or if there are any groups to the group of your choosing.
+						</p>
+						<p>
+							~Subject - Subject goes here. You may leave it blank, but that would make the message more obscure.
+						</p>
+						<p>
+							~Message content - Your message here. If you plan on sending it via SMS please keep it short. Definition of short is subject + message should be less than 160 characters including spaces, otherwise your message will be cut off in the SMS
+						</p>
 					</div>
 					<div class="panel-body">
 						<h4> Configuration Options: </h4>
-						<p>	~Message delivery method - This configures how the message is sent. SMS only will only send an SMS. Email only will only send an email. SMS+Email will send both SMS and email.</p>
-						<p>	~Enable email confirmation - Toggles whether user receives a link via email to confirm message. If confirm option is selected you will be able to track who confirmed the message and who has not from "Track Messages" page.</p>
-						<p>	~Everyone confirmed notification method - Same as Message delivery method except if you check the box to its right configures how the sending party will receive the notification once the message have been confirmed by everyone.</p>
-						<p>	~Notify me when confirmation recall is finished - Checkbox configuring whether you receive a notification once everyone has confirmed your message. </p>
+						<p>
+							~Message delivery method - This configures how the message is sent. SMS only will only send an SMS. Email only will only send an email. SMS+Email will send both SMS and email.
+						</p>
+						<p>
+							~Enable email confirmation - Toggles whether user receives a link via email to confirm message. If confirm option is selected you will be able to track who confirmed the message and who has not from "Track Messages" page.
+						</p>
+						<p>
+							~Everyone confirmed notification method - Same as Message delivery method except if you check the box to its right configures how the sending party will receive the notification once the message have been confirmed by everyone.
+						</p>
+						<p>
+							~Notify me when confirmation recall is finished - Checkbox configuring whether you receive a notification once everyone has confirmed your message.
+						</p>
 					</div>
 				</div>
 				<%= form_for(@message) do |f| %>
@@ -69,7 +87,7 @@
 					</table>
 				</div>
 				<div class="actions">
-					<%= f.submit "Send",data: { confirm: 'Please make sure all options are set correctly. Press OK if you are satisfied with your selections and Cancel to return.' }, :class => 'btn btn-primary custombtnblock' %>
+					<%= f.submit "Send",data: { confirm: 'Please make sure all options are set correctly. Press OK if you are satisfied with your selections and Cancel to return.', toggle: "modal", target: '#myModal' }, :class => 'btn btn-primary custombtnblock' %>
 				</div>
 				<br>
 
@@ -78,6 +96,22 @@
 			<% end %>
 
 		</body>
+	</div>
+</div>
+
+<!-- Loading Modal -->
+<div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">Sending.... Please wait. Page will refresh upon completion.</h4>
+			</div>
+			<div class="modal-body">
+				<div class="progress">
+					<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <script>
