@@ -32,7 +32,7 @@
 					<td><%= User.find_by_id(group.users_id).fname+ " " +User.find_by_id(group.users_id).lname %></td>
 					<td><%= link_to 'Show Members', group ,:class=>'btn btn-info'%></td>
 					<% if current_user.tracker == true%>
-          <%if (group.grouptype.include? "Non-Attendance") == false%>
+					<%if (group.grouptype.include? "Non-Attendance") == false%>
 					<%if today(group) == true%>
 					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
 					<%else%>
@@ -60,7 +60,7 @@
 					<%end%>
 					<td><%= link_to 'Show Members', group, :class => 'btn btn-info' %></td>
 					<td><%= link_to 'Manage Group', edit_group_path(group), :class => 'btn btn-warning' %></td>
-          <%if (group.grouptype.include? "Non-Attendance") == false%>
+					<%if (group.grouptype.include? "Non-Attendance") == false%>
 					<%if today(group) == true%>
 					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
 					<%else%>
@@ -81,16 +81,15 @@
 			</tbody>
 		</table>
 		<% @att = Attendance.where(groups_id: nil) rescue nil%>
-		<% if current_user.admin == true || current_user.uberdamin == true%>
+		<% if current_user.admin == true || current_user.uberadmin == true%>
 
 		<%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %>
-		
-						<%= link_to 'Manage Alternane PT and LLAB Users', excused_users_path, :class => 'btn btn-default'%>
+
+		<%= link_to 'Manage Alternane PT and LLAB Users', excused_users_path, :class => 'btn btn-default'%>
 
 		<% if @att.count >= 1%>
 		<%= link_to 'Non-group attendance found! Click here!', attendances_path, :class => 'btn btn-danger'%>
 		<%end%>
-
 		<% end %>
 	</div>
 </div>
