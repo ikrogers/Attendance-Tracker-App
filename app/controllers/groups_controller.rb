@@ -2,6 +2,7 @@ class GroupsController < InheritedResources::Base
   before_action :authenticate_user!
   layout 'application1'
   def create
+ 
     @group = Group.new(group_params)
    
 

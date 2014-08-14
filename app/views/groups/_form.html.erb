@@ -1,3 +1,22 @@
+<%
+@ptgroup = Group.find_by(grouptype: 'Alternate PT Attendance') rescue nil
+@llabgroup = Group.find_by(grouptype: 'Alternate LLAB Attendance') rescue nil
+@ptflag = false
+@llabflag = false
+
+if @ptgroup == nil
+	@ptflag = true
+end
+
+if @llabgroup == nil
+	@llabflag = true
+end
+%>
+
+
+
+
+
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		New Group
@@ -67,10 +86,23 @@
 					<br>
 					<i> ~Attendance is for attendance tracking and Non-Attendance is everything else</i>
 				</div>
-
+				<%if @ptflag == true && @llabflag == true%>
 				<div>
 					<%= f.select(:grouptype, options_for_select([["Attendance"], ["Alternate LLAB Attendance"], ["Alternate PT Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control', :id => 'type_dd'})%>
 				</div>
+				<%elsif @ptflag == true && @llabflag == false%>
+				<div>
+					<%= f.select(:grouptype, options_for_select([["Attendance"], ["Alternate PT Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control', :id => 'type_dd'})%>
+				</div>
+				<%elsif @ptflag == false && @llabflag == true%>
+						<div>
+					<%= f.select(:grouptype, options_for_select([["Attendance"], ["Alternate LLAB Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control', :id => 'type_dd'})%>
+				</div>		
+				<%else %>
+				<div>
+					<%= f.select(:grouptype, options_for_select([["Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control', :id => 'type_dd'})%>
+				</div>
+				<%end%>
 
 				<br>
 
