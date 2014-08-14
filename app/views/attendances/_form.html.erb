@@ -81,6 +81,34 @@
 
 			%>
 			<% end %>
+			
+			<%if (Group.find_by_id(@group).grouptype.include? "Alternate PT") == true%>
+			
+			
+			<%= f.label "Event: PT" %><i> ~Alternate PT group</i>
+			<br>
+			<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
+			<%= f.hidden_field :groups_id, :value=>@group%>
+			<%= select_tag(:user_ids, options_for_select(@userarray.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
+				<br>
+				<div class="actions">
+					<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
+					
+			
+			<%elsif (Group.find_by_id(@group).grouptype.include? "Alternate LLAB") == true %>
+			
+				<%= f.label "Event: LLAB" %><i> ~Alternate LLAB group</i>
+			<br>
+			<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
+			<%= f.hidden_field :groups_id, :value=>@group%>
+			<%= select_tag(:user_ids, options_for_select(@userarray.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
+				<br>
+				<div class="actions">
+					<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
+					
+			<%else%>
+			
+			
 			<%if is_today_llab(@group)==true && is_today_pt(@group)==false%>
 			<%= f.label "Select Event" %><i> ~Can only record LLAB attendance today</i>
 			<br>
@@ -92,6 +120,7 @@
 				<br>
 				<div class="actions">
 					<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK' }, :class=>'btn btn-primary' %>
+					
 				</div> <%elsif is_today_llab(@group)==false && is_today_pt(@group)==true%>
 				<%= f.label "Select Event" %><i> ~Can only record PT attendance today</i>
 				<br>
@@ -124,7 +153,7 @@
 				<br>
 				<i>~If today is attendance day please be sure correct attendance recording days were selected for this group!</i> <%else%>
 				<%end%>
-
+				<%end%><!-- end of else whether its alternate group or not -->
 				<% end %>
 		</div>
 	</div>

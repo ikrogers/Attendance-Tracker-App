@@ -52,7 +52,9 @@ class GroupsController < InheritedResources::Base
         @users.each do |u|
           if (@group.grouptype.include? "Non-Attendance") == false
           @user = User.find_by_id(u.id)
-          @user.update_attributes(:in_attendance_group => true)
+          if (@group.grouptype.include? "Alternate") == false
+            @user.update_attributes(:in_attendance_group => true)
+          end
           end
           @in_group = InGroup.new
 

@@ -72,6 +72,18 @@ class AlternateController < ApplicationController
   def remove_pt_excuse
     @user = User.find_by_id(params[:id])
     @user.update_attributes(:excused_pt_days => nil, :ptexcuse => false)
+    @groups = Group.all
+    @groups.each do |g|
+      if (g.grouptype.include? "Alternate PT") == true
+        @ingroup = InGroup.where(groups_id: g.id)
+        @ingroup.each do |ig|
+          if ig.users_id == @user.id
+            ig.destroy
+            break
+          end
+        end
+      end
+    end
     respond_to do |format|
       format.html{redirect_to excused_users_path, notice: 'PT excuse removed successfully! User will now appear on all regular attendance tracking forms'}
     end
@@ -80,8 +92,25 @@ class AlternateController < ApplicationController
   def remove_llab_excuse
     @user = User.find_by_id(params[:id])
     @user.update_attributes(:excused_llab_days => nil, :llabexcuse => false)
+     @groups = Group.all
+    @groups.each do |g|
+      if (g.grouptype.include? "Alternate LLAB") == true
+        @ingroup = InGroup.where(groups_id: g.id)
+        @ingroup.each do |ig|
+          if ig.users_id == @user.id
+            ig.destroy
+            break
+          end
+        end
+      end
+    end
     respond_to do |format|
       format.html{redirect_to excused_users_path, notice: 'LLAB excuse removed successfully! User will now appear on all regular attendance tracking forms'}
     end
+  end
+  
+  
+  def destroy
+    
   end
 end
