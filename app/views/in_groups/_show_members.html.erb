@@ -5,12 +5,24 @@
 	<div class="panel-body">
 		<%
 		@group_members = InGroup.where(:groups_id => params[:id])
-
+		@group = Group.find_by_id(params[:id])
 		@group_members.all.each do |u| %>
 		<% @user = User.find(u.users_id) %>
 		<% @u = Group.find_by(users_id: @user.id, id: params[:id]) rescue nil %>
 		<% attendancept = Attendance.where(user_id: @user.id, event: "PT")%>
 		<% attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")%>
+		<% @ptdays = @group.ptdays.split("::")
+      @ptstring = ""
+      @ptdays.each do |day|
+        @ptstring = @ptstring+", "+day
+      end
+      @llabdays = @group.llabdays.split("::")
+      @llabstring = ""
+      @llabdays.each do |day|
+        @llabstring = @llabstring+", "+day
+      end
+%>
+
 		<div class="row">
 			<div class="col-md-4">
 
@@ -18,9 +30,17 @@
 
 					<tr>
 						<%if @u != nil%>
-						<th><%= @user.fname+ " " +@user.lname %><br><%= @user.email %><br>(Leader)</th>
+						<th><%= @user.fname+ " " +@user.lname %>
+						<br>
+						<%= @user.email %>
+						<br>
+						(Leader)</th>
 						<%else%>
-						<th><%= @user.fname+ " " +@user.lname %><br><%= @user.email %><br>(Member)</th>						<%end%>
+						<th><%= @user.fname+ " " +@user.lname %>
+						<br>
+						<%= @user.email %>
+						<br>
+						(Member)</th>						<%end%>
 
 					</tr>
 
@@ -52,4 +72,16 @@
 		<%end%>
 
 	</div>
+
 </div>
+<div class="panel panel-warning">
+	<div class="panel-heading">
+		Attendance Days: (Debugging purposes... if empty and this is an attendance group please update the days under Manage Group)
+	</div>
+	<div class="panel-body">
+
+		<h5>PT Days: <%= @ptstring%></h5>
+		<h5>LLAB Days: <%= @llabstring%></h5>
+	</div>
+</div>
+
