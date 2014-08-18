@@ -90,7 +90,7 @@
 				<br>
 				<i> ~Will allow you to add users that are not in this group</i>
 				<br>
-				<%= select_tag(:user_ids, options_for_select(@usersnotingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				<%= select_tag(:user_ids, options_for_select(@usersnotingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 				<br>
 				<%else%>
 				<%if (@group.grouptype.include? "Alternate PT") == true%>
@@ -98,26 +98,26 @@
 				<br>
 				<i> ~Will only allow to add users that are allowed to attend alternate PT sessions</i>
 				<br>
-				<%= select_tag(:user_ids, options_for_select(excused_pt_group(@group).collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				<%= select_tag(:user_ids, options_for_select(excused_pt_group(@group).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 				<%elsif (@group.grouptype.include? "Alternate LLAB") == true %>
 				<%= f.label "Select Users to add" %>
 				<br>
 				<i> ~Will only allow to add users that are allowed to attend alternate LLAB sessions</i>
 				<br>
-				<%= select_tag(:user_ids, options_for_select(excused_llab_group(@group).collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				<%= select_tag(:user_ids, options_for_select(excused_llab_group(@group).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 				<%else%>
 				<%= f.label "Select Users to add" %>
 				<br>
 				<i> ~Will allow you to add users that are not in this group and if they are already in another attendance group</i>
 				<br>
-				<%= select_tag(:user_ids, options_for_select(not_assigned_to_attendance_group.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				<%= select_tag(:user_ids, options_for_select(not_assigned_to_attendance_group.collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 				<%end%>
 				<%end%>
 				<%= f.label "Select Users to remove (users in this group)" %>
 				<br>
 				<i> ~Will allow you to remove users from this group</i>
 				<br>
-				<%= select_tag(:user_remove, options_for_select(@usersingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_remove][]'}) %>
+				<%= select_tag(:user_remove, options_for_select(@usersingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_remove][]'}) %>
 				<br>
 				<% if (@group.grouptype.include? "Alternate") == true%>
 				<%= f.label "Change group leader (User must already be in group)" %>
@@ -126,7 +126,7 @@
 				<br>
 				<i>~You may not remove a group leader from the group. You can reassign group leader position to another user in the group, or if leader is the only remaining user destroy the entire group.</i>
 				<br />
-				<%= select_tag(:user_id, options_for_select(User.all.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:include_blank => true, :class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
+				<%= select_tag(:user_id, options_for_select(User.all.collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:include_blank => true, :class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
 
 				<%else%>
 				<%= f.label "Change group leader (User must already be in group)" %>
@@ -135,7 +135,7 @@
 				<br>
 				<i>~You may not remove a group leader from the group. You can reassign group leader position to another user in the group, or if leader is the only remaining user destroy the entire group.</i>
 				<br />
-				<%= select_tag(:user_id, options_for_select(@usersingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:include_blank => true,:class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
+				<%= select_tag(:user_id, options_for_select(@usersingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:include_blank => true,:class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
 
 				<%end%>
 				<div class="actions">

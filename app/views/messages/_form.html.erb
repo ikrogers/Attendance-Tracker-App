@@ -52,7 +52,7 @@
 				<div class="field">
 					<%= f.label "Recipients" %><i> ~Either select a group from drop-down or send message to everyone</i>
 					<br>
-					<%= select_tag(:groups_id, options_for_select(Group.all.collect {|u| [u.name, u.id]}), {:class => 'form-control', :multiple => false, :prompt => 'All', :name=>'project[groups_id][]'})%>
+					<%= select_tag(:groups_id, options_for_select(Group.all.collect {|u| [u.name, u.id]}), {data:{live_search: "true"},:class => 'form-control', :multiple => false, :prompt => 'All', :name=>'project[groups_id][]'})%>
 				</div>
 				<div class="field">
 					<%= f.label "Subject" %><i> ~Enter your message subject here</i>

@@ -14,7 +14,7 @@
 						<br>
 						<i> ~User only from this group are shown</i>
 						<br>
-						<%= select_tag(:user_ids, options_for_select(users_in_group(@currentgroup).collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+						<%= select_tag(:user_ids, options_for_select(users_in_group(@currentgroup).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 					</div>
 					<div>
 						<%= label_tag 'Select event'%>

@@ -39,7 +39,7 @@
 
 						<br>
 						<i>~Select one or more users. Only select multiple users if they are excused for same PT/LLAB days.</i>
-						<%= select_tag(:user_ids, options_for_select(User.all.collect {|u| [(u.fname+" "+u.lname), u.id]}),{:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+						<%= select_tag(:user_ids, options_for_select(User.all.collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 					</div>
 
 					<div>
