@@ -2,7 +2,7 @@
 <% attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")+Attendance.where(user_id: @user.id, event: "Alternate LLAB")%>
 
 
-<%if @event == "PT"%>
+<%if @event == "PT"|| @event == "Alternate PT"%>
 	<%if attendancept.count == 9 %>
 		<h1>You have used all of your <%=@event%> absences please contact your leadership ASAP</h1>
 		
@@ -16,7 +16,7 @@
 <% end %>
 
 
-<%if @event == "LLAB"%>
+<%if @event == "LLAB"|| @event == "Alternate LLAB"%>
 	<%if attendancellab.count == 4 %>
 		<h1>You have used all of your <%=@event%> absences please contact your leadership ASAP</h1>
 		<h3>Please contact your attendance tracker if you feel you have received this in error</h3>
