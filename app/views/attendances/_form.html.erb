@@ -87,7 +87,7 @@
 			
 			<%= f.label "Event" %><i> ~Alternate PT group</i>
 			<br>
-			<%= f.select(:event, options_for_select([["PT"]]),{}, { :class => 'form-control', :id => 'event'})%>
+			<%= f.select(:event, options_for_select([["Alternate PT"]]),{}, { :class => 'form-control', :id => 'event'})%>
 			<br>
 			<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
 			<%= f.hidden_field :groups_id, :value=>@group%>
@@ -101,7 +101,7 @@
 			
 				<%= f.label "Event" %><i> ~Alternate LLAB group</i>
 			<br>
-			<%= f.select(:event, options_for_select([["LLAB"]]),{}, { :class => 'form-control', :id => 'event'})%>
+			<%= f.select(:event, options_for_select([["Alternate LLAB"]]),{}, { :class => 'form-control', :id => 'event'})%>
 			<br>
 			<%= f.label "Absent Users" %><i> ~Only select absent users.</i>
 			<%= f.hidden_field :groups_id, :value=>@group%>

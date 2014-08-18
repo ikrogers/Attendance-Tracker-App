@@ -9,8 +9,8 @@
 		@group_members.all.each do |u| %>
 		<% @user = User.find(u.users_id) %>
 		<% @u = Group.find_by(users_id: @user.id, id: params[:id]) rescue nil %>
-		<% attendancept = Attendance.where(user_id: @user.id, event: "PT")%>
-		<% attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")%>
+		<% attendancept = Attendance.where(user_id: @user.id, event: "PT")+Attendance.where(user_id: @user.id, event: "Alternate PT")%>
+		<% attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")+Attendance.where(user_id: @user.id, event: "Alternate LLAB")%>
 		<% @ptdays = @group.ptdays.split("::")
       @ptstring = ""
       @ptdays.each do |day|
@@ -51,7 +51,7 @@
 					<th>Missed PT: <%= attendancept.count %></th>
 					<% attendancept.each do |a|%>
 					<tr>
-						<td> <%= a.created_at.to_date.to_formatted_s(:long)%> </td>
+						<td> <%= a.created_at.to_date.to_formatted_s(:long)%><%if a.event == "Alternate PT"%> (<%=a.event%>)<%end%> </td>
 
 						<% end %>
 					</tr>
@@ -63,7 +63,7 @@
 					<th>Missed LLAB: <%= attendancellab.count %></th>
 					<tr>
 						<% attendancellab.each do |a|%>
-						<td> <%= a.created_at.to_date.to_formatted_s(:long)%> </td>
+						<td> <%= a.created_at.to_date.to_formatted_s(:long)%><%if a.event == "Alternate LLAB"%> (<%=a.event%>)<%end%> </td>
 					</tr>
 					<% end %>
 				</table>

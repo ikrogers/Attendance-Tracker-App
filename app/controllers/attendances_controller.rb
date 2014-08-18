@@ -16,18 +16,18 @@ class AttendancesController < InheritedResources::Base
         if @users==nil
           else
           @users.each do |u|
-            attendancept = Attendance.where(user_id: u.id, event: "PT")
-            attendancellab = Attendance.where(user_id: u.id, event: "LLAB")
+            attendancept = Attendance.where(user_id: u.id, event: "PT")+Attendance.where(user_id: u.id, event: "Alternate PT")
+            attendancellab = Attendance.where(user_id: u.id, event: "LLAB")+Attendance.where(user_id: u.id, event: "Alternate LLAB")
             if u.id == @user.id
               @attendance = Attendance.new(attendance_params)
               @attendance.update_attributes(:absent => true, :user_id => @user.id, :date_recorded => @today, :tracker_id => current_user.id, :groups_id => attendance_params[:groups_id])
-              if @attendance.event == "PT"
+              if @attendance.event == "PT" || @attendance.event == "Alternate PT"
                 if attendancept.count <= 9
                    UserMailer.absence_notify(u, attendance_params[:event]).deliver
                    UserMailer.absence_notify_text(u, [u.phone, @carrier[u.carrier]].join(""), attendance_params[:event]).deliver
                 end
               end   
-              if @attendance.event == "LLAB"
+              if @attendance.event == "LLAB" || @attendance.event == "Alternate LLAB"
                  if attendancellab.count <= 4
                     UserMailer.absence_notify_text(u, [u.phone, @carrier[u.carrier]].join(""), attendance_params[:event]).deliver
                     UserMailer.absence_notify(u, attendance_params[:event]).deliver
@@ -39,16 +39,16 @@ class AttendancesController < InheritedResources::Base
         end
       else #if user has no record for today
         if @users == nil 
-           attendancept = Attendance.where(user_id: @user.id, event: "PT")
-            attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")
+           attendancept = Attendance.where(user_id: @user.id, event: "PT")+Attendance.where(user_id: @user.id, event: "Alternate PT")
+            attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")+Attendance.where(user_id: @user.id, event: "Alternate LLAB")
             @att.destroy
-            if attendance_params[:event] == "PT"
+            if attendance_params[:event] == "PT" || attendance_params[:event] == "Alternate PT"
                 if attendancept.count <= 9
                    UserMailer.absence_removed_notify(@user, attendance_params[:event]).deliver
                    UserMailer.absence_removed_notify_text(@user, [@user.phone, @carrier[@user.carrier]].join(""), attendance_params[:event]).deliver
                 end
               end   
-              if attendance_params[:event]== "LLAB"
+              if attendance_params[:event]== "LLAB" || attendance_params[:event] == "Alternate LLAB"
                  if attendancellab.count <= 4
                     UserMailer.absence_removed_notify_text(@user, [@user.phone, @carrier[@user.carrier]].join(""), attendance_params[:event]).deliver
                     UserMailer.absence_removed_notify(@user, attendance_params[:event]).deliver
@@ -66,15 +66,15 @@ class AttendancesController < InheritedResources::Base
           end
           if @flag == false
           @att.destroy
-          attendancept = Attendance.where(user_id: @user.id, event: "PT")
-            attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")
-            if attendance_params[:event] == "PT"
+          attendancept = Attendance.where(user_id: @user.id, event: "PT")+Attendance.where(user_id: @user.id, event: "Alternate PT")
+            attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")+Attendance.where(user_id: @user.id, event: "Alternate LLAB")
+            if attendance_params[:event] == "PT"|| attendance_params[:event] == "Alternate PT"
                 if attendancept.count <= 9
                    UserMailer.absence_removed_notify(@user, attendance_params[:event]).deliver
                    UserMailer.absence_removed_notify_text(@user, [@user.phone, @carrier[@user.carrier]].join(""), attendance_params[:event]).deliver
                 end
               end   
-              if attendance_params[:event] == "LLAB"
+              if attendance_params[:event] == "LLAB"|| attendance_params[:event] == "Alternate LLAB"
                  if attendancellab.count <= 4
                     UserMailer.absence_removed_notify_text(@user, [@user.phone, @carrier[@user.carrier]].join(""), attendance_params[:event]).deliver
                     UserMailer.absence_removed_notify(@user, attendance_params[:event]).deliver

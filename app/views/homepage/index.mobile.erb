@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="panel-body" align="center">
 		<h2>Your Attendance Statistics:</h2>
-		<% @attendancept = Attendance.where(user_id: current_user.id, event: "PT")%>
-		<% @attendancellab = Attendance.where(user_id: current_user.id, event: "LLAB")%>
+		<% @attendancept = Attendance.where(user_id: current_user.id, event: "PT")+Attendance.where(user_id: current_user.id, event: "Alternate PT")%>
+		<% @attendancellab = Attendance.where(user_id: current_user.id, event: "LLAB")+Attendance.where(user_id: current_user.id, event: "Alternate LLAB")%>
 		<table class="table">
 			<thead>
 				<tr>
@@ -16,14 +16,14 @@
 					<table>
 						<% @attendancept.each do |a|%>
 						<tr>
-							<td> <%= a.created_at.to_date.to_formatted_s(:long)%> </td>
+						<td> <%= a.created_at.to_date.to_formatted_s(:long)%><%if a.event == "Alternate PT"%> (<%=a.event%>)<%end%> </td>
 						</tr>
 						<% end %>
 					</table></td><td>
 					<table>
 						<% @attendancellab.each do |a|%>
 						<tr>
-							<td> <%= a.created_at.to_date.to_formatted_s(:long)%> </td>
+						<td> <%= a.created_at.to_date.to_formatted_s(:long)%><%if a.event == "Alternate LLAB"%> (<%=a.event%>)<%end%> </td>
 						</tr>
 						<% end %>
 					</table></td>
