@@ -1,5 +1,5 @@
-<% attendancept = Attendance.where(user_id: @user.id, event: "PT")%>
-<% attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")%>
+<% attendancept = Attendance.where(user_id: @user.id, event: "PT")+Attendance.where(user_id: @user.id, event: "Alternate PT")%>
+<% attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")+Attendance.where(user_id: @user.id, event: "Alternate LLAB")%>
 
 <%if @event == "PT"%>
 <%if attendancept.count == 9 %>
