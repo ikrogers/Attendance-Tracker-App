@@ -84,7 +84,7 @@
 			
 			<%if (Group.find_by_id(@group).grouptype.include? "Alternate PT") == true%>
 			
-			
+			<%if @userarray != nil %>
 			<%= f.label "Event" %><i> ~Alternate PT group</i>
 			<br>
 			<%= f.select(:event, options_for_select([["Alternate PT"]]),{}, { :class => 'form-control', :id => 'event'})%>
@@ -95,10 +95,14 @@
 				<br>
 				<div class="actions">
 					<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK', toggle: "modal", target: '#myModal'  }, :class=>'btn btn-primary' %>
+					</div>
 					
+									<%else%>
+				<label>You must have users in the group to record attendance!</label>
+				<%end%>
 			
 			<%elsif (Group.find_by_id(@group).grouptype.include? "Alternate LLAB") == true %>
-			
+			<%if @userarray != nil %>
 				<%= f.label "Event" %><i> ~Alternate LLAB group</i>
 			<br>
 			<%= f.select(:event, options_for_select([["Alternate LLAB"]]),{}, { :class => 'form-control', :id => 'event'})%>
@@ -110,10 +114,15 @@
 				<div class="actions">
 					<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK', toggle: "modal", target: '#myModal'  }, :class=>'btn btn-primary' %>
 					
+					
+				<%else%>
+				<label>You must have users in the group to record attendance!</label>
+				<%end%>
 			<%else%>
 			
 			
 			<%if is_today_llab(@group)==true && is_today_pt(@group)==false%>
+			<%if @llab != nil%>
 			<%= f.label "Select Event" %><i> ~Can only record LLAB attendance today</i>
 			<br>
 			<%= f.select(:event, options_for_select([["LLAB"]]),{}, { :class => 'form-control', :id => 'event'})%>
@@ -125,7 +134,14 @@
 				<div class="actions">
 					<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK', toggle: "modal", target: '#myModal'  }, :class=>'btn btn-primary' %>
 					
-				</div> <%elsif is_today_llab(@group)==false && is_today_pt(@group)==true%>
+				</div> 
+				
+				<%else%>
+				<label>You must have users in the group to record attendance!</label>
+				<%end%>
+				
+				<%elsif is_today_llab(@group)==false && is_today_pt(@group)==true%>
+				<%if @pt != nil%>
 				<%= f.label "Select Event" %><i> ~Can only record PT attendance today</i>
 				<br>
 				<%= f.select(:event, options_for_select([["PT"]]),{}, { :class => 'form-control', :id => 'event'})%>
@@ -135,7 +151,14 @@
 				<br>
 				<div class="actions">
 					<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK', toggle: "modal", target: '#myModal'  }, :class=>'btn btn-primary' %>
-				</div> <%elsif is_today_llab(@group)==true && is_today_pt(@group)==true%>
+				</div> 
+				<%else%>
+				<label>You must have users in the group to record attendance!</label>
+				<%end%>
+				
+				<%elsif is_today_llab(@group)==true && is_today_pt(@group)==true%>
+				<%if @llab != nil || @pt != nil%>
+
 				<%= f.label "Select Event" %><i> ~Select either PT or LLAB</i>
 				<br>
 				<div id="selection">
@@ -147,13 +170,18 @@
 				<div id="pt">
 					<%= select_tag(:user_ids, options_for_select(@pt.collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
 				</div>
+				
 				<div id="llab">
 					<%= select_tag(:user_ids, options_for_select(@llab.collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
 				</div>
-				<br>
 				<div class="actions">
 					<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK', toggle: "modal", target: '#myModal'  }, :class=>'btn btn-primary' %>
-				</div> <%elsif is_today_llab(@group)==false && is_today_pt(@group)==false%> <i>****You are not supposed to be here! Please navigate back. You will not be able to take attendance today! Contact site admin if you receive this in error.****</i>
+				</div>
+				<%else%>
+				<label>You must have users in the group to record attendance!</label>
+				<%end%>
+				<br>
+				 <%elsif is_today_llab(@group)==false && is_today_pt(@group)==false%> <i>****You are not supposed to be here! Please navigate back. You will not be able to take attendance today! Contact site admin if you receive this in error.****</i>
 				<br>
 				<i>~If today is attendance day please be sure correct attendance recording days were selected for this group!</i> <%else%>
 				<%end%>
