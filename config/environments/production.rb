@@ -89,11 +89,11 @@ config.assets.digest = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
 config.action_mailer.smtp_settings = {
-  address:              'smtp.gmail.com',
+  address:              'smtp.mandrillapp.com',
   port:                 587,
-  domain:               'example.com',
-  user_name:            'automaticnotification172@gmail.com',
-  password:             '78 chickens went on a walk and for got that Google uses CAPTCHA which drives girls up the wall',
+  domain:               'heroku.com',
+  user_name:            ENV['MANDRILL_USERNAME'],
+  password:             ENV['MANDRILL_APIKEY'],
   authentication:       'plain',
   enable_starttls_auto: true  }
 
