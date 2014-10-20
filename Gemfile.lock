@@ -53,7 +53,8 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
-    bootstrap (0.0.1)
+    bootstrap-sass (3.2.0.2)
+      sass (~> 3.2)
     bootstrap3-datetimepicker-rails (3.0.3)
       momentjs-rails (>= 2.8.1)
     bourbon (3.2.3)
@@ -101,7 +102,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (5.0.2)
       railties (>= 3.2.16)
-    jquery_mobile_rails (1.4.4)
+    jquery_mobile_rails (1.4.4.1)
       railties (>= 3.1.0)
     json (1.8.1)
     kaminari (0.16.1)
@@ -208,7 +209,7 @@ DEPENDENCIES
   activeadmin!
   better_errors
   binding_of_caller
-  bootstrap
+  bootstrap-sass
   bootstrap3-datetimepicker-rails (~> 3.0.2)
   coffee-rails (~> 4.0.0)
   devise (= 3.2.4)

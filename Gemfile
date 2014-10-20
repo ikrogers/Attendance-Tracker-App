@@ -28,7 +28,6 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'bootstrap-sass', :git => 'https://github.com/twbs/bootstrap-sass.git', :branch => 'next'
 gem 'figaro'
 gem 'high_voltage'
 gem 'simple_form'
@@ -50,6 +49,8 @@ gem 'newrelic_rpm'
 
 
 group :development do
+  gem 'bootstrap-sass'
+
 gem'better_errors'
 gem'binding_of_caller',:platforms=>[:mri_19,:mri_20,:rbx]
 gem'quiet_assets'
@@ -58,6 +59,8 @@ gem 'sqlite3', '1.3.9'
 
 end
 group :production do
+  gem 'bootstrap-sass'
+
   gem 'sass-rails', '~> 4.0.3'
   gem 'pg', '0.15.1'
   gem 'rails_12factor', '0.0.2'

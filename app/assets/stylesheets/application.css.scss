@@ -11,16 +11,10 @@
  * file per style scope.
  *
  * 
- *= require bootstrap
+ *
  *= require_self
  */
-/*!
- * bootstrap-select v1.5.4
- * http://silviomoreto.github.io/bootstrap-select/
- *
- * Copyright 2013 bootstrap-select
- * Licensed under the MIT license
- */
+
 // import bootstrap-sprockets before bootstrap if using bootstrap >= 3.2
 @import "bootstrap-sprockets";
 @import 'bootstrap';
