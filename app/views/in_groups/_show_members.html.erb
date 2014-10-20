@@ -51,7 +51,7 @@
 					<th>Missed PT: <%= attendancept.count %></th>
 					<% attendancept.each do |a|%>
 					<tr>
-						<td> <%= a.created_at.to_date.to_formatted_s(:long)%><%if a.event == "Alternate PT"%> (<%=a.event%>)<%end%> </td>
+						<td> <%= Date.strptime(a.date_recorded,"%m/%d/%y").to_date.to_formatted_s("%M/%d/%Y").to_date.to_formatted_s(:long)%><%if a.event == "Alternate PT"%> (<%=a.event%>)<%end%> </td>
 
 						<% end %>
 					</tr>
@@ -63,7 +63,7 @@
 					<th>Missed LLAB: <%= attendancellab.count %></th>
 					<tr>
 						<% attendancellab.each do |a|%>
-						<td> <%= a.created_at.to_date.to_formatted_s(:long)%><%if a.event == "Alternate LLAB"%> (<%=a.event%>)<%end%> </td>
+						<td> <%= Date.strptime(a.date_recorded,"%m/%d/%y").to_date.to_formatted_s("%M/%d/%Y").to_date.to_formatted_s(:long)%><%if a.event == "Alternate LLAB"%> (<%=a.event%>)<%end%> </td>
 					</tr>
 					<% end %>
 				</table>
