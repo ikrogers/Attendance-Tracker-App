@@ -123,7 +123,7 @@ class AttendancesController < InheritedResources::Base
   def process_insert_attendance
         @users = User.find(params[:project][:user_ids]) rescue nil
         @event = params[:event]
-        @date = params[:date]
+        @date = Date.strptime(params[:date],"%m/%d/%Y").strftime("%D")
         @group = Group.find_by_id(params[:id])
         if @users != nil
         @users.each do |user|
