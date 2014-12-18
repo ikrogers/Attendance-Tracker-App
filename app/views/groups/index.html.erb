@@ -86,6 +86,8 @@
 		<%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %>
 
 		<%= link_to 'Manage Alternane PT and LLAB Users', excused_users_path, :class => 'btn btn-default'%>
+		<%= link_to 'Define events', events_path, :class => 'btn btn-default'%>
+
 
 		<% if @att.count >= 1%>
 		<%= link_to 'Non-group attendance found! Click here!', attendances_path, :class => 'btn btn-danger'%>

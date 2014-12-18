@@ -1,0 +1,33 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Excused Users</h3>
+	</div>
+	<div class="panel-body">
+		<table class="table">
+
+			<thead>
+				<tr>
+					<th>Event Name</th>
+					<th colspan="2">Controls</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<% @events.each do |event| %>
+				<tr>
+					<td><%= event.event_name%></td>
+					<td><%= link_to 'Edit', edit_event_path(event) %></td>
+					<td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+
+	</div>
+	
+<%= link_to 'New Event', new_event_path %>
+<%= link_to 'Back', groups_path%>
+</div>
+
+<br>
+
