@@ -39,4 +39,9 @@ module AttendancesHelper
   
   return @usersingroup
   end
+  
+ 
+  
+  
+  
 end

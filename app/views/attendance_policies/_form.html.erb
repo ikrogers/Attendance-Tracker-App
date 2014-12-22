@@ -28,26 +28,29 @@
 			</div>
 					<%= form_for(@attendance_policy) do |f| %>
 					<div>
-						<%= f.label "Add excuse" %>
+						<%= f.label "Event" %>
+						<%= f.select(:event, options_for_select(get_events),{}, { :class => 'form-control', :id => 'event'})%>
 					</div>
 					<div>
-						<%= f.label "Add excuse" %>
+						<%= f.label "Groups Applied To:" %><br>
+						<%= f.select(:groups_id, options_for_select(Group.all.collect {|u| [u.name, u.id]}), {data:{live_search: "true"},:class => 'form-control', :multiple => false, :prompt => 'All'})%>
 					</div>
 					<div>
-						<%= f.label "Add excuse" %>
+						<%= f.label "Absence Milestone(Make dynamic with selected event)" %>
+						<%= f.number_field :absence_milestone, in: 0..1000, class: 'form-control' %>
 					</div>
 					<div>
-						<%= f.label "Add excuse" %>
+						<%= f.label "Action" %>
+						<%= f.select(:action, options_for_select([["SMS Notify"], ["Email Notify"], ["Notify User and Supervisor(Group leader) Email"],["Notify User and Supervisor(Group leader) SMS"]]),{}, { :class => 'form-control'})%>
 					</div>
 					<div>
-						<%= f.label 'Select users'%>
+						<%= f.label "Custom message content" %>
+						<%= f.text_area :message, :class=>'form-control'%>
 					</div>
-
 					<div class="actions">
 						<%= submit_tag "Add Another Milestone", :class => 'btn btn-primary custombtnblock'  %>
 						<%= link_to 'Done', groups_path, :class => 'btn btn-default' %>
 					</div>
-
 					<% end %>
 				</div>
 			</body>

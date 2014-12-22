@@ -4,6 +4,7 @@ class CreateAttendancePolicies < ActiveRecord::Migration
       t.text :message
       t.integer :absence_milestone
       t.text :action
+      t.text :event
       t.integer :groups_id
       t.timestamps
     end

@@ -1,4 +1,7 @@
 class EventsController < InheritedResources::Base
+    before_action :authenticate_user!
+  layout 'application1'
+  
   def new
     @event = Event.new
   end
@@ -19,9 +22,11 @@ class EventsController < InheritedResources::Base
     end
 
   end
-def index
-  @events = Event.all
-end
+
+  def index
+    @events = Event.all
+  end
+
   def edit
     @event = Event.find_by_id(params[:id])
   end
@@ -45,7 +50,7 @@ end
   private
 
   def event_params
-    params.require(:event).permit(:event_name)
+    params.require(:event).permit(:event_name, :absence_max)
   end
 end
 

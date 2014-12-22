@@ -56,6 +56,15 @@
 					<%= f.text_field :event_name, :class => 'form-control'%>
 				</div>
 				<br>
+				<div>
+					<%= f.label "Max Allowed Absences" %>
+					<br>
+					<i> ~Indicate number of allowed absences. Ex: 13</i>
+				</div>
+				<div>
+				  <%= f.number_field :absence_max, in: 0..1000, class: 'form-control' %>
+				</div>
+				<br>
 				<div class="actions">
 					<%if params[:action] != "edit"%>
 					<%= f.submit "Create Event", :class=>'btn btn-primary' %>

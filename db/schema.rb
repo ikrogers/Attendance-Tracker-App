@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20141218193702) do
     t.text     "message"
     t.integer  "absence_milestone"
     t.text     "action"
+    t.text     "event"
     t.integer  "groups_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -52,6 +53,7 @@ ActiveRecord::Schema.define(version: 20141218193702) do
 
   create_table "events", force: true do |t|
     t.text     "event_name"
+    t.integer  "absence_max"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
