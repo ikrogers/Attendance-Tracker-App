@@ -1,23 +1,61 @@
-<h1>Listing attendance_policies</h1>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Excused Users</h3>
+	</div>
+	<div class="panel-body">
+		<table class="table">
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+			<thead>
+				<tr>
+					<th>Event</th>
+					<th>Groups Applied To</th>
+					<th>Absence Milestone</th>
+					<th>Action</th>
+					<th>Message</th>
 
-  <tbody>
-    <% @attendance_policies.each do |attendance_policy| %>
-      <tr>
-        <td><%= link_to 'Show', attendance_policy %></td>
-        <td><%= link_to 'Edit', edit_attendance_policy_path(attendance_policy) %></td>
-        <td><%= link_to 'Destroy', attendance_policy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+					<th colspan="2">Controls</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<% @attendance_policies.each do |ap| %>
+				<tr>
+					<td><%= ap.event%></td>
+					<td><%= group_exists(ap.groups_id)%></td>
+					<td><%= ap.absence_milestone%></td>
+					<td><%= ap.action%></td>
+					<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#showmodal">Show Message</button></td>
+
+					<!-- Modal -->
+					<div class="modal fade" id="showmodal" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title">Message Content</h2>
+								</div>
+								<div class="modal-body" style="word-wrap: break-word;">
+									<b> <%= ap.message %></b>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">
+										Close
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<td><%= link_to 'Edit', edit_attendance_policy_path(ap) %></td>
+					<td><%= link_to 'Destroy', ap, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+
+	</div>
+
+	<%= link_to 'New Attendance Rule', new_attendance_policy_path %>
+	<%= link_to 'Back', groups_path%>
+</div>
 
 <br>
 
-<%= link_to 'New Attendance policy', new_attendance_policy_path %>

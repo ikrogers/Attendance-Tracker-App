@@ -12,12 +12,11 @@ class EventsController < InheritedResources::Base
       if @event.save
         format.html { redirect_to events_path, notice: 'Event was successfully created.' }
         format.mobile{ redirect_to events_path, notice: 'Event was successfully created.' }
-        format.js
-        format.json { render action: 'show', status: :created, location: @group }
+        format.json { render action: 'show', status: :created, location: @event }
       else
         format.html { render action: 'new' }
         format.mobile { render action: 'new' }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
+        format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
 
