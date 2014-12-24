@@ -26,25 +26,7 @@ class GroupsController < InheritedResources::Base
   def update
 
     respond_to do |format|
-    # This block sets PT and LLAB days for the group
-      @group= Group.find params[:id]
-      @ptdays = params[:project][:ptdays] rescue nil
-      @llabdays = params[:project][:llabdays] rescue nil
-      if @ptdays != nil
-        @ptday_string = ''
-        @ptdays.each do |d|
-          @ptday_string = @ptday_string+'::'+d
-        end
-        @group.update_attributes(:ptdays => @ptday_string)
-      end
-      if @llabdays != nil
-        @llabday_string = ''
-        @llabdays.each do |d|
-          @llabday_string = @llabday_string+'::'+d
-        end
-        @group.update_attributes(:llabdays => @llabday_string)
-      end
-    #-----------------------------------------
+    
     #This block adds users to group
       @users = User.find(params[:project][:user_ids]) rescue nil
       @removeusers = User.find(params[:project][:user_remove]) rescue nil

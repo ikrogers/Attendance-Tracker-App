@@ -33,11 +33,9 @@
 					<td><%= link_to 'Show Members', group ,:class=>'btn btn-info'%></td>
 					<% if current_user.tracker == true%>
 					<%if (group.grouptype.include? "Non-Attendance") == false%>
-					<%if today(group) == true%>
+					
 					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
-					<%else%>
-					<td><%= link_to 'Take attendance(Not Today!)', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
-					<% end %>
+					
 					<% end %>
 					<% end %>
 					<td></td>
@@ -61,11 +59,10 @@
 					<td><%= link_to 'Show Members', group, :class => 'btn btn-info' %></td>
 					<td><%= link_to 'Manage Group', edit_group_path(group), :class => 'btn btn-warning' %></td>
 					<%if (group.grouptype.include? "Non-Attendance") == false%>
-					<%if today(group) == true%>
+					
 					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
-					<%else%>
-					<td><%= link_to 'Take attendance(Not Today!)', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
-					<% end %>
+				
+					
 					<td><%= link_to 'Adjust Attendance', attendances_path(:attgroup_id => group.id), :class => 'btn btn-danger' %></td>
 					<% else %>
 					<td><%= link_to 'Take Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary', :disabled => true %></td>

@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20141218193702) do
 
   create_table "events", force: true do |t|
     t.text     "event_name"
+    t.text     "event_days"
     t.integer  "absence_max"
     t.datetime "created_at"
     t.datetime "updated_at"

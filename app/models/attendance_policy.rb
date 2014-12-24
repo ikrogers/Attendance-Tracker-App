@@ -5,6 +5,4 @@ class AttendancePolicy < ActiveRecord::Base
   validates_uniqueness_of :absence_milestone, scope: [:event, :groups_id], :message => "may not be repeated for the same event"
   validates :action, :presence => true
   validates :event, :presence => {:message => "must be created first"}
-  
-  
 end

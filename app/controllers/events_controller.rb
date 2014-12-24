@@ -1,7 +1,6 @@
 class EventsController < InheritedResources::Base
-    before_action :authenticate_user!
+  before_action :authenticate_user!
   layout 'application1'
-  
   def new
     @event = Event.new
   end
@@ -49,7 +48,7 @@ class EventsController < InheritedResources::Base
   private
 
   def event_params
-    params.require(:event).permit(:event_name, :absence_max)
+    params.require(:event).permit(:event_name, :absence_max, :event_days => [])
   end
 end
 

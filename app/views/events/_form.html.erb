@@ -57,12 +57,20 @@
 				</div>
 				<br>
 				<div>
+					<%= f.label "Select days for which attendance for this even could be taken" %>
+					<br>
+					<i> ~To clear, submit without making changes</i>
+					<br>
+					<%= f.select(:event_days, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), {}, { :class => 'form-control', :multiple => true})%>
+					<br>
+				</div>
+				<div>
 					<%= f.label "Max Allowed Absences" %>
 					<br>
 					<i> ~Indicate number of allowed absences. Ex: 13</i>
 				</div>
 				<div>
-				  <%= f.number_field :absence_max, in: 0..1000, class: 'form-control' %>
+					<%= f.number_field :absence_max, in: 0..1000, class: 'form-control' %>
 				</div>
 				<br>
 				<div class="actions">
@@ -79,7 +87,7 @@
 	</div>
 
 	<script>
-		$(document).ready(function() {
-			$('select').selectpicker();
-		});
-	</script>
+	$(document).ready(function() {
+		$('select').selectpicker();
+	}); 
+</script>

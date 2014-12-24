@@ -3,7 +3,7 @@ class AttendancePoliciesController < InheritedResources::Base
   layout 'application1'
   def create
     @attendance_policy = AttendancePolicy.create(attendance_policy_params)
-
+    
     respond_to do |format|
       if @attendance_policy.save
         format.html { redirect_to attendance_policies_path, notice: 'Rule was successfully created.' }

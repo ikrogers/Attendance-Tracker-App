@@ -71,20 +71,7 @@
 				<%= f.text_field :name, :class=>'form-control'%>
 			</div>
 			<div>
-				<%if (@group.grouptype.include? "Non-Attendance") == false%>
-				<%= f.label "Select days for which PT attendance is to be taken" %>
-				<br>
-				<i> ~No one will be able to take PT attendance otherwise</i>
-				<br>
-				<%= select_tag(:ptdays, options_for_select([["Clear All Days"],["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[ptdays][]',  :multiple => true})%>
-				<br>
-				<%= f.label "Select days for which LLAB attendance is to be taken" %>
-				<br>
-				<i> ~No one will be able to take LLAB attendance otherwise</i>
-				<br>
-				<%= select_tag(:llabdays, options_for_select([["Clear All Days"],["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[llabdays][]',  :multiple => true})%>
-				<br>
-				<%end%>
+				
 				<%if (@group.grouptype.include? "Non-Attendance") == true%>
 				<%= f.label "Select Users to add" %>
 				<br>
