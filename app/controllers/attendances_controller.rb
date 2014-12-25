@@ -2,6 +2,28 @@ class AttendancesController < InheritedResources::Base
   before_action :authenticate_user!
   layout 'application1'
   
+  
+  def create
+    @users = User.find(params[:project][:user_ids]) rescue nil
+    if @users != nil
+      @users.each do |user|
+         @attendance = Attendance.create(attendance_params)
+         @attendance.update_attributes(:absent => true, :user_id => user.id, :tracker_id => current_user.id, :date_recorded => Time.now.strftime("%D"))
+      end
+    end
+    respond_to do |format|
+      if @attendance.save
+        format.html { redirect_to groups_path, notice: 'Attendance was successfully recorded.' }
+        format.mobile{ redirect_to groups_path, notice: 'Attendance was successfully recorded.' }
+        format.json { render action: 'show', status: :created, location: @attendance }
+      else
+        format.html { render action: 'new' }
+        format.mobile { render action: 'new' }
+        format.json { render json: @attendance.errors, status: :unprocessable_entity }
+      end
+    end
+
+  end
 
   def updateattendance
     @attendance = Attendance.find_by_id(params[:id])
@@ -61,7 +83,7 @@ class AttendancesController < InheritedResources::Base
     end
     
     respond_to do |format|
-      format.html{redirect_to groups_path, notice: "Attendance successfully removed"}
+      format.html{redirect_to groups_path, notice: "Attendance record successfully removed"}
     end
   end
 

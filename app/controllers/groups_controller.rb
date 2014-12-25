@@ -26,7 +26,7 @@ class GroupsController < InheritedResources::Base
   def update
 
     respond_to do |format|
-    
+    @group= Group.find params[:id]
     #This block adds users to group
       @users = User.find(params[:project][:user_ids]) rescue nil
       @removeusers = User.find(params[:project][:user_remove]) rescue nil
@@ -34,7 +34,7 @@ class GroupsController < InheritedResources::Base
       if @users != nil
         @users.each do |u|
           if (@group.grouptype.include? "Non-Attendance") == false
-          @user = User.find_by_id(u.id)
+            @user = User.find_by_id(u.id)
           if (@group.grouptype.include? "Alternate") == false
             @user.update_attributes(:in_attendance_group => true)
           end
