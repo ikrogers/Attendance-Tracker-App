@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141218193702) do
+ActiveRecord::Schema.define(version: 20141225174544) do
 
   create_table "active_admin_comments", force: true do |t|
     t.text     "namespace"
@@ -55,6 +55,15 @@ ActiveRecord::Schema.define(version: 20141218193702) do
     t.text     "event_name"
     t.text     "event_days"
     t.integer  "absence_max"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "excuses", force: true do |t|
+    t.integer  "user_id"
+    t.text     "event"
+    t.text     "excused_days"
+    t.datetime "timeframe"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

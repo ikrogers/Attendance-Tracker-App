@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :excuses
+
   resources :events
 
   resources :attendance_policies
@@ -26,14 +28,6 @@ Rails.application.routes.draw do
   resources :message_lists
 
   resources :messages
-  
-    
-
-  get "/new" , :to => "alternate#new", :as => 'new_excused_users'
-  post "/create" , :to => "alternate#create", :as => 'create_excused_users'
-  get "/index" , :to => "alternate#index", :as => 'excused_users'
-  post "/remove_pt_excuse/:id" , :to => "alternate#remove_pt_excuse", :as => 'remove_pt_excuse'
-  post "/remove_llab_excuse/:id" , :to => "alternate#remove_llab_excuse", :as => 'remove_llab_excuse'
 
   get "/message_confirmation/:id" , :to => "messages#message_confirmation", :as => 'message_confirmation'
   get "/user_message_confirmations" => "messages#user_message_confirmations"

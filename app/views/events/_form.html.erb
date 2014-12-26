@@ -61,7 +61,7 @@
 					<br>
 					<i> ~To clear, submit without making changes</i>
 					<br>
-					<%= f.select(:event_days, options_for_select([["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), {}, { :class => 'form-control', :multiple => true})%>
+					<%= f.select(:event_days, options_for_select(Date::DAYNAMES.collect {|day| [day]}), {}, { :class => 'form-control', :multiple => true})%>
 					<br>
 				</div>
 				<div>

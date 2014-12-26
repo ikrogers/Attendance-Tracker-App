@@ -1,0 +1,26 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Excused Users</h3>
+	</div>
+	<div class="panel-body">
+		<table class="table">
+			<th>Name</th>
+			<th>Event</th>
+			<th>Days</th>
+			<th colspan="2">Controls</th>
+			<tbody>
+				<%Excuse.all.each do |excuse|%>
+				<tr>
+					<td><%= User.find_by_id(excuse.user_id).fname+" "+User.find_by_id(excuse.user_id).lname%></td>
+					<td><%= excuse.event%></td>
+					<td><%= excuse.excused_days%></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<%end%>
+			</tbody>
+		</table>
+		<%= link_to 'Add/Update/Remove Excused Users', new_excuse_path, :class => 'btn btn-primary' %>
+	</div>
+</div>
+

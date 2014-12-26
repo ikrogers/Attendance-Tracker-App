@@ -84,7 +84,7 @@
 		<% @att = Attendance.where(groups_id: nil) rescue nil%>
 		<% if current_user.admin == true || current_user.uberadmin == true%>
 		<%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %>
-		<%= link_to 'Manage Alternane PT and LLAB Users', excused_users_path, :class => 'btn btn-default'%>
+		<%= link_to 'Manage Excused Users', excuses_path, :class => 'btn btn-default'%>
 		<%= link_to 'Define events', events_path, :class => 'btn btn-default'%>
 		<%= link_to 'Define Attendance Policy', attendance_policies_path, :class => 'btn btn-default'%>
 

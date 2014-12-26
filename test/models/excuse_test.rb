@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AlternateControllerTest < ActionController::TestCase
+class ExcuseTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
