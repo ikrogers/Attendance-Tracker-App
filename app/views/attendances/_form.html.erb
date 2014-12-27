@@ -1,6 +1,6 @@
 <div class="panel panel-primary">
 	<div class="panel-heading">
-		<h3 class="panel-title">Record Attendance</h3>
+		<h3 class="panel-title">Record Attendance For <%= params[:event] %></h3>
 	</div>
 	<div class="panel-body">
 		<div class="container">
@@ -54,12 +54,11 @@
 			</div>
 			<% end %>
 			<div id="selection">
-				
-				<%= f.select(:event, options_for_select(assigned_events(params[:group_id])),{}, { :class => 'form-control', :id => 'event'})%>
-				<br>
+
 				<%= f.label "Absent Users" %> <i> ~Only select absent users.</i>
-				<%= select_tag(:user_ids, options_for_select(users_in_group(params[:group_id]).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
+				<%= select_tag(:user_ids, options_for_select(users_in_group(params[:group_id], params[:event]).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
 				<%= f.hidden_field :groups_id, :value=>params[:group_id]%>
+				<%= f.hidden_field :event, :value=>params[:event]%>
 			</div>
 			<div class="actions">
 				<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK', toggle: "modal", target: '#myModal'  }, :class=>'btn btn-primary' %>

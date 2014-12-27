@@ -32,7 +32,7 @@
 					<br>
 					<i> ~What type of excuse is it?</i>
 					<br>
-					<%= f.select(:event, options_for_select(Event.all.collect {|e| [e.event_name+" Excuse"]}), { :class => 'form-control', :name => 'project[add_remove][]',  :multiple => false})%>
+					<%= f.select(:event, options_for_select(Event.all.collect {|e| [e.event_name]}), { :class => 'form-control', :name => 'project[add_remove][]',  :multiple => false})%>
 					<%if any_errors(@excuse, :event) != nil%>
 					<%= any_errors(@excuse, :event) %>
 					<%end%>

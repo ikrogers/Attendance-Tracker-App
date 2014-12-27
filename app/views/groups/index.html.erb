@@ -36,7 +36,20 @@
 					<%if assigned_events(group.id) == nil%>
 					<td><%= link_to 'Take attendance', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
 					<%else%>
-					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
+					<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle"  type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+							Take Attendance
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<%assigned_events(group.id).each do |e|%>
+							<li role="presentation">
+								<%= link_to e.event_name, new_attendance_path(:group_id => group.id, :event => e.event_name), :role => "menuitem", :tabindex => -1 %>
+							</li>
+							<%end%>
+						</ul>
+					</div></td>
 					<%end%>
 					<% end %>
 					<% end %>
@@ -64,9 +77,22 @@
 					<%if assigned_events(group.id).count < 1%>
 					<td><%= link_to 'Take attendance', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
 					<%else%>
-					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
+					<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle"  type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+							Take Attendance
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<%assigned_events(group.id).each do |e|%>
+							<li role="presentation">
+								<%= link_to e.event_name, new_attendance_path(:group_id => group.id, :event => e.event_name), :role => "menuitem", :tabindex => -1 %>
+							</li>
+							<%end%>
+						</ul>
+					</div></td>
 					<%end%>
-					
+
 					<td><%= link_to 'Adjust Attendance', attendances_path(:attgroup_id => group.id), :class => 'btn btn-danger' %></td>
 					<% else %>
 					<td><%= link_to 'Take Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary', :disabled => true %></td>

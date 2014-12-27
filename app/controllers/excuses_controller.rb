@@ -17,6 +17,21 @@ class ExcusesController < InheritedResources::Base
     end
 
   end
+  
+  def update
+    @excuse = Excuse.find_by_id(params[:id])
+    respond_to do |format|
+      if @excuse.update(excuse_params)
+        format.html { redirect_to excuses_path, notice: 'Excuse was successfully updated.' }
+        format.mobile{ redirect_to excuses_path, notice: 'Excuse was successfully updated.' }
+        format.json { render action: 'show', status: :created, location: @excuse }
+      else
+        format.html { render action: 'new' }
+        format.mobile { render action: 'new' }
+        format.json { render json: @excuse.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 private
 
 

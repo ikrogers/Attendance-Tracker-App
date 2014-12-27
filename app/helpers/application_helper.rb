@@ -17,35 +17,7 @@ module ApplicationHelper
     end
   end
 
-  def is_today_pt(group)
-    group = Group.find_by_id(group)
-    @availabledays = group.ptdays.split("::")
-    @flag = false
-    @availabledays.each do |a|
-      if Time.now.strftime("%A") == a
-        @flag = true
-      break
-      else
-        @flag = false
-      end
-    end
-    return @flag
-  end
-
-  def is_today_llab(group)
-    group = Group.find_by_id(group)
-    @availabledays = group.llabdays.split("::")
-    @flag = false
-    @availabledays.each do |a|
-      if Time.now.strftime("%A") == a
-        @flag = true
-      break
-      else
-        @flag = false
-      end
-    end
-    return @flag
-  end
+  
 
   def get_events
     @event_objs = Event.all rescue nil
@@ -56,15 +28,6 @@ module ApplicationHelper
       end
     end
     return @events
-  end
-
-  def groups_present
-    @groups = Group.all rescue nil
-    if @groups == nil
-      return false
-    else
-      return true
-    end
   end
   
   def assigned_events(group_id)
@@ -91,9 +54,8 @@ module ApplicationHelper
           end
         end
         if @flag == true
-        @allowed << @e.event_name
+        @allowed << @e
         end
-
       end
     end
     return @allowed

@@ -14,8 +14,8 @@
 					<td><%= User.find_by_id(excuse.user_id).fname+" "+User.find_by_id(excuse.user_id).lname%></td>
 					<td><%= excuse.event%></td>
 					<td><%= excuse.excused_days%></td>
-					<td></td>
-					<td></td>
+					<td><%= link_to 'Edit', edit_excuse_path(excuse) %></td>
+					<td><%= link_to 'Destroy', excuse, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 				</tr>
 				<%end%>
 			</tbody>
