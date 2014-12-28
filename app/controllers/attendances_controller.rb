@@ -5,22 +5,34 @@ class AttendancesController < InheritedResources::Base
   
   def create
     @users = User.find(params[:project][:user_ids]) rescue nil
+    @carrier = {"Verizon"=>"@vtext.com", "AT&T"=>"@txt.att.net","Boost Mobile" => "@myboostmobile.com", "Cellular One"=>"@mobile.celloneusa.com","Metro PCS"=>"@mymetropcs.com","Nextel"=>"@messaging.nextel.com","Sprint"=>"@messaging.sprintpcs.com","T-Mobile"=>"@tmomail.net","Tracfone"=>"@txt.att.net"}
+
     if @users != nil
-      @users.each do |user|
-         @attendance = Attendance.create(attendance_params)
-         @attendance.update_attributes(:absent => true, :user_id => user.id, :tracker_id => current_user.id, :date_recorded => Time.now.strftime("%D"))
+      users_in_group(params[:attendance][:groups_id]).each do |ug|
+        if Attendance.find_by(:user_id => ug.id, :event => params[:attendance][:event], :date_recorded => Time.now.strftime("%D")).nil?
+          if @users.include?(ug)
+            @att = Attendance.create(:absent => true, :user_id => ug.id, :tracker_id => current_user.id, :date_recorded => Time.now.strftime("%D"), :event => params[:attendance][:event], :groups_id => params[:attendance][:groups_id])
+          end
+        else
+          if @users.include?(ug)
+          else
+            Attendance.find_by(:user_id => ug.id, :event => params[:attendance][:event], :date_recorded => Time.now.strftime("%D")).destroy
+          end  
+        end
+      end   
+    else
+      users_in_group(params[:attendance][:groups_id]).each do |ug|
+        @att = Attendance.find_by(:user_id => ug.id, :event => params[:attendance][:event], :date_recorded => Time.now.strftime("%D")) rescue nil
+        if @att != nil
+          @att.destroy 
+        end
       end
     end
+    
     respond_to do |format|
-      if @attendance.save
-        format.html { redirect_to groups_path, notice: 'Attendance was successfully recorded.' }
+        format.html { redirect_to groups_path, notice: 'Attendance  successfully recorded.' }
         format.mobile{ redirect_to groups_path, notice: 'Attendance was successfully recorded.' }
         format.json { render action: 'show', status: :created, location: @attendance }
-      else
-        format.html { render action: 'new' }
-        format.mobile { render action: 'new' }
-        format.json { render json: @attendance.errors, status: :unprocessable_entity }
-      end
     end
 
   end
@@ -86,7 +98,19 @@ class AttendancesController < InheritedResources::Base
       format.html{redirect_to groups_path, notice: "Attendance record successfully removed"}
     end
   end
+private
 
+
+ def users_in_group(group)
+  @group=Group.find_by_id(group)
+      @ingroup = InGroup.where(groups_id: @group.id)      
+      @usersingroup = Array.new
+      @ingroup.each do |ig|
+        @usersingroup << User.find_by_id(ig.users_id)   
+      end  
+  return @usersingroup
+  end
+  
   def attendance_params
     params.require(:attendance).permit(:event, :absent, :user_id, :tracker_id, :groups_id)
   end

@@ -43,7 +43,6 @@
 			<% if @attendance.errors.any? %>
 			<div id="error_explanation">
 				<h2><%= pluralize(@attendance.errors.count, "error") %> prohibited this attendance from being saved:</h2>
-
 				<ul>
 					<% @attendance.errors.full_messages.each do |message| %>
 					<li>
@@ -54,7 +53,6 @@
 			</div>
 			<% end %>
 			<div id="selection">
-
 				<%= f.label "Absent Users" %> <i> ~Only select absent users.</i>
 				<%= select_tag(:user_ids, options_for_select(users_in_group(params[:group_id], params[:event]).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:id=>"sel",:class => 'form-control',:placeholder=>"Click here to select all absent users. Leave blank if all present", :multiple => true, :name=>'project[user_ids][]'}) %>
 				<%= f.hidden_field :groups_id, :value=>params[:group_id]%>
@@ -63,47 +61,69 @@
 			<div class="actions">
 				<%= f.submit 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK', toggle: "modal", target: '#myModal'  }, :class=>'btn btn-primary' %>
 			</div>
-
-			<% end %>
+			
+			<br />
+			<h3>Recorded as absent</h3>
+			
+			<div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th> Absent user </th>
+							<th> Event </th>
+							<th> Recorded Date </th>
+							<th> Tracker </th>
+			
+						</tr>
+					</thead>
+					<tbody>
+						<% Attendance.where(:event => params[:event], :date_recorded => Time.now.strftime("%D")).each do |attendance| %>
+						<tr>
+							<td><%= User.find_by_id(attendance.user_id).fname + " "+User.find_by_id(attendance.user_id).lname %></td>
+							<td><%= attendance.event%></td>
+							<td><%= attendance.date_recorded%></td>
+							<td><%= User.find_by_id(attendance.tracker_id).fname + " "+User.find_by_id(attendance.tracker_id).lname%></td>
+						</tr>
+						<%end%>
+					</tbody>
+				</table>
+				<%end%>
+			</div>
 		</div>
 	</div>
-</div>
 
-<!-- Loading Modal -->
-<div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel">Updating records and notifying users... Please wait.</h4>
-			</div>
-			<div class="modal-body">
-				<div class="progress">
-					<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+	<!-- Loading Modal -->
+	<div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Updating records and notifying users... Please wait.</h4>
+				</div>
+				<div class="modal-body">
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<!-- JQuery code to  show the form -->
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("div#llab").hide();
-		$("select#event").bind("change", function() {
-			if ($(this).val() == "PT") {
-				$("div#pt").show();
-				$("div#llab").hide();
-			} else {
-				$("div#llab").show();
-				$("div#pt").hide();
-			}
+	<!-- JQuery code to  show the form -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("div#llab").hide();
+			$("select#event").bind("change", function() {
+				if ($(this).val() == "PT") {
+					$("div#pt").show();
+					$("div#llab").hide();
+				} else {
+					$("div#llab").show();
+					$("div#pt").hide();
+				}
+			})
 		})
-	})
 
-</script>
-
-<script>
-	$(document).ready(function() {
-		$('select').selectpicker();
-	}); 
-</script>
+		$(document).ready(function() {
+			$('select').selectpicker();
+		});
+	</script>
