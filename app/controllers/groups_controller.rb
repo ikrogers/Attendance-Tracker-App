@@ -6,7 +6,6 @@ class GroupsController < InheritedResources::Base
     @group = Group.new(group_params)
    
 
-    @group.update_attributes(:ptdays => '', :llabdays => '')
 
 
     respond_to do |format|

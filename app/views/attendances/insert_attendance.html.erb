@@ -14,13 +14,20 @@
 						<br>
 						<i> ~User only from this group are shown</i>
 						<br>
-						<%= select_tag(:user_ids, options_for_select(users_in_group(@currentgroup).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+						<%= select_tag(:user_ids, options_for_select(users_in_group_unfiltered(@currentgroup).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 					</div>
 					<div>
 						<%= label_tag 'Select event'%>
 						<br>
-						<i>~Either PT or LLAB</i>
-						<%= select_tag :event, options_for_select([["PT"],["LLAB"]]), :class => 'form-control', :id => 'event'%>
+						
+						<%= select_tag :event, options_for_select(assigned_events(@currentgroup.id).collect {|e| [e.event_name, e.id]}), :class => 'form-control', :id => 'event'%>
+					</div>
+					
+					<div>
+						<%= label_tag 'Select offence'%>
+						<br>
+						
+						<%= select_tag :offence, options_for_select([["Absent"],["Tardy"],["Tardy limit absence"]]), :class => 'form-control', :id => 'event'%>
 					</div>
 
 					<div>
@@ -29,7 +36,6 @@
 						<i> ~Use the date picker(Click on the field. If you have problems try to click anywhere on the page then click the field again) to select which date you want to mark user as absent. Note: You cannot type dates in, but you can use picker.</i>
 						<br>
 						<%= text_field_tag "date", nil, {:class => 'form-control', :id => 'date', :readonly => true}%>
-
 					</div>
 					<br>
 					<div class="actions">

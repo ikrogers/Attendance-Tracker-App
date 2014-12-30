@@ -45,7 +45,7 @@
 						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<%assigned_events(group.id).each do |e|%>
 							<li role="presentation">
-								<%= link_to e.event_name, new_attendance_path(:group_id => group.id, :event => e.event_name), :role => "menuitem", :tabindex => -1 %>
+								<%= link_to e.event_name, new_attendance_path(:group_id => group.id, :event => e.event_name), :role => "menuitem", :method => :get, :tabindex => -1 %>
 							</li>
 							<%end%>
 						</ul>
@@ -86,7 +86,7 @@
 						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<%assigned_events(group.id).each do |e|%>
 							<li role="presentation">
-								<%= link_to e.event_name, new_attendance_path(:group_id => group.id, :event => e.event_name), :role => "menuitem", :tabindex => -1 %>
+								<%= link_to ""+e.event_name, new_attendance_path(:group_id => group.id, :event => e.event_name), :method => :get, :role => "menuitem", :tabindex => -1 %>
 							</li>
 							<%end%>
 						</ul>

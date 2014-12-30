@@ -48,7 +48,7 @@ class EventsController < InheritedResources::Base
   private
 
   def event_params
-    params.require(:event).permit(:event_name, :absence_max, :event_days => [])
+    params.require(:event).permit(:event_name, :absence_max, :max_tardies, :event_days => [])
   end
 end
 

@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(version: 20141225174544) do
 
   create_table "attendances", force: true do |t|
     t.boolean  "absent"
+    t.boolean  "tardy"
+    t.boolean  "absence_tardy"
     t.integer  "user_id"
     t.text     "event"
     t.integer  "tracker_id"
@@ -54,6 +56,7 @@ ActiveRecord::Schema.define(version: 20141225174544) do
   create_table "events", force: true do |t|
     t.text     "event_name"
     t.text     "event_days"
+    t.integer  "max_tardies"
     t.integer  "absence_max"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -70,8 +73,6 @@ ActiveRecord::Schema.define(version: 20141225174544) do
 
   create_table "groups", force: true do |t|
     t.text     "name"
-    t.text     "ptdays"
-    t.text     "llabdays"
     t.integer  "users_id"
     t.integer  "groups_id"
     t.text     "grouptype"
