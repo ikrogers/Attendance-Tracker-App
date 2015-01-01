@@ -78,9 +78,15 @@
 					<i> ~Indicate number of taries at which point it will turn into absence. Ex: 13</i>
 					<br>
 					<i> <b>~Leave/make blank if you DO NOT want to use tardy system (You will have to remove any incurred tardy absences manually).</b></i>
+					<%= f.number_field :max_tardies, in: 2..1000, class: 'form-control' %>
 				</div>
 				<div>
-					<%= f.number_field :max_tardies, in: 2..1000, class: 'form-control' %>
+					<%= f.label "Select Notification Type" %>
+					<br>
+					<i> ~How users will be notified if absence has been recorded/removed</i>
+					<br>
+					<%= f.select(:notification_type, options_for_select([["None"],["SMS"],["E-Mail"],["Both"]]), {}, { :include_blank => false, :class => 'form-control', :multiple => false})%>
+					<br>
 				</div>
 				<br>
 				<div class="actions">

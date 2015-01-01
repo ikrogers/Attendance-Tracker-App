@@ -11,6 +11,7 @@
 					<th>Max Absences</th>
 					<th>Max Tardies</th>
 					<th>Attendance Days</th>
+					<th>Absence Notifications</th>
 
 					<th colspan="2">Controls</th>
 				</tr>
@@ -23,6 +24,7 @@
 					<td><%= event.absence_max%></td>
 					<td><%= event.max_tardies%></td>
 					<td><%= event.event_days%></td>
+					<td><%= event.notification_type%></td>
 					<td><%= link_to 'Edit', edit_event_path(event) %></td>
 					<td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 				</tr>

@@ -1,3 +1,23 @@
+<script>
+	$(document).ready(function() {
+	  $('select').selectpicker();
+		
+	  $("select#event").change(function() {
+        
+        $("div#"+selected).hide();
+    });
+	});
+	
+	$(document).ready(function() {
+ $('.show').hide();    
+ $("select#event").on('change',function() {
+        var selected = $(this).find("option:selected").text();
+        $('div.show').hide();
+        $('div.'+selected).show();
+ });
+});
+</script>
+
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">Attendance Policy Rule From</h3>
@@ -37,20 +57,23 @@
 					<%end%>
 				</div>
 				<div>
-					<%= f.label "Groups Applied To:" %>
+					<%= f.label "Group Applied To:" %>
 					<br>
 					<%= f.select(:groups_id, options_for_select(Group.all.collect {|u| [u.name, u.id]},["All"]), {data:{live_search: "true"},:class => 'form-control', :multiple => false, :include_blank => 'All'})%>
 					<%if any_errors(@attendance_policy, :groups_id) != nil%>
 					<%= any_errors(@attendance_policy, :groups_id) %>
 					<%end%>
 				</div>
-				<div>
-					<%= f.label "Absence Milestone(Make dynamic with selected event)" %>
-					<%= f.number_field :absence_milestone, in: 0..1000, class: 'form-control' %>
+				<% Event.all.each do |event| %>
+				<div id="<%=event.event_name%>" class="show <%=event.event_name%>">
+					<%= f.label "Absence Milestone(Make dynamic with selected event)"+event.event_name %>
+					<%= f.number_field :absence_milestone, in: 0..event.absence_max.to_i, class: 'form-control' %>
 					<%if any_errors(@attendance_policy, :absence_milestone) != nil%>
 					<%= any_errors(@attendance_policy, :absence_milestone) %>
 					<%end%>
+					
 				</div>
+				<%end%>
 				<div>
 					<%= f.label "Action" %>
 					<%= f.select(:action, options_for_select([["SMS Notify"], ["Email Notify"], ["Email+SMS Notify"], ["Notify User and Supervisor(Group leader) Email"],["Notify User and Supervisor(Group leader) SMS"], ["Notify User and Supervisor(Group leader) Email + SMS "]]),{}, { :class => 'form-control'})%>
@@ -68,7 +91,7 @@
 				</div>
 				
 				<div>
-					<%= f.label "Custom message content" %>
+					<%= f.label "Custom Message" %>
 					<%= f.text_area :message, :class=>'form-control'%>
 					<%if any_errors(@attendance_policy, :message) != nil%>
 					<%= any_errors(@attendance_policy, :message) %>
@@ -84,8 +107,4 @@
 	</div>
 </div>
 </div>
-<script>
-	$(document).ready(function() {
-	$('select').selectpicker();
-	});
-</script>
+
