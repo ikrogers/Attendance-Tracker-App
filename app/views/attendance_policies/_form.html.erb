@@ -1,20 +1,17 @@
 <script>
 	$(document).ready(function() {
 	  $('select').selectpicker();
-		
-	  $("select#event").change(function() {
-        
-        $("div#"+selected).hide();
-    });
 	});
 	
-	$(document).ready(function() {
- $('.show').hide();    
- $("select#event").on('change',function() {
-        var selected = $(this).find("option:selected").text();
-        $('div.show').hide();
-        $('div.'+selected).show();
- });
+$(document).ready(function() { 
+	$("[class='hurr']").hide();
+	var selected = $("select#event").find("option:selected").text();
+	$("[id='"+selected+"']").show();
+	$("select#event").on('change',function() {
+		$("[class='hurr']").hide();
+		var selected = $(this).find("option:selected").text();
+		$("[id='"+selected+"']").show();      
+	});
 });
 </script>
 
@@ -65,7 +62,7 @@
 					<%end%>
 				</div>
 				<% Event.all.each do |event| %>
-				<div id="<%=event.event_name%>" class="show <%=event.event_name%>">
+				<div id="<%=event.event_name%>" class="hurr">
 					<%= f.label "Absence Milestone(Make dynamic with selected event)"+event.event_name %>
 					<%= f.number_field :absence_milestone, in: 0..event.absence_max.to_i, class: 'form-control' %>
 					<%if any_errors(@attendance_policy, :absence_milestone) != nil%>
