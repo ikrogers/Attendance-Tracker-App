@@ -1,21 +1,2 @@
-<% attendancept = Attendance.where(user_id: @user.id, event: "PT")+Attendance.where(user_id: @user.id, event: "Alternate PT")%>
-<% attendancellab = Attendance.where(user_id: @user.id, event: "LLAB")+Attendance.where(user_id: @user.id, event: "Alternate LLAB")%>
 
-<%if @event == "PT"|| @event == "Alternate PT"%>
-<%if attendancept.count == 9 %>
-You have used all of your <%= @event%>
-<% end %>
-<%if attendancept.count <= 8 %>
-You now have <%= attendancept.count%>/8 PT absences
-<% end %>
-<% end %>
-
-<%if @event == "LLAB"|| @event == "Alternate LLAB"%>
-<%if attendancellab.count == 4 %>
-You have used all of your <%= @event%> absences
-<% end %>
-<%if attendancellab.count <= 3 %>
-You now have <%= attendancellab.count%>/3 LLAB absences
-<% end %>
-<% end %>
 

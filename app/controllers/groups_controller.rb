@@ -2,12 +2,7 @@ class GroupsController < InheritedResources::Base
   before_action :authenticate_user!
   layout 'application1'
   def create
- 
     @group = Group.new(group_params)
-   
-
-
-
     respond_to do |format|
       if @group.save
         format.html { redirect_to groups_path, notice: 'Group was successfully created.' }

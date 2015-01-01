@@ -46,7 +46,6 @@ default from: 'automatedsystem@do-not-reply.com'
     mail :to => phone, :subject => "Removed "+@event+" absence"
   end 
   
-  
   def absence_removed_notify(user,event)
      @user = user
      @event = event

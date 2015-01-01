@@ -1,5 +1,4 @@
 module ApplicationHelper
-  
   def any_errors(resource, field)
     return nil if resource.errors[field] == nil
     messages = resource.errors.full_messages_for(field).map { |msg| content_tag(:li, msg) }.join
@@ -17,8 +16,6 @@ module ApplicationHelper
     end
   end
 
-  
-
   def get_events
     @event_objs = Event.all rescue nil
     @events = Array.new
@@ -29,7 +26,7 @@ module ApplicationHelper
     end
     return @events
   end
-  
+
   def assigned_events(group_id)
     @policy = AttendancePolicy.where(:groups_id => group_id)
     @policy_all = AttendancePolicy.where(:groups_id => nil)
@@ -61,5 +58,33 @@ module ApplicationHelper
     return @allowed
   end
 
+  def populate_new_groups
+    @names = Array.new
+    @names << "Attendance"
+    @names << "Non-Attendance"
+    @group = Group.all
+    if @group.count >= 1
+      Event.all.each do |event|
+        if alt_name_exist(event) == false
+          @names << "Alternate "+ event.event_name+" Attendance"
+        end
+      end
+    else
+      Event.all.each do |event|
+        @names << "Alternate "+ event.event_name+" Attendance"
+      end
+    end
+    return @names
+  end
+
+  def alt_name_exist(event)
+    @group = Group.all
+    @group.each do |group|
+      if (group.grouptype.include? event.event_name)
+      return true
+      end
+    end
+    return false
+  end
 
 end

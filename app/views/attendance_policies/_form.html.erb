@@ -53,11 +53,20 @@
 				</div>
 				<div>
 					<%= f.label "Action" %>
-					<%= f.select(:action, options_for_select([["SMS Notify"], ["Email Notify"], ["Notify User and Supervisor(Group leader) Email"],["Notify User and Supervisor(Group leader) SMS"]]),{}, { :class => 'form-control'})%>
+					<%= f.select(:action, options_for_select([["SMS Notify"], ["Email Notify"], ["Email+SMS Notify"], ["Notify User and Supervisor(Group leader) Email"],["Notify User and Supervisor(Group leader) SMS"], ["Notify User and Supervisor(Group leader) Email + SMS "]]),{}, { :class => 'form-control'})%>
 					<%if any_errors(@attendance_policy, :action) != nil%>
 					<%= any_errors(@attendance_policy, :action) %>
 					<%end%>
 				</div>
+				
+				<div>
+					<%= f.label "Additional Users" %>
+					<%= f.select(:additional_users, options_for_select(User.all.collect {|u| [(u.fname+" "+u.lname), u.id]}),{}, { data: {live_search: "true"},  :include_blank => true, :multiple => true, :class => 'form-control'})%>
+					<%if any_errors(@attendance_policy, :action) != nil%>
+					<%= any_errors(@attendance_policy, :action) %>
+					<%end%>
+				</div>
+				
 				<div>
 					<%= f.label "Custom message content" %>
 					<%= f.text_area :message, :class=>'form-control'%>

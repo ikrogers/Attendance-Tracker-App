@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20141225174544) do
     t.integer  "absence_milestone"
     t.text     "action"
     t.text     "event"
+    t.text     "additional_users"
     t.integer  "groups_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -57,6 +58,7 @@ ActiveRecord::Schema.define(version: 20141225174544) do
     t.text     "event_name"
     t.text     "event_days"
     t.integer  "max_tardies"
+    t.text     "notification_type"
     t.integer  "absence_max"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -76,6 +78,7 @@ ActiveRecord::Schema.define(version: 20141225174544) do
     t.integer  "users_id"
     t.integer  "groups_id"
     t.text     "grouptype"
+    t.boolean  "unique_user_group"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

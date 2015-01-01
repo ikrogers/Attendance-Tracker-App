@@ -1,4 +1,5 @@
 class AttendancePolicy < ActiveRecord::Base
+  serialize :additional_users
   
   validates :message, :presence => true
   validates :absence_milestone, :presence => true

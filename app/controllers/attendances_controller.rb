@@ -13,6 +13,8 @@ class AttendancesController < InheritedResources::Base
         if Attendance.find_by(:absent => true, :absence_tardy => nil, :user_id => ug.id, :event => params[:attendance][:event], :date_recorded => Time.now.strftime("%D")).nil?
           if @absent_users.include?(ug)
             @att = Attendance.create(:absent => true, :user_id => ug.id, :tracker_id => current_user.id, :date_recorded => Time.now.strftime("%D"), :event => params[:attendance][:event], :groups_id => params[:attendance][:groups_id])
+             UserMailer.absence_notify(u, attendance_params[:event]).deliver
+                   UserMailer.absence_notify_text(u, [u.phone, @carrier[u.carrier]].join(""), attendance_params[:event]).deliver
           end
         else
           if @absent_users.include?(ug)
