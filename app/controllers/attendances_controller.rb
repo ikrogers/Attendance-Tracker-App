@@ -11,6 +11,7 @@ class AttendancesController < InheritedResources::Base
           if @absent_users.include?(ug)
             @att = Attendance.create(:absent => true, :user_id => ug.id, :tracker_id => current_user.id, :date_recorded => Time.now.strftime("%D"), :event => params[:attendance][:event], :groups_id => params[:attendance][:groups_id])
             absence_notify(ug, params[:attendance][:event], "ABSENCE ADD")
+            process_milestone(ug, Group.find(params[:attendance][:groups_id]), Event.find_by(:event_name => params[:attendance][:event]))
           end
         else
           if @absent_users.include?(ug)
@@ -68,13 +69,14 @@ class AttendancesController < InheritedResources::Base
           if is_max_tardies(ug, params[:attendance][:event]) == false
             @att = Attendance.find_by(:absence_tardy => true, :user_id => ug.id, :event => params[:attendance][:event]) rescue nil
             if @att != nil
-            max_tardy_notify(ug, @event.event_name, "TARDY ABSENCE REMOVE")
+              max_tardy_notify(ug, @event.event_name, "TARDY ABSENCE REMOVE")
             @att.destroy
             end
           end
         end
 
       end
+
     end
 
     respond_to do |format|
@@ -190,6 +192,65 @@ class AttendancesController < InheritedResources::Base
       end
     end
     return false
+  end
+
+  def process_milestone(user, group, event)
+    @absences = Attendance.where(user_id: user.id, event: event.event_name, :absent => true).count
+    @policy = AttendancePolicy.where(:groups_id => group.id, :event => event.event_name, :absence_milestone => @absences) rescue nil
+    @policy2 = AttendancePolicy.where(:groups_id => nil, :event => event.event_name, :absence_milestone => @absences) rescue nil
+    @total_policies = (@policy + @policy2)
+
+    @total_policies.each do |policy|
+      @cc_users = get_users_for_policy_email(policy, group)
+      @sms_cc_users = get_users_for_policy_sms(policy, group, user)
+      if policy.action.include? "SMS"
+        UserMailer.milestone_notify_text(user, event, policy, @sms_cc_users).deliver
+      elsif policy.action.include? "Email"
+        UserMailer.milestone_notify(user, event, policy, @cc_users).deliver
+      elsif policy.action.include? "Email + SMS"
+        UserMailer.milestone_notify(user, event, policy, @cc_users).deliver
+        UserMailer.milestone_notify_text(user, event, policy, @sms_cc_users).deliver
+      end
+    end
+  end
+
+  def get_users_for_policy_email(policy, group)
+    @users = Array.new
+    policy.additional_users.each do |p|
+      if p != ""
+        @users << User.find(p)
+      end
+    end
+
+    if policy.action.include? "Supervisor"
+      @users << User.find(group.users_id)
+    end
+    @cc_emails = Array.new
+    @users.each do |u|
+      @cc_emails << u.email
+    end
+    return @cc_emails.uniq
+
+  end
+
+  def get_users_for_policy_sms(policy, group, user)
+    @carrier = {"Verizon"=>"@vtext.com", "AT&T"=>"@txt.att.net","Boost Mobile" => "@myboostmobile.com", "Cellular One"=>"@mobile.celloneusa.com","Metro PCS"=>"@mymetropcs.com","Nextel"=>"@messaging.nextel.com","Sprint"=>"@messaging.sprintpcs.com","T-Mobile"=>"@tmomail.net","Tracfone"=>"@txt.att.net"}
+    @users = Array.new
+    @users << user
+    policy.additional_users.each do |p|
+      if p != ""
+        @users << User.find(p)
+      end
+    end
+    if policy.action.include? "Supervisor"
+      @users << User.find(group.users_id)
+    end
+    @cc_sms = Array.new
+    @users.each do |u|
+      @cc_sms << ([u.phone, @carrier[u.carrier]].join(""))
+    end
+    return @cc_sms.uniq
+
   end
 
   def absence_notify(user, event, action)

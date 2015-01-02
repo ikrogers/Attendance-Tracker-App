@@ -1,5 +1,0 @@
-<% absences = Attendance.where(user_id: @user.id, event: @event.event_name, :absent => true).count%>
-<h2>You have reached limit on tardies and have incurred new absence</h2>
-<h2>You now have <%= absences%>/<%= @event.absence_max%> allowed absences</h2>
-
-

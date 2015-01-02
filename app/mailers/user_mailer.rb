@@ -88,14 +88,7 @@ class UserMailer < ActionMailer::Base
     @event = Event.find_by_event_name(event)
     mail :to => phone, :subject => "New "+@event.event_name+" tardy"
   end
-  
-  
-  
-  
-  
-  
-  
-  
+
   def max_tardy_removed_notify_text(user,phone,event)
     @user = user
     @event = Event.find_by_event_name(event)
@@ -118,6 +111,20 @@ class UserMailer < ActionMailer::Base
     @user = user
     @event = Event.find_by_event_name(event)
     mail :to => phone, :subject => "New "+@event.event_name+" tardy absence"
+  end
+
+  def milestone_notify(user, event, milestone, cc_users)
+    @user = user
+    @event = event
+    @milestone = milestone
+    mail :to => user.email, :cc => cc_users, :subject => "You have reached attendance milesone for "+@event.event_name
+  end
+
+  def milestone_notify_text(user, event, milestone, users)
+    @user = user
+    @event = event
+    @milestone = milestone
+    mail :to => users, :subject => "Milestone reached for "+@event.event_name
   end
 
 end
