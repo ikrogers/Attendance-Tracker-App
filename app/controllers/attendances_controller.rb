@@ -40,7 +40,7 @@ class AttendancesController < InheritedResources::Base
               tardy_notify(ug, params[:attendance][:event], "TARDY ADD")
               if is_max_tardies(ug, params[:attendance][:event])
                 @att = Attendance.create(:absent => true, :absence_tardy => true, :user_id => ug.id, :tracker_id => current_user.id, :date_recorded => Time.now.strftime("%D"), :event => params[:attendance][:event], :groups_id => params[:attendance][:groups_id])
-                max_tardy_notify(user, @event.event_name, "TARDY ABSENCE ADD")
+                max_tardy_notify(ug, @event.event_name, "TARDY ABSENCE ADD")
               end
             end
           else
@@ -51,7 +51,7 @@ class AttendancesController < InheritedResources::Base
               if is_max_tardies(ug, params[:attendance][:event]) == false
                 @att = Attendance.find_by(:absence_tardy => true, :user_id => ug.id, :event => params[:attendance][:event]) rescue nil
                 if @att != nil
-                  max_tardy_notify(user, @event.event_name, "TARDY ABSENCE REMOVE")
+                  max_tardy_notify(ug, @event.event_name, "TARDY ABSENCE REMOVE")
                 @att.destroy
                 end
               end
@@ -68,7 +68,7 @@ class AttendancesController < InheritedResources::Base
           if is_max_tardies(ug, params[:attendance][:event]) == false
             @att = Attendance.find_by(:absence_tardy => true, :user_id => ug.id, :event => params[:attendance][:event]) rescue nil
             if @att != nil
-            max_tardy_notify(user, @event.event_name, "TARDY ABSENCE REMOVE")
+            max_tardy_notify(ug, @event.event_name, "TARDY ABSENCE REMOVE")
             @att.destroy
             end
           end
@@ -128,13 +128,13 @@ class AttendancesController < InheritedResources::Base
     if @users != nil && @date != ""
       @users.each do |user|
         if @offence == "Absent"
-          @att = Attendance.create(:absent => true, :user_id => user.id, :tracker_id => current_user.id, :date_recorded => Time.now.strftime("%D"), :event => @event.event_name, :groups_id => @group.id)
+          @att = Attendance.create(:absent => true, :user_id => user.id, :tracker_id => current_user.id, :date_recorded => @date, :event => @event.event_name, :groups_id => @group.id)
           absence_notify(user, @event.event_name, "ABSENCE ADD")
         elsif @offence == "Tardy"
-          @att = Attendance.create(:tardy => true, :user_id => user.id, :tracker_id => current_user.id, :date_recorded => Time.now.strftime("%D"), :event => @event.event_name, :groups_id => @group.id)
+          @att = Attendance.create(:tardy => true, :user_id => user.id, :tracker_id => current_user.id, :date_recorded => @date, :event => @event.event_name, :groups_id => @group.id)
           tardy_notify(user, @event.event_name, "TARDY ADD")
         elsif @offence == "Tardy limit absence"
-          @att = Attendance.create(:absent => true, :absence_tardy => true, :user_id => user.id, :tracker_id => current_user.id, :date_recorded => Time.now.strftime("%D"), :event => @event.event_name, :groups_id => @group.id)
+          @att = Attendance.create(:absent => true, :absence_tardy => true, :user_id => user.id, :tracker_id => current_user.id, :date_recorded => @date, :event => @event.event_name, :groups_id => @group.id)
           max_tardy_notify(user, @event.event_name, "TARDY ABSENCE ADD")
         end
       end
