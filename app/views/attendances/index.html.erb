@@ -74,8 +74,22 @@
 					<td><%= User.find_by_id(attendance.tracker_id).email %></td>
 					<%end%>
 					<td><%= link_to 'Update', update_attendance_form_path(attendance.id), :class => 'btn btn-warning'%></td>
-					<td><%= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?' }, :class=>'btn btn-danger' %></td>
+					<td><%= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?', toggle: "modal", target: '#myModal'}, :class=>'btn btn-danger' %></td>
 				</tr>
+				<div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="myModalLabel">Updating records and notifying users... Please wait.</h4>
+							</div>
+							<div class="modal-body">
+								<div class="progress">
+									<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<% end %>
 			</tbody>
 		</table>
@@ -83,3 +97,4 @@
 		<br>
 	</div>
 </div>
+<!-- Loading Modal -->

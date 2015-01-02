@@ -39,13 +39,28 @@
 					</div>
 					<br>
 					<div class="actions">
-						<%= submit_tag "Submit", :class => 'btn btn-primary custombtnblock'  %>
+						<%= submit_tag 'Submit', data: {confirm: 'Please review your selections hence your changes are permanent. Press cancel if you wish to make a change, otherwise press OK', toggle: "modal", target: '#myModal'  }, :class=>'btn btn-primary' %>
 						<%= link_to 'Adjust Attendance', attendances_path(:attgroup_id => @currentgroup.id), :class => 'btn btn-default' %>
 					</div>
-
 					<% end %>
 				</div>
 			</body>
+		</div>
+	</div>
+</div>
+
+<!-- Loading Modal -->
+<div class="modal fade" id="myModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel">Updating records and notifying users... Please wait.</h4>
+			</div>
+			<div class="modal-body">
+				<div class="progress">
+					<div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

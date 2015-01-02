@@ -53,8 +53,9 @@
 
 						</tr>
 					</thead>
+					<% if Group.find(params[:group_id]).grouptype != "Alternate "+params[:event]+" Attendance"%>
 					<tbody>
-						<% users_in_group(params[:group_id], params[:event]).each do |user| %>
+						<% users_in_group_excused_excluded(params[:group_id], params[:event]).each do |user| %>
 						<tr>
 							<td><%= user.fname + " "+user.lname %></td>
 							<td><%= params[:event]%></td>
@@ -65,6 +66,20 @@
 						</tr>
 						<%end%>
 					</tbody>
+					<%else%>
+					<tbody>
+						<% users_in_group_unfiltered(params[:group_id]).each do |user| %>
+						<tr>
+							<td><%= user.fname + " "+user.lname %></td>
+							<td><%= params[:event]%></td>
+							<td><%= check_box_tag 'project[absent_user_ids][]', user.id, false %></td>
+							<% if Event.find_by_event_name(params[:event]).max_tardies != nil %>
+							<td><%= check_box_tag 'project[tardy_user_ids][]', user.id, false %></td>
+							<% end %>
+						</tr>
+						<%end%>
+					</tbody>
+					<%end%>
 				</table>
 			</div>
 			<%= f.hidden_field :groups_id, :value=>params[:group_id]%>
@@ -95,22 +110,8 @@
 
 <!-- JQuery code to  show the form -->
 <script>
-
-	$(document).ready(function() {
-		$("div#llab").hide();
-		$("select#event").bind("change", function() {
-			if ($(this).val() == "PT") {
-				$("div#pt").show();
-				$("div#llab").hide();
-			} else {
-				$("div#llab").show();
-				$("div#pt").hide();
-			}
-		})
-	})
-
 	$(document).ready(function() {
 		$('select').selectpicker();
 	});
- 
+
 </script>
