@@ -42,6 +42,7 @@ class AttendancesController < InheritedResources::Base
               if is_max_tardies(ug, params[:attendance][:event])
                 @att = Attendance.create(:absent => true, :absence_tardy => true, :user_id => ug.id, :tracker_id => current_user.id, :date_recorded => Time.now.strftime("%D"), :event => params[:attendance][:event], :groups_id => params[:attendance][:groups_id])
                 max_tardy_notify(ug, @event.event_name, "TARDY ABSENCE ADD")
+                process_milestone(ug, Group.find(params[:attendance][:groups_id]), Event.find_by(:event_name => params[:attendance][:event]))
               end
             end
           else
@@ -103,7 +104,6 @@ class AttendancesController < InheritedResources::Base
     if @isnil.count >= 1
       redirect_to attendances_path, notice: 'Record was successfully updated.'
     else
-
       redirect_to groups_path, notice: 'Record was successfully updated.'
     end
   end
@@ -132,12 +132,14 @@ class AttendancesController < InheritedResources::Base
         if @offence == "Absent"
           @att = Attendance.create(:absent => true, :user_id => user.id, :tracker_id => current_user.id, :date_recorded => @date, :event => @event.event_name, :groups_id => @group.id)
           absence_notify(user, @event.event_name, "ABSENCE ADD")
+          process_milestone(user, @group, @event)
         elsif @offence == "Tardy"
           @att = Attendance.create(:tardy => true, :user_id => user.id, :tracker_id => current_user.id, :date_recorded => @date, :event => @event.event_name, :groups_id => @group.id)
           tardy_notify(user, @event.event_name, "TARDY ADD")
         elsif @offence == "Tardy limit absence"
           @att = Attendance.create(:absent => true, :absence_tardy => true, :user_id => user.id, :tracker_id => current_user.id, :date_recorded => @date, :event => @event.event_name, :groups_id => @group.id)
           max_tardy_notify(user, @event.event_name, "TARDY ABSENCE ADD")
+          process_milestone(user, @group, @event)
         end
       end
     end
@@ -203,13 +205,13 @@ class AttendancesController < InheritedResources::Base
     @total_policies.each do |policy|
       @cc_users = get_users_for_policy_email(policy, group)
       @sms_cc_users = get_users_for_policy_sms(policy, group, user)
-      if policy.action.include? "SMS"
+      if policy.action.include? "Email + SMS"
+        UserMailer.milestone_notify(user, event, policy, @cc_users).deliver
+        UserMailer.milestone_notify_text(user, event, policy, @sms_cc_users).deliver
+      elsif policy.action.include? "SMS"
         UserMailer.milestone_notify_text(user, event, policy, @sms_cc_users).deliver
       elsif policy.action.include? "Email"
         UserMailer.milestone_notify(user, event, policy, @cc_users).deliver
-      elsif policy.action.include? "Email + SMS"
-        UserMailer.milestone_notify(user, event, policy, @cc_users).deliver
-        UserMailer.milestone_notify_text(user, event, policy, @sms_cc_users).deliver
       end
     end
   end
