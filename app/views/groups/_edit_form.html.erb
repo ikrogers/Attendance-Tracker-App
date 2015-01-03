@@ -71,6 +71,12 @@
 				<br>
 				<%= select_tag(:user_ids, options_for_select(excused_group(params[:id]).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 				 
+				 <%= f.label "Select allowed days for taking attendance" %>
+				<br>
+				<i> ~This will allow to take attendance for the event this group is created for on different days</i>
+				<br>
+				<%= f.select(:alt_event_days, options_for_select(Date::DAYNAMES.collect {|day| [day]}), {}, { :class => 'form-control', :multiple => true})%>
+				 
 				<%else%>
 				<%= f.label "Select Users to add" %>
 				<br>

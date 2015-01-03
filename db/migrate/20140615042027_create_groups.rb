@@ -5,6 +5,7 @@ class CreateGroups < ActiveRecord::Migration
       t.references :users, index: true
       t.references :groups, index: true 
       t.text :grouptype
+      t.text :alt_event_days
       t.boolean :unique_user_group
       t.timestamps
     end

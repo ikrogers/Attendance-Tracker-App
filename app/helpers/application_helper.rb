@@ -16,6 +16,18 @@ module ApplicationHelper
     end
   end
 
+  def is_today_alt(group)
+    @days = group.alt_event_days
+    if @days != nil
+    @days.each do |ed|
+      if Time.now.strftime("%A") == ed
+      return true
+      end
+    end
+    end
+    return false
+  end
+
   def get_events
     @event_objs = Event.all rescue nil
     @events = Array.new
@@ -57,6 +69,8 @@ module ApplicationHelper
     end
     return @allowed
   end
+
+  
 
   def populate_new_groups
     @names = Array.new

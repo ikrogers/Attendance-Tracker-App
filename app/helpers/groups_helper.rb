@@ -23,6 +23,12 @@ module GroupsHelper
     return @notin
 
   end
+  
+  def strip_alt_att(group)
+    @name = group.remove("Alternate ")
+    @name = @name.remove(" Attendance")
+    return @name
+  end
 
   def excused_group(group)
     @group = Group.find_by_id(group)

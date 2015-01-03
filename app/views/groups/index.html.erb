@@ -33,8 +33,10 @@
 					<td><%= link_to 'Show Members', group ,:class=>'btn btn-info'%></td>
 					<% if current_user.tracker == true%>
 					<%if (group.grouptype.include? "Non-Attendance") == false%>
-					<%if assigned_events(group.id) == nil%>
+					<%if assigned_events(group.id).count < 1%>
 					<td><%= link_to 'Take attendance', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+					<%elsif group.grouptype.include? "Alternate"%>
+					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id, :event => strip_alt_att(group.grouptype)), :class=>'btn btn-primary', :disabled => true %></td>
 					<%else%>
 					<td>
 					<div class="dropdown">
@@ -76,6 +78,12 @@
 					<%if (group.grouptype.include? "Non-Attendance") == false%>
 					<%if assigned_events(group.id).count < 1%>
 					<td><%= link_to 'Take attendance', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+					<%elsif group.grouptype.include? "Alternate"%>
+					<%if is_today_alt(group) == true %>
+					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id, :event => strip_alt_att(group.grouptype)), :class=>'btn btn-primary' %></td>
+					<%else%>
+					<td><%= link_to 'Take attendance', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+					<%end%>
 					<%else%>
 					<td>
 					<div class="dropdown">

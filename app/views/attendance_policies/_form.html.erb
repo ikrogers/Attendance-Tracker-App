@@ -56,7 +56,7 @@ $(document).ready(function() {
 				<div>
 					<%= f.label "Group Applied To:" %>
 					<br>
-					<%= f.select(:groups_id, options_for_select(Group.all.collect {|u| [u.name, u.id]},["All"]), {data:{live_search: "true"},:class => 'form-control', :multiple => false, :include_blank => 'All'})%>
+					<%= f.select(:groups_id, options_for_select(Group.all.collect {|u| [u.name, u.id]}), {data:{live_search: "true"},:class => 'form-control', :multiple => false, :include_blank => 'All'})%>
 					<%if any_errors(@attendance_policy, :groups_id) != nil%>
 					<%= any_errors(@attendance_policy, :groups_id) %>
 					<%end%>

@@ -142,7 +142,7 @@ class GroupsController < InheritedResources::Base
   end
 
   def group_params
-    params.require(:group).permit(:name, :grouptype, :users_id, :groups_id)
+    params.require(:group).permit(:name, :grouptype, :users_id, :groups_id, :alt_event_days => [])
   end
 
 end
