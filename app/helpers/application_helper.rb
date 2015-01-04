@@ -19,11 +19,11 @@ module ApplicationHelper
   def is_today_alt(group)
     @days = group.alt_event_days
     if @days != nil
-    @days.each do |ed|
-      if Time.now.strftime("%A") == ed
-      return true
+      @days.each do |ed|
+        if Time.now.strftime("%A") == ed
+        return true
+        end
       end
-    end
     end
     return false
   end
@@ -70,8 +70,6 @@ module ApplicationHelper
     return @allowed
   end
 
-  
-
   def populate_new_groups
     @names = Array.new
     @names << "Attendance"
@@ -99,6 +97,60 @@ module ApplicationHelper
       end
     end
     return false
+  end
+
+  def get_users_for_group(group)
+    @users = Array.new
+    InGroup.where(:groups_id => group).each do |g|
+      @users << User.find(g.users_id)
+    end
+    return @users
+  end
+
+  def get_absence_events(user)
+    @events = Array.new
+    Attendance.where(:user_id => user.id, :absent => true).each do |event|
+      @event = Event.find_by_event_name(event.event)
+      @events << @event.event_name
+    end
+    return @events.uniq
+  end
+
+  def get_tardy_events(user)
+    @events = Array.new
+    Attendance.where(:user_id => user.id, :tardy => true).each do |event|
+      @event = Event.find_by_event_name(event.event)
+      @events << @event.event_name
+    end
+    return @events.uniq
+  end
+
+  def get_absence_count(user, event)
+    return Attendance.where(:user_id => user.id, :absent => true, :event => event).count
+  end
+
+  def get_tardy_count(user, event)
+    return Attendance.where(:user_id => user.id, :tardy => true, :event => event).count
+  end
+
+  def get_absence_days(user, event)
+    @days = Array.new
+    Attendance.where(:user_id => user.id, :absent => true, :event => event).each do |att|
+      if att.absence_tardy != nil && att.absence_tardy == true
+        @days << Date.strptime(att.date_recorded,"%m/%d/%y").to_date.to_formatted_s("%M/%d/%Y").to_date.to_formatted_s(:long)+" (Absence due to reaching tardy limit)"
+      else
+        @days << Date.strptime(att.date_recorded,"%m/%d/%y").to_date.to_formatted_s("%M/%d/%Y").to_date.to_formatted_s(:long)
+      end
+    end
+    return @days
+  end
+
+  def get_tardy_days(user, event)
+    @days = Array.new
+    Attendance.where(:user_id => user.id, :tardy => true, :event => event).each do |att|
+      @days << Date.strptime(att.date_recorded,"%m/%d/%y").to_date.to_formatted_s("%M/%d/%Y").to_date.to_formatted_s(:long)
+    end
+    return @days
   end
 
 end
