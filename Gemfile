@@ -45,6 +45,9 @@ gem 'bootstrap3-datetimepicker-rails', '~> 3.0.2'
 #Heroku addons
 gem 'newrelic_rpm'
 
+#Sortable tables gem
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+
 
 
 

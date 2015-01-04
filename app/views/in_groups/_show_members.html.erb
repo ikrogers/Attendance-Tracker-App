@@ -1,11 +1,22 @@
+<script>
+
+$(document).ready(function() {
+$('#maintable').dataTable();
+})
+
+</script>
+
+
+
+
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		Group Details
 	</div>
 	<div class="panel-body">
 
-		<table class='table table-striped table-bordered'>
-			<thread>
+		<table class="table table-striped table-bordered" id="maintable">
+			<thead>
 				<tr>
 
 					<th>Name</th>
@@ -13,7 +24,7 @@
 					<th>Tardies</th>
 
 				</tr>
-			</thread>
+			</thead>
 			<tbody class="table-bordered">
 				<%get_users_for_group(params[:id]).each do |u|%>
 				<tr>
@@ -66,7 +77,6 @@
 												</tr>
 												<%end%>
 											</tbody>
-
 										</table>
 									</div>
 								</div></td>
@@ -77,18 +87,6 @@
 				</tr>
 				<%end%>
 			</tbody>
-
 		</table>
-
 	</div>
-	<div class="panel panel-warning">
-		<div class="panel-heading">
-			Attendance Days: (Debugging purposes... if empty and this is an attendance group please update the days under Manage Group)
-		</div>
-		<div class="panel-body">
-
-			<h5>PT Days: <%= @ptstring%></h5>
-			<h5>LLAB Days: <%= @llabstring%></h5>
-		</div>
-	</div>
-
+</div>
