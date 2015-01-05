@@ -32,6 +32,24 @@ class ExcusesController < InheritedResources::Base
       end
     end
   end
+  
+  def destroy
+    @excuse = Excuse.find(params[:id])
+    @groups = Group.all
+    @groups.each do |group|
+      if group.grouptype.include? @excuse.event
+        @in_group = InGroup.where(:groups_id => group.id, :users_id => @excuse.user_id) rescue nil
+        if @in_group != nil
+          @in_group.destroy_all
+          break
+        end
+      end
+    end
+    @excuse.destroy
+    respond_to do |format|
+      format.html { redirect_to excuses_path, notice: 'Excuse removed! All associated records has been removed as well' }
+    end
+  end
 private
 
 

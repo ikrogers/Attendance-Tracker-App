@@ -116,6 +116,12 @@ class GroupsController < InheritedResources::Base
         end
       end
     @all.destroy_all
+    
+    #if group is deleted remove all policies associated explicidly with it
+    @policies = AttendancePolicy.where(:groups_id => params[:id]) rescue nil
+    if @policies != nil
+      @policies.destroy_all
+    end
     end
 
     #Message sent to will update to -1

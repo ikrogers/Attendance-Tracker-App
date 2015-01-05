@@ -67,7 +67,7 @@
 				</tr>
 				<%if  current_user.admin == true || current_user.uberadmin == true %>
 				<%if group.users_id ==  nil%>
-				<tr bgcolor="#FFFF19">
+				<tr class="danger">
 					<%else%>
 				<tr>
 					<%end%>
@@ -122,10 +122,11 @@
 		</table>
 		<% @att = Attendance.where(groups_id: nil) rescue nil%>
 		<% if current_user.admin == true || current_user.uberadmin == true%>
-		<%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %>
+		<%= link_to '(1) New Group', new_group_path, :class => 'btn btn-primary' %>
+		<%= link_to '(2) Define events', events_path, :method => :get, :class => 'btn btn-default'%>
+		<%= link_to '(3) Define Attendance Policy', attendance_policies_path, :method => :get, :class => 'btn btn-default'%>
 		<%= link_to 'Manage Excused Users', excuses_path, :method => :get, :class => 'btn btn-default'%>
-		<%= link_to 'Define events', events_path, :method => :get, :class => 'btn btn-default'%>
-		<%= link_to 'Define Attendance Policy', attendance_policies_path, :method => :get, :class => 'btn btn-default'%>
+		
 
 		<% if @att.count >= 1%>
 		<%= link_to 'Non-group attendance found! Click here!', attendances_path, :method => :get, :class => 'btn btn-danger'%>
@@ -133,6 +134,7 @@
 		<% end %>
 	</div>
 </div>
+
 
 <script>
 	$(document).ready(function() {

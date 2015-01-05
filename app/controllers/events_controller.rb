@@ -30,6 +30,7 @@ class EventsController < InheritedResources::Base
   end
 
   def update
+    
     @event = Event.find_by_id(params[:id])
     respond_to do |format|
       if @event.update(event_params)
@@ -42,6 +43,36 @@ class EventsController < InheritedResources::Base
         format.mobile { render action: 'new' }
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
+    end
+  end
+  
+  def destroy
+    @event = Event.find(params[:id])
+    @groups = Group.all
+    @groups.each do |group|
+      if group.grouptype.include? @event.event_name
+        @in_group = InGroup.where(:groups_id => group.id) rescue nil
+        if @in_group != nil
+          @in_group.destroy_all
+        end
+        group.destroy
+      end
+    end
+    
+    @excuses = Excuse.where(:event => @event.event_name) rescue nil
+    if @excuses != nil
+      @excuses.destroy_all
+    end
+    
+    @policies = AttendancePolicy.where(:event => @event.event_name) rescue nil
+    if @policies != nil
+      @policies.destroy_all
+    end
+    
+    @event.destroy
+    
+    respond_to do |format|
+      format.html { redirect_to events_path, notice: 'Event removed! All associated records has been removed as well' }
     end
   end
 

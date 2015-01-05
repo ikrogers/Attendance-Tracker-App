@@ -8,7 +8,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<%= link_to "Home", authenticated_root_path, :class => 'navbar-brand' %>
+			<%= link_to "Home", authenticated_root_path, :method => :get, :class => 'navbar-brand' %>
 
 		</div>
 
@@ -18,18 +18,18 @@
 				<% if current_user.admin == true || current_user.uberadmin == true%>
 				<% if current_user.uberadmin == true%>
 				<li>
-					<%= link_to "Active Admin Interface", admin_root_path %>
+					<%= link_to "Active Admin Interface", admin_root_path, :method => :get %>
 				</li>
 				<% end %>
 				<li >
-					<%= link_to "Group and Attendace Management", groups_path %>
+					<%= link_to "Group and Attendace Management", groups_path, :method => :get %>
 				</li>
 				<li >
-					<%= link_to "Send Group Messages", new_message_path %>
+					<%= link_to "Send Group Messages", new_message_path, :method => :get %>
 				</li>
 
 				<li >
-					<%= link_to "View and Track Messages", messages_path %>
+					<%= link_to "View and Track Messages", messages_path, :method => :get %>
 				</li>
 
 				<%end%>
@@ -37,7 +37,7 @@
 				<% if current_user.leader == true || current_user.tracker == true %>
 				<% if current_user.admin == false || current_user.admin == nil%>
 				<li >
-					<%= link_to "Take/View Attendance", groups_path %>
+					<%= link_to "Take/View Attendance", groups_path, :method => :get %>
 				</li>
 
 				<%end%>

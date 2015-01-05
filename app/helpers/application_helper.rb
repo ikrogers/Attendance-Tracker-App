@@ -110,8 +110,8 @@ module ApplicationHelper
   def get_absence_events(user)
     @events = Array.new
     Attendance.where(:user_id => user.id, :absent => true).each do |event|
-      @event = Event.find_by_event_name(event.event)
-      @events << @event.event_name
+      
+      @events << event.event
     end
     return @events.uniq
   end
@@ -119,8 +119,7 @@ module ApplicationHelper
   def get_tardy_events(user)
     @events = Array.new
     Attendance.where(:user_id => user.id, :tardy => true).each do |event|
-      @event = Event.find_by_event_name(event.event)
-      @events << @event.event_name
+      @events << event.event
     end
     return @events.uniq
   end

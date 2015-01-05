@@ -1,22 +1,10 @@
 ActiveAdmin.register User do
-
-
-   
-
-
   controller do
     def update_resource(object, attributes)
-
       update_method = attributes.first[:password].present? ? :update_attributes : :update_without_password
-
       object.send(update_method, *attributes)
-
     end
-    
-    
-    
-    
-    
+  
     alias_method :destroy_user, :destroy
 
     #Custom cascading destroy action where it will delete everything that belongs to the user then deletes the actual user
@@ -70,7 +58,6 @@ ActiveAdmin.register User do
       else
       end
     end
-
   end
 
   form do |f|
