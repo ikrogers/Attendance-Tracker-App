@@ -139,11 +139,16 @@ class GroupsController < InheritedResources::Base
         at.update_attributes(:groups_id => nil)
       end
     end
-    
+     #if group is deleted remove all policies associated with it
+     @policy = AttendancePolicy.where(:groups_id => params[:id]) rescue nil
+     if @policy != nil
+       @policy.destroy_all
+     end
     @group.destroy
+    
 
     respond_to do |format|
-      format.html { redirect_to groups_path, notice: 'Group removed!' }
+      format.html { redirect_to groups_path, notice: 'Group removed! All associated records has been removed as well' }
     end
   end
 
