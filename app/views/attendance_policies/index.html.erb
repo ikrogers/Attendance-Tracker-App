@@ -1,9 +1,16 @@
+<script>
+	$(document).ready(function() {
+		$('.table').dataTable();
+	})
+
+</script>
+
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">Excused Users</h3>
 	</div>
 	<div class="panel-body">
-		<table class="table">
+		<table class="table table-striped table-bordered">
 
 			<thead>
 				<tr>
@@ -11,9 +18,9 @@
 					<th>Groups Applied To</th>
 					<th>Absence Milestone</th>
 					<th>Action</th>
-					<th>Message</th>
-
-					<th colspan="2">Controls</th>
+					<th>Show</th>
+					<th>Edit</th>
+					<th>Destroy</th>
 				</tr>
 			</thead>
 
@@ -24,7 +31,10 @@
 					<td><%= group_exists(ap.groups_id)%></td>
 					<td><%= ap.absence_milestone%></td>
 					<td><%= ap.action%></td>
-					<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#showmodal">Show Message</button></td>
+					<td>
+					<button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#showmodal">
+						Show Message
+					</button></td>
 
 					<!-- Modal -->
 					<div class="modal fade" id="showmodal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -44,17 +54,16 @@
 							</div>
 						</div>
 					</div>
-					<td><%= link_to 'Edit', edit_attendance_policy_path(ap) %></td>
-					<td><%= link_to 'Destroy', ap, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+					<td><%= link_to 'Edit', edit_attendance_policy_path(ap), :class => "btn btn-warning btn-block" %></td>
+					<td><%= link_to 'Destroy', ap, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-block" %></td>
 				</tr>
 				<% end %>
 			</tbody>
 		</table>
 
+		<%= link_to 'New Attendance Rule', new_attendance_policy_path, :class => "btn btn-primary" %>
+		<%= link_to 'Back', groups_path, :class => "btn btn-default"%>
 	</div>
-
-	<%= link_to 'New Attendance Rule', new_attendance_policy_path %>
-	<%= link_to 'Back', groups_path%>
 </div>
 
 <br>

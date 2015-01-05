@@ -152,5 +152,13 @@ module ApplicationHelper
     end
     return @days
   end
+  
+  def get_absences_for_user(u, event)
+    
+  end
+  
+  def get_tardies_for_user(u, event)
+    
+  end
 
 end

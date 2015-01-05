@@ -1,7 +1,9 @@
+
+
 <%= form_for(@excuse) do |f| %>
 <div class="panel panel-primary">
 	<div class="panel-heading">
-		<h3 class="panel-title">Alternate PT/LLAB User From</h3>
+		<h3 class="panel-title">Excuse set-up form</h3>
 	</div>
 	<div class="panel-body">
 		<div class="container">
@@ -32,7 +34,7 @@
 					<br>
 					<i> ~What type of excuse is it?</i>
 					<br>
-					<%= f.select(:event, options_for_select(Event.all.collect {|e| [e.event_name]}), { :class => 'form-control', :name => 'project[add_remove][]',  :multiple => false})%>
+					<%= f.select(:event, options_for_select(Event.all.collect {|e| [e.event_name]}),{}, { :class => 'form-control',  :multiple => false})%>
 					<%if any_errors(@excuse, :event) != nil%>
 					<%= any_errors(@excuse, :event) %>
 					<%end%>
@@ -49,7 +51,7 @@
 				</div>
 
 				<div>
-					<%= f.label "Select PT days" %>
+					<%= f.label "Select excuse days" %>
 					<br>
 					<i> ~Select which days user is excused for and will not show up on regular attendance tracking form.</i>
 					<br>
@@ -60,8 +62,8 @@
 				</div>
 
 				<div class="actions">
-					<%= f.submit  %>
-					<%= link_to 'Manage Alternane PT and LLAB Users', excuses_path, :class => 'btn btn-default' %>
+					<%= f.submit  :class => 'btn btn-primary'%>
+					<%= link_to 'Back', excuses_path, :class => 'btn btn-default' %>
 
 				</div>
 				<% end %>
@@ -69,7 +71,6 @@
 		</body>
 	</div>
 </div>
-
 <script>
 	$(document).ready(function() {
 		$('select').selectpicker();

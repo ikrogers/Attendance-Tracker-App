@@ -1,3 +1,11 @@
+<script>
+
+$(document).ready(function() {
+$('.table').dataTable();
+})
+
+</script>
+
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">Attendance Records</h3>
@@ -8,7 +16,7 @@
 		<% @currentuserattendance = Attendance.where(groups_id: @currentgroup.id) rescue nil %>
 		<h1>Absence Records For Group: <%= @currentgroup.name %></h1>
 
-		<table class='table'>
+		<table class="table table-striped table-bordered" id = "maint">
 			<thead>
 				<tr>
 					<th> Absent user </th>
@@ -28,7 +36,7 @@
 					<% if attendance.absent == true && attendance.absence_tardy == nil %>
 					<td>Absent</td>
 					<% elsif attendance.tardy == true %>
-					<td>Tardy</td>c
+					<td>Tardy</td>
 					<% elsif attendance.absence_tardy == true %>
 					<td>Tardy limit absence</td>
 					<% end %>
@@ -50,7 +58,7 @@
 		<% else %>
 		<% @currentuserattendance = Attendance.where(groups_id: nil) rescue nil %>
 		<h1>Absence Records For Group: Deleted!</h1>
-		<table class='table'>
+		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
 					<th> Absent user </th>

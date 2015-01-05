@@ -1,21 +1,31 @@
+<script>
+
+$(document).ready(function() {
+$('.table').dataTable();
+})
+
+</script>
+
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">Excused Users</h3>
 	</div>
 	<div class="panel-body">
-		<table class="table">
+		<table class="table table-striped table-bordered">
+			<thead>
 			<th>Name</th>
 			<th>Event</th>
 			<th>Days</th>
 			<th colspan="2">Controls</th>
+			</thead>
 			<tbody>
 				<%Excuse.all.each do |excuse|%>
 				<tr>
 					<td><%= User.find_by_id(excuse.user_id).fname+" "+User.find_by_id(excuse.user_id).lname%></td>
 					<td><%= excuse.event%></td>
 					<td><%= excuse.excused_days%></td>
-					<td><%= link_to 'Edit', edit_excuse_path(excuse) %></td>
-					<td><%= link_to 'Destroy', excuse, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+					<td><%= link_to 'Edit', edit_excuse_path(excuse), :class => "btn btn-warning btn-block" %></td>
+					<td><%= link_to 'Destroy', excuse, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-block" %></td>
 				</tr>
 				<%end%>
 			</tbody>
