@@ -1,18 +1,4 @@
-<%
- def today(group) #Script that determines if today is one of the days attendance is allowed to be taken on
-    @availabledays = group.event_days.split("::")
-    @flag = false
-    @availabledays.each do |a|
-      if Time.now.strftime("%A") == a
-        @flag = false
-      break
-      else
-        @flag = true
-      end
-    end
-    return @flag
-  end
-%>
+
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">Groups</h3>
@@ -43,16 +29,28 @@
 					<td><%= group.name %></td>
 					<td><%= link_to 'Show', group ,:class=>'btn btn-info'%></td>
 					<% if current_user.tracker == true%>
-          			<%if (group.grouptype.include? "Non-Attendance") == false%>
-
-					<%if today(group) == true%>
-					<td><%= link_to 'Record', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
+          				<%if (group.grouptype.include? "Non-Attendance") == false%>
+					<%if assigned_events(group.id).count < 1%>
+					<td><%= link_to 'Take attendance', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+					<%elsif group.grouptype.include? "Alternate"%>
+					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id, :event => strip_alt_att(group.grouptype)), :class=>'btn btn-primary', :disabled => true %></td>
 					<%else%>
-					<td><%= link_to 'Not Today!', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+					<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle"  type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+							Take Attendance
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<%assigned_events(group.id).each do |e|%>
+							<li role="presentation">
+								<%= link_to e.event_name, new_attendance_path(:group_id => group.id, :event => e.event_name), :role => "menuitem", :method => :get, :tabindex => -1 %>
+							</li>
+							<%end%>
+						</ul>
+					</div></td>
+					<%end%>
 					<% end %>
-
-					<% end %>
-
 					<% end %>
 					<td></td>
 					<td></td>
@@ -64,17 +62,32 @@
 					<td><%= group.name %></td>
 					<td><%= link_to 'Show', group, :class => 'btn btn-info' %></td>
           <%if (group.grouptype.include? "Non-Attendance") == false%>
-<%if today(group) == true%>
-					<td><%= link_to 'Record', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
+					<%if assigned_events(group.id).count < 1%>
+					<td><%= link_to 'Take attendance', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+					<%elsif group.grouptype.include? "Alternate"%>
+					<%if is_today_alt(group) == true %>
+					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id, :event => strip_alt_att(group.grouptype)), :class=>'btn btn-primary' %></td>
 					<%else%>
-					<td><%= link_to 'Not Today!', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
-					<% end %>
-					<% else %>
-					<td><%= link_to 'Attendance', authenticated_root_path, :class => 'btn btn-primary', :disabled => true %></td>
-					<td></td>
+					<td><%= link_to 'Take attendance', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+					<%end%>
+					<%else%>
+					<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle"  type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+							Take Attendance
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<%assigned_events(group.id).each do |e|%>
+							<li role="presentation">
+								<%= link_to ""+e.event_name, new_attendance_path(:group_id => group.id, :event => e.event_name), :method => :get, :role => "menuitem", :tabindex => -1 %>
+							</li>
+							<%end%>
+						</ul>
+					</div></td>
 					<%end%>
 					<% end %>
-
+<% end %>
 				</tr>
 				<% end %>
 			</tbody>

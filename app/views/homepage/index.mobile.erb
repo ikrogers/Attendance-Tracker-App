@@ -3,33 +3,72 @@
 		<h2>Your Attendance Statistics:</h2>
 		<% @attendancept = Attendance.where(user_id: current_user.id, event: "PT")+Attendance.where(user_id: current_user.id, event: "Alternate PT")%>
 		<% @attendancellab = Attendance.where(user_id: current_user.id, event: "LLAB")+Attendance.where(user_id: current_user.id, event: "Alternate LLAB")%>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Missed PT: <%= @attendancept.count %></th>
-					<th>Missed LLAB: <%= @attendancellab.count %></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-					<table>
-						<% @attendancept.each do |a|%>
+		<table class="table table-striped table-bordered" id="maint">
+					<thead>
 						<tr>
-						<td> <%= Date.strptime(a.date_recorded,"%m/%d/%y").to_date.to_formatted_s("%M/%d/%Y").to_date.to_formatted_s(:long)%><%if a.event == "Alternate PT"%> (<%=a.event%>)<%end%> </td>
+							<th>Absences</th>
+							<th>Tardies</th>
 						</tr>
-						<% end %>
-					</table></td><td>
-					<table>
-						<% @attendancellab.each do |a|%>
+					</thead>
+					<tbody class="table-bordered">
 						<tr>
-						<td> <%= Date.strptime(a.date_recorded,"%m/%d/%y").to_date.to_formatted_s("%M/%d/%Y").to_date.to_formatted_s(:long)%><%if a.event == "Alternate LLAB"%> (<%=a.event%>)<%end%> </td>
+							<td>
+							<table class = "table table-striped table-bordered">
+								<tbody class="table-bordered">
+									<%get_absence_events(current_user).each do |event|%>
+									<tr>
+										<td><b><%= get_absence_count(current_user, event)%></b> missed <%= event%> event(s). <a data-toggle="collapse" href="#1<%= current_user.fname+current_user.lname+event %>" aria-expanded="false" aria-controls="collapseExample">Details</a></td>
+									</tr>
+									<tr>
+										<td>
+										<div class="collapse" id="1<%= current_user.fname+current_user.lname+event %>">
+											<div class="well">
+												<table class="table table-striped">
+													<tbody class="table-bordered">
+														<%get_absence_days(current_user, event).each do |day|%>
+														<tr class="info">
+															<td> <%= day %> </td>
+														</tr>
+														<%end%>
+													</tbody>
+
+												</table>
+											</div>
+										</div></td>
+									</tr>
+									<%end%>
+								</tbody>
+							</table></td>
+
+							<td>
+							<table class="table table-striped table-bordered">
+								<tbody class="table-bordered">
+									<%get_tardy_events(current_user).each do |event|%>
+									<tr>
+										<td><b><%= get_tardy_count(current_user, event)%></b> tardy(ies) for <%= event%>. <a data-toggle="collapse" href="#2<%= current_user.fname+current_user.lname+event %>" aria-expanded="false" aria-controls="collapseExample">Details</a></td>
+									</tr>
+									<tr>
+										<td>
+										<div class="collapse" id="2<%= current_user.fname+current_user.lname+event %>">
+											<div class="well">
+												<table class="table table-striped  table-bordered">
+													<tbody class="table-bordered">
+														<%get_tardy_days(current_user, event).each do |day|%>
+														<tr class="info">
+															<td> <%= day %> </td>
+														</tr>
+														<%end%>
+													</tbody>
+												</table>
+											</div>
+										</div></td>
+									</tr>
+									<%end%>
+								</tbody>
+							</table></td>
 						</tr>
-						<% end %>
-					</table></td>
-				</tr>
-			</tbody>
-		</table>
+					</tbody>
+				</table>
 		<br />
 		<h2>Notifications:</h2>
 		<% @unconfirmed = MessageList.where(users_id: current_user.id, confirmed_recall: false)%>
