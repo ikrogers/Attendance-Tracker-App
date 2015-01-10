@@ -12,7 +12,6 @@
 				<th>Group Leader</th>
 				<th>Controls</th>
 				<th>Controls</th>
-				<th>Controls</th>
 				<% end %>
 
 				<%if  current_user.admin == true %>
@@ -57,11 +56,12 @@
 							<%end%>
 						</ul>
 					</div></td>
+					
 					<%end%>
+										<td><%= link_to 'Take attendance', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+
 					<% end %>
 					<% end %>
-					<td></td>
-					<td></td>
 					<% end %>
 					<% end %>
 				</tr>
@@ -126,7 +126,6 @@
 		<%= link_to '(2) Define events', events_path, :method => :get, :class => 'btn btn-default'%>
 		<%= link_to '(3) Define Attendance Policy', attendance_policies_path, :method => :get, :class => 'btn btn-default'%>
 		<%= link_to 'Manage Excused Users', excuses_path, :method => :get, :class => 'btn btn-default'%>
-		
 
 		<% if @att.count >= 1%>
 		<%= link_to 'Non-group attendance found! Click here!', attendances_path, :method => :get, :class => 'btn btn-danger'%>
@@ -135,9 +134,8 @@
 	</div>
 </div>
 
-
 <script>
 	$(document).ready(function() {
 		$('.table').dataTable();
-	});
+	}); 
 </script>
