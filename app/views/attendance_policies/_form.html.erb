@@ -54,7 +54,7 @@
 				<% Event.all.each do |event| %>
 				<div id="<%= event.event_name%>" class="wipe">
 					<%= f.label "Absence Milestone" %>
-					<%= f.number_field :absence_milestone, in: 0..event.absence_max.to_i, class: 'form-control' %>
+					<%= f.number_field :absence_milestone, in: 0..1000, class: 'form-control' %>
 					<%if any_errors(@attendance_policy, :absence_milestone) != nil%>
 					<%= any_errors(@attendance_policy, :absence_milestone) %>
 					<%end%>
