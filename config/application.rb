@@ -9,6 +9,7 @@ Bundler.require(*Rails.groups)
 module T
   class Application < Rails::Application
       config.time_zone = 'Eastern Time (US & Canada)'
+ config.active_record.default_timezone = 'Eastern Time (US & Canada)'
     config.autoload_paths += %W["#{config.root}/app/validators/"]
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
