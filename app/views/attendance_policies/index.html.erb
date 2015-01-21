@@ -32,27 +32,11 @@
 					<td><%= ap.absence_milestone%></td>
 					<td><%= ap.action%></td>
 					<td>
-					<button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#showmodal">
-						Show Message
-					</button></td>
+						<%=ap.message%>
+						</td>
+					
 
-					<!-- Modal -->
-					<div class="modal fade" id="showmodal" tabindex="-1" role="dialog" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h2 class="modal-title">Message Content</h2>
-								</div>
-								<div class="modal-body" style="word-wrap: break-word;">
-									<b> <%= ap.message %></b>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">
-										Close
-									</button>
-								</div>
-							</div>
-						</div>
+					
 					</div>
 					<td><%= link_to 'Edit', edit_attendance_policy_path(ap), :class => "btn btn-warning btn-block" %></td>
 					<td><%= link_to 'Destroy', ap, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-block" %></td>

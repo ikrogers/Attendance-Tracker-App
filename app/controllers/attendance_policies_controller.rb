@@ -1,6 +1,13 @@
 class AttendancePoliciesController < InheritedResources::Base
   before_action :authenticate_user!
   layout 'application1'
+  
+  
+  def index
+    @attendance_policies = AttendancePolicy.all
+  end
+  
+  
   def create
     @attendance_policy = AttendancePolicy.create(attendance_policy_params)
     
