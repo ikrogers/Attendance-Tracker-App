@@ -51,8 +51,8 @@
 					<%= any_errors(@attendance_policy, :groups_id) %>
 					<%end%>
 				</div>
-				<% Event.all.each do |event| %>
-				<div id="<%= event.event_name%>" class="wipe">
+				
+				<div>
 					<%= f.label "Absence Milestone" %>
 					<%= f.number_field :absence_milestone, in: 0..1000, class: 'form-control' %>
 					<%if any_errors(@attendance_policy, :absence_milestone) != nil%>
@@ -60,7 +60,7 @@
 					<%end%>
 
 				</div>
-				<%end%>
+				
 				<div>
 					<%= f.label "Action" %>
 					<%= f.select(:action, options_for_select([["SMS Notify"], ["Email Notify"], ["Email+SMS Notify"], ["Notify User and Supervisor(Group leader) Email"],["Notify User and Supervisor(Group leader) SMS"], ["Notify User and Supervisor(Group leader) Email + SMS "]]),{}, { :class => 'form-control'})%>
