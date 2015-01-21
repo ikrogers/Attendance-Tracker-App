@@ -35,7 +35,7 @@ $('#maint').dataTable();
 						<tbody class="table-bordered">
 							<%get_absence_events(u).each do |event|%>
 							<tr>
-								<td><b><%= get_absence_count(u, event)%></b> missed <%= event%> event(s). <a data-toggle="collapse" href="#1<%=  u.fname.gsub(/[^0-9a-z ]/i, ''+u.lname.gsub(/[^0-9a-z ]/i, ''+event.gsub(/\s+/, "") %>" aria-expanded="false" aria-controls="collapseExample">Details</a></td>
+								<td><b><%= get_absence_count(u, event)%></b> missed <%= event%> event(s). <a data-toggle="collapse" href="#1<%=  u.fname.gsub(/[^0-9a-z ]/i, '')+u.lname.gsub(/[^0-9a-z ]/i, '')+event.gsub(/\s+/, "") %>" aria-expanded="false" aria-controls="collapseExample">Details</a></td>
 							</tr>
 							<tr>
 								<td>
@@ -63,7 +63,7 @@ $('#maint').dataTable();
 						<tbody class="table-bordered">
 							<%get_tardy_events(u).each do |event|%>
 							<tr>
-								<td><b><%= get_tardy_count(u, event)%></b> tardy(ies) for <%= event%>. <a data-toggle="collapse" href="#2<%= u.fname.gsub(/[^0-9a-z ]/i, ''+u.lname.gsub(/[^0-9a-z ]/i, ''+event.gsub(/\s+/, "") %>" aria-expanded="false" aria-controls="collapseExample">Details</a></td>
+								<td><b><%= get_tardy_count(u, event)%></b> tardy(ies) for <%= event%>. <a data-toggle="collapse" href="#2<%= u.fname.gsub(/[^0-9a-z ]/i, '')+u.lname.gsub(/[^0-9a-z ]/i, '')+event.gsub(/\s+/, "") %>" aria-expanded="false" aria-controls="collapseExample">Details</a></td>
 							</tr>
 							<tr>
 								<td>
