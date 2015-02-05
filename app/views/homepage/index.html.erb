@@ -94,7 +94,7 @@
 					<thead>
 						<tr>
 							<th>Subject</th>
-							<th>Date sent</th>
+							
 							<th>Confirm</th>
 						</tr>
 					</thead>
@@ -104,7 +104,7 @@
 						<% @message = Message.find_by_id(a.messages_id)%>
 						<tr>
 							<td><%= @message.subject%></td>
-							<td> <%= @message.created_at.to_date.to_formatted_s(:long)%> </td>
+							
 							<% conf = a.confirmed_recall%>
 							<td>Not confirmed</td>
 							<td><%= button_to 'Confirm Now', message_confirmation_path(a.messageconfirmtoken), :method=>:get, :class => 'btn btn-primary'%></td>
