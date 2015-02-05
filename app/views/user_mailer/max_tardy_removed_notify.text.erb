@@ -1,0 +1,2 @@
+<% absences = Attendance.where(user_id: @user.id, event: @event.event_name).count%>
+You have <%= absences%>/<%= @event.absence_max%> allowed absences

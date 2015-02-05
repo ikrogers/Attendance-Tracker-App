@@ -2,13 +2,7 @@ class GroupsController < InheritedResources::Base
   before_action :authenticate_user!
   layout 'application1'
   def create
- 
     @group = Group.new(group_params)
-   
-
-    @group.update_attributes(:ptdays => '', :llabdays => '')
-
-
     respond_to do |format|
       if @group.save
         format.html { redirect_to groups_path, notice: 'Group was successfully created.' }
@@ -26,25 +20,7 @@ class GroupsController < InheritedResources::Base
   def update
 
     respond_to do |format|
-    # This block sets PT and LLAB days for the group
-      @group= Group.find params[:id]
-      @ptdays = params[:project][:ptdays] rescue nil
-      @llabdays = params[:project][:llabdays] rescue nil
-      if @ptdays != nil
-        @ptday_string = ''
-        @ptdays.each do |d|
-          @ptday_string = @ptday_string+'::'+d
-        end
-        @group.update_attributes(:ptdays => @ptday_string)
-      end
-      if @llabdays != nil
-        @llabday_string = ''
-        @llabdays.each do |d|
-          @llabday_string = @llabday_string+'::'+d
-        end
-        @group.update_attributes(:llabdays => @llabday_string)
-      end
-    #-----------------------------------------
+    @group= Group.find params[:id]
     #This block adds users to group
       @users = User.find(params[:project][:user_ids]) rescue nil
       @removeusers = User.find(params[:project][:user_remove]) rescue nil
@@ -52,7 +28,7 @@ class GroupsController < InheritedResources::Base
       if @users != nil
         @users.each do |u|
           if (@group.grouptype.include? "Non-Attendance") == false
-          @user = User.find_by_id(u.id)
+            @user = User.find_by_id(u.id)
           if (@group.grouptype.include? "Alternate") == false
             @user.update_attributes(:in_attendance_group => true)
           end
@@ -140,6 +116,12 @@ class GroupsController < InheritedResources::Base
         end
       end
     @all.destroy_all
+    
+    #if group is deleted remove all policies associated explicidly with it
+    @policies = AttendancePolicy.where(:groups_id => params[:id]) rescue nil
+    if @policies != nil
+      @policies.destroy_all
+    end
     end
 
     #Message sent to will update to -1
@@ -157,16 +139,21 @@ class GroupsController < InheritedResources::Base
         at.update_attributes(:groups_id => nil)
       end
     end
-    
+     #if group is deleted remove all policies associated with it
+     @policy = AttendancePolicy.where(:groups_id => params[:id]) rescue nil
+     if @policy != nil
+       @policy.destroy_all
+     end
     @group.destroy
+    
 
     respond_to do |format|
-      format.html { redirect_to groups_path, notice: 'Group removed!' }
+      format.html { redirect_to groups_path, notice: 'Group removed! All associated records has been removed as well' }
     end
   end
 
   def group_params
-    params.require(:group).permit(:name, :grouptype, :users_id, :groups_id)
+    params.require(:group).permit(:name, :grouptype, :users_id, :groups_id, :alt_event_days => [])
   end
 
 end

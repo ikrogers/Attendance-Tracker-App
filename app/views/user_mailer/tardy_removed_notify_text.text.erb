@@ -1,0 +1,3 @@
+<% tardies = Attendance.where(user_id: @user.id, event: @event.event_name, :tardy => true).count%>
+<% mod = tardies.to_i % @event.max_tardies.to_i%>
+You have <%= mod%>/<%= @event.max_tardies%> tardies

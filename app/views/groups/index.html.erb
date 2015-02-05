@@ -3,22 +3,26 @@
 		<h3 class="panel-title">Groups</h3>
 	</div>
 	<div class="panel-body">
-		<table class="table">
+		<table class="table table-striped table-bordered" id="maintable">
 			<thead>
 
 				<% if current_user.admin == nil || current_user.admin == false%>
 				<th>Group Name</th>
 				<th>Group Type</th>
 				<th>Group Leader</th>
-				<th colspan='3'>Controls</th>
+				<th>Controls</th>
+				<th>Controls</th>
 				<% end %>
 
 				<%if  current_user.admin == true %>
 				<th>Group Name</th>
 				<th>Group Type</th>
 				<th>Group Leader</th>
-				<th colspan="7">Controls</th>
-
+				<th>Show</th>
+				<th>Manage</th>
+				<th>Attendance</th>
+				<th>Adjust</th>
+				<th>Destroy</th>
 				<%end%>
 			</thead>
 			<tbody>
@@ -30,24 +34,39 @@
 					<td><%= group.name %></td>
 					<td><%= group.grouptype %></td>
 					<td><%= User.find_by_id(group.users_id).fname+ " " +User.find_by_id(group.users_id).lname %></td>
-					<td><%= link_to 'Show Members', group ,:class=>'btn btn-info'%></td>
+					<td><%= link_to 'Show Members', group, :method => :get, :class=>'btn btn-info'%></td>
 					<% if current_user.tracker == true%>
 					<%if (group.grouptype.include? "Non-Attendance") == false%>
-					<%if today(group) == true%>
-					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
+					<%if assigned_events(group.id).count < 1%>
+					<td><%= link_to 'Take attendance', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+					<%elsif group.grouptype.include? "Alternate"%>
+					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id, :event => strip_alt_att(group.grouptype)), :class=>'btn btn-primary', :disabled => true %></td>
 					<%else%>
-					<td><%= link_to 'Take attendance(Not Today!)', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+					<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle"  type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+							Take Attendance
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<%assigned_events(group.id).each do |e|%>
+							<li role="presentation">
+								<%= link_to e.event_name, new_attendance_path(:group_id => group.id, :event => e.event_name), :role => "menuitem", :method => :get, :tabindex => -1 %>
+							</li>
+							<%end%>
+						</ul>
+					</div></td>
+					
+					<%end%>
+					
 					<% end %>
 					<% end %>
-					<% end %>
-					<td></td>
-					<td></td>
 					<% end %>
 					<% end %>
 				</tr>
 				<%if  current_user.admin == true || current_user.uberadmin == true %>
 				<%if group.users_id ==  nil%>
-				<tr bgcolor="#FFFF19">
+				<tr class="danger">
 					<%else%>
 				<tr>
 					<%end%>
@@ -58,14 +77,34 @@
 					<%else%>
 					<td><%= User.find_by_id(group.users_id).fname+ " " +User.find_by_id(group.users_id).lname %></td>
 					<%end%>
-					<td><%= link_to 'Show Members', group, :class => 'btn btn-info' %></td>
+					<td><%= link_to 'Show Members', group, :method => :get, :class => 'btn btn-info' %></td>
 					<td><%= link_to 'Manage Group', edit_group_path(group), :class => 'btn btn-warning' %></td>
 					<%if (group.grouptype.include? "Non-Attendance") == false%>
-					<%if today(group) == true%>
-					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id), :class=>'btn btn-primary' %></td>
+					<%if assigned_events(group.id).count < 1%>
+					<td><%= link_to 'Take attendance', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+					<%elsif group.grouptype.include? "Alternate"%>
+					<%if is_today_alt(group) == true %>
+					<td><%= link_to 'Take attendance', new_attendance_path(:group_id => group.id, :event => strip_alt_att(group.grouptype)), :class=>'btn btn-primary' %></td>
 					<%else%>
-					<td><%= link_to 'Take attendance(Not Today!)', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
-					<% end %>
+					<td><%= link_to 'Take attendance', authenticated_root_path, :class=>'btn btn-primary', :disabled => true %></td>
+					<%end%>
+					<%else%>
+					<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle"  type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+							Take Attendance
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<%assigned_events(group.id).each do |e|%>
+							<li role="presentation">
+								<%= link_to ""+e.event_name, new_attendance_path(:group_id => group.id, :event => e.event_name), :method => :get, :role => "menuitem", :tabindex => -1 %>
+							</li>
+							<%end%>
+						</ul>
+					</div></td>
+					<%end%>
+
 					<td><%= link_to 'Adjust Attendance', attendances_path(:attgroup_id => group.id), :class => 'btn btn-danger' %></td>
 					<% else %>
 					<td><%= link_to 'Take Attendance', new_attendance_path(:group_id => group.id), :class => 'btn btn-primary', :disabled => true %></td>
@@ -82,15 +121,20 @@
 		</table>
 		<% @att = Attendance.where(groups_id: nil) rescue nil%>
 		<% if current_user.admin == true || current_user.uberadmin == true%>
-
-		<%= link_to 'New Group', new_group_path, :class => 'btn btn-primary' %>
-
-		<%= link_to 'Manage Alternane PT and LLAB Users', excused_users_path, :class => 'btn btn-default'%>
+		<%= link_to '(1) New Group', new_group_path, :class => 'btn btn-primary' %>
+		<%= link_to '(2) Define events', events_path, :method => :get, :class => 'btn btn-default'%>
+		<%= link_to '(3) Define Attendance Policy', attendance_policies_path, :method => :get, :class => 'btn btn-default'%>
+		<%= link_to 'Manage Excused Users', excuses_path, :method => :get, :class => 'btn btn-default'%>
 
 		<% if @att.count >= 1%>
-		<%= link_to 'Non-group attendance found! Click here!', attendances_path, :class => 'btn btn-danger'%>
+		<%= link_to 'Non-group attendance found! Click here!', attendances_path, :method => :get, :class => 'btn btn-danger'%>
 		<%end%>
 		<% end %>
 	</div>
 </div>
 
+<script>
+	$(document).ready(function() {
+		$('.table').dataTable();
+	}); 
+</script>

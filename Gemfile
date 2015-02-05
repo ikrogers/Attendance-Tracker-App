@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'devise', '3.2.4'
 gem 'devise_security_extension'
@@ -44,6 +44,9 @@ gem 'bootstrap3-datetimepicker-rails', '~> 3.0.2'
 
 #Heroku addons
 gem 'newrelic_rpm'
+
+#Sortable tables gem
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 
 
 

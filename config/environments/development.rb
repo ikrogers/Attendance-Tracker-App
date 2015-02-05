@@ -41,9 +41,9 @@ Rails.application.configure do
 config.action_mailer.smtp_settings = {
   address:              'smtp.gmail.com',
   port:                 587,
-  domain:               'example.com',
-  user_name:            'automaticnotification172@gmail.com',
-  password:             '78 chickens went on a walk and for got that Google uses CAPTCHA which drives girls up the wall',
+  domain:               'gmail.com',
+  user_name:            'hurrdurr123333333@gmail.com',
+  password:             '123123123123123123',
   authentication:       'plain',
   enable_starttls_auto: true  }
 

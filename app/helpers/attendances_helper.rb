@@ -1,42 +1,35 @@
-module AttendancesHelper 
-  
-   def is_today_excused_pt(user)
-    @user = User.find_by_id(user.id)
-    @availabledays = @user.excused_pt_days.split("::")
-    @flag = false
-    @availabledays.each do |a|
-      if Time.now.strftime("%A") == a
-        @flag = true
-      break
+module AttendancesHelper
+  def users_in_group_excused_excluded(group, event)
+    @group=Group.find_by_id(group)
+    @ingroup = InGroup.where(groups_id: @group.id)
+    @usersingroup = Array.new
+    @ingroup.each do |ig|
+      @usersingroup << User.find_by_id(ig.users_id)
+    end
+    @excused_list = Array.new
+    @usersingroup.each do |ig|
+      @excuse = Excuse.find_by(:user_id => ig.id, :event => event) rescue nil
+      if @excuse != nil
+        if @excuse.excused_days.include?(Time.now.strftime("%A"))
+        else
+        @excused_list << ig
+        end
       else
-        @flag = false
+      @excused_list << ig
       end
     end
-    return @flag
+    return @excused_list
   end
-  
-   def is_today_excused_llab(user)
-    @user = User.find_by_id(user.id)
-    @availabledays = @user.excused_llab_days.split("::")
-    @flag = false
-    @availabledays.each do |a|
-      if Time.now.strftime("%A") == a
-        @flag = true
-      break
-      else
-        @flag = false
-      end
+
+
+  def users_in_group_unfiltered(group)
+    @group=Group.find_by_id(group)
+    @ingroup = InGroup.where(groups_id: @group.id)
+    @usersingroup = Array.new
+    @ingroup.each do |ig|
+      @usersingroup << User.find_by_id(ig.users_id)
     end
-    return @flag
+    return @usersingroup
   end
- def users_in_group(group)
-  @group=group
-      @ingroup = InGroup.where(groups_id: @group.id)      
-      @usersingroup= Array.new
-      @ingroup.each do |ig|
-        @usersingroup << User.find_by_id(ig.users_id)
-      end
-  
-  return @usersingroup
-  end
+
 end

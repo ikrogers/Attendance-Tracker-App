@@ -45,23 +45,7 @@
 			</div>
 			<% end %>
 
-			<%
- @group= Group.find params[:id]
-        @ingroup = InGroup.where(groups_id: @group.id)
-        @users = User.all
-        @usersnotingroup = Array.new
-        @users.each do |u|
-          @notin = InGroup.find_by(users_id: u.id, groups_id: @group.id) rescue nil
-          if @notin == nil
-            @usersnotingroup << User.find_by_id(u.id)
-          end
-        end
-        @usersingroup= Array.new
-        @ingroup.each do |ig|
-          @usersingroup << User.find_by_id(ig.users_id)
-        end
-
-%>
+			
 
 			<div>
 				<%= f.label "Name" %>
@@ -71,40 +55,28 @@
 				<%= f.text_field :name, :class=>'form-control'%>
 			</div>
 			<div>
-				<%if (@group.grouptype.include? "Non-Attendance") == false%>
-				<%= f.label "Select days for which PT attendance is to be taken" %>
-				<br>
-				<i> ~No one will be able to take PT attendance otherwise</i>
-				<br>
-				<%= select_tag(:ptdays, options_for_select([["Clear All Days"],["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[ptdays][]',  :multiple => true})%>
-				<br>
-				<%= f.label "Select days for which LLAB attendance is to be taken" %>
-				<br>
-				<i> ~No one will be able to take LLAB attendance otherwise</i>
-				<br>
-				<%= select_tag(:llabdays, options_for_select([["Clear All Days"],["Monday"], ["Tuesday"], ["Wednesday"], ["Thursday"],["Friday"], ["Saturday"], ["Sunday"]]), { :class => 'form-control', :name => 'project[llabdays][]',  :multiple => true})%>
-				<br>
-				<%end%>
+				
 				<%if (@group.grouptype.include? "Non-Attendance") == true%>
 				<%= f.label "Select Users to add" %>
 				<br>
 				<i> ~Will allow you to add users that are not in this group</i>
 				<br>
-				<%= select_tag(:user_ids, options_for_select(@usersnotingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				<%= select_tag(:user_ids, options_for_select(users_not_in_group(params[:id]).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
 				<br>
 				<%else%>
-				<%if (@group.grouptype.include? "Alternate PT") == true%>
+				<%if (@group.grouptype.include? "Alternate") == true%>
 				<%= f.label "Select Users to add" %>
 				<br>
 				<i> ~Will only allow to add users that are allowed to attend alternate PT sessions</i>
 				<br>
-				<%= select_tag(:user_ids, options_for_select(excused_pt_group(@group).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
-				<%elsif (@group.grouptype.include? "Alternate LLAB") == true %>
-				<%= f.label "Select Users to add" %>
+				<%= select_tag(:user_ids, options_for_select(excused_group(params[:id]).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				 
+				 <%= f.label "Select allowed days for taking attendance" %>
 				<br>
-				<i> ~Will only allow to add users that are allowed to attend alternate LLAB sessions</i>
+				<i> ~This will allow to take attendance for the event this group is created for on different days</i>
 				<br>
-				<%= select_tag(:user_ids, options_for_select(excused_llab_group(@group).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_ids][]'}) %>
+				<%= f.select(:alt_event_days, options_for_select(Date::DAYNAMES.collect {|day| [day]}), {}, { :class => 'form-control', :multiple => true})%>
+				 
 				<%else%>
 				<%= f.label "Select Users to add" %>
 				<br>
@@ -117,7 +89,7 @@
 				<br>
 				<i> ~Will allow you to remove users from this group</i>
 				<br>
-				<%= select_tag(:user_remove, options_for_select(@usersingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_remove][]'}) %>
+				<%= select_tag(:user_remove, options_for_select(users_in_group(params[:id]).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:class => 'form-control', :multiple => true, :name=>'project[user_remove][]'}) %>
 				<br>
 				<% if (@group.grouptype.include? "Alternate") == true%>
 				<%= f.label "Change group leader (User must already be in group)" %>
@@ -135,7 +107,7 @@
 				<br>
 				<i>~You may not remove a group leader from the group. You can reassign group leader position to another user in the group, or if leader is the only remaining user destroy the entire group.</i>
 				<br />
-				<%= select_tag(:user_id, options_for_select(@usersingroup.collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:include_blank => true,:class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
+				<%= select_tag(:user_id, options_for_select(users_in_group(params[:id]).collect {|u| [(u.fname+" "+u.lname), u.id]}),{data:{live_search: "true"},:include_blank => true,:class => 'form-control',:multiple => false, :name=>'project[user_id][]'}) %>
 
 				<%end%>
 				<div class="actions">

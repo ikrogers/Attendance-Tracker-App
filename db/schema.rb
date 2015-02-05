@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140805061021) do
+ActiveRecord::Schema.define(version: 20141225174544) do
 
   create_table "active_admin_comments", force: true do |t|
     t.text     "namespace"
@@ -28,8 +28,21 @@ ActiveRecord::Schema.define(version: 20140805061021) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace"
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
 
+  create_table "attendance_policies", force: true do |t|
+    t.text     "message"
+    t.integer  "absence_milestone"
+    t.text     "action"
+    t.text     "event"
+    t.text     "additional_users"
+    t.integer  "groups_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "attendances", force: true do |t|
     t.boolean  "absent"
+    t.boolean  "tardy"
+    t.boolean  "absence_tardy"
     t.integer  "user_id"
     t.text     "event"
     t.integer  "tracker_id"
@@ -41,13 +54,32 @@ ActiveRecord::Schema.define(version: 20140805061021) do
 
   add_index "attendances", ["user_id"], name: "index_attendances_on_user_id"
 
+  create_table "events", force: true do |t|
+    t.text     "event_name"
+    t.text     "event_days"
+    t.integer  "max_tardies"
+    t.text     "notification_type"
+    t.integer  "absence_max"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "excuses", force: true do |t|
+    t.integer  "user_id"
+    t.text     "event"
+    t.text     "excused_days"
+    t.datetime "timeframe"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "groups", force: true do |t|
     t.text     "name"
-    t.text     "ptdays"
-    t.text     "llabdays"
     t.integer  "users_id"
     t.integer  "groups_id"
     t.text     "grouptype"
+    t.text     "alt_event_days"
+    t.boolean  "unique_user_group"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -121,10 +153,6 @@ ActiveRecord::Schema.define(version: 20140805061021) do
     t.boolean  "leader"
     t.boolean  "tracker"
     t.boolean  "uberadmin"
-    t.text     "excused_pt_days"
-    t.text     "excused_llab_days"
-    t.boolean  "ptexcuse"
-    t.boolean  "llabexcuse"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"

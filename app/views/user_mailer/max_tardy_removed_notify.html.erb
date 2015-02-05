@@ -1,0 +1,4 @@
+<% absences = Attendance.where(user_id: @user.id, event: @event.event_name).count%>
+<h2>Tardy has been removed, your absence count has been adjusted.</h2>
+<h2>You have <%= absences%>/<%= @event.absence_max%> allowed absences</h2>
+

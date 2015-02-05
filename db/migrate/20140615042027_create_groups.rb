@@ -2,11 +2,11 @@ class CreateGroups < ActiveRecord::Migration
   def change
     create_table :groups do |t|
       t.text :name
-      t.text :ptdays
-      t.text :llabdays
       t.references :users, index: true
       t.references :groups, index: true 
       t.text :grouptype
+      t.text :alt_event_days
+      t.boolean :unique_user_group
       t.timestamps
     end
   end

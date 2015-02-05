@@ -1,0 +1,54 @@
+<script>
+	$(document).ready(function() {
+		$('.table').dataTable();
+	})
+
+</script>
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Excused Users</h3>
+	</div>
+	<div class="panel-body">
+		<table class="table table-striped table-bordered">
+
+			<thead>
+				<tr>
+					<th>Event</th>
+					<th>Groups Applied To</th>
+					<th>Absence Milestone</th>
+					<th>Action</th>
+					<th>Message</th>
+					<th>Edit</th>
+					<th>Destroy</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<% @attendance_policies.each do |ap| %>
+				<tr>
+					<td><%= ap.event%></td>
+					<td><%= group_exists(ap.groups_id)%></td>
+					<td><%= ap.absence_milestone%></td>
+					<td><%= ap.action%></td>
+					<td>
+						<%=ap.message%>
+						</td>
+					
+
+					
+					</div>
+					<td><%= link_to 'Edit', edit_attendance_policy_path(ap), :class => "btn btn-warning btn-block" %></td>
+					<td><%= link_to 'Destroy', ap, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-block" %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+
+		<%= link_to 'New Attendance Milestone', new_attendance_policy_path, :method => :get, :class => "btn btn-primary" %>
+		<%= link_to 'Back', groups_path, :method => :get, :class => "btn btn-default"%>
+	</div>
+</div>
+
+<br>
+

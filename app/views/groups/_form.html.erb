@@ -1,21 +1,17 @@
 <%
-@ptgroup = Group.find_by(grouptype: 'Alternate PT Attendance') rescue nil
-@llabgroup = Group.find_by(grouptype: 'Alternate LLAB Attendance') rescue nil
-@ptflag = false
-@llabflag = false
+ @ptgroup = Group.find_by(grouptype: 'Alternate PT Attendance') rescue nil
+  @llabgroup = Group.find_by(grouptype: 'Alternate LLAB Attendance') rescue nil
+  @ptflag = false
+  @llabflag = false
 
-if @ptgroup == nil
-	@ptflag = true
-end
+  if @ptgroup == nil
+    @ptflag = true
+  end
 
-if @llabgroup == nil
-	@llabflag = true
-end
+  if @llabgroup == nil
+    @llabflag = true
+  end
 %>
-
-
-
-
 
 <div class="panel panel-primary">
 	<div class="panel-heading">
@@ -52,27 +48,6 @@ end
 
 				</div>
 				<%= form_for(@group) do |f| %>
-				<% if @group.errors.any? %>
-				<div id="error_explanation">
-					<h2><%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:</h2>
-
-					<ul>
-						<% @group.errors.full_messages.each do |message| %>
-						<li>
-							<%= message %>
-						</li>
-						<% end %>
-					</ul>
-				</div>
-				<% end %>
-
-				<% @users = User.all
-  @array = Array.new
-  @users.each do |user|
-    @array << user.email
-  end
-%>
-
 				<div>
 					<%= f.label "Name" %>
 					<br>
@@ -80,29 +55,25 @@ end
 				</div>
 				<div>
 					<%= f.text_field :name, :class => 'form-control'%>
+					<%if any_errors(@group, :name) != nil%>
+					<%= any_errors(@group, :name) %>
+					<%end%>
 				</div>
 				<div>
 					<%= f.label "Select group type" %>
 					<br>
 					<i> ~Attendance is for attendance tracking and Non-Attendance is everything else</i>
 				</div>
-				<%if @ptflag == true && @llabflag == true%>
 				<div>
-					<%= f.select(:grouptype, options_for_select([["Attendance"], ["Alternate LLAB Attendance"], ["Alternate PT Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control', :id => 'type_dd'})%>
+					<%= f.select(:grouptype, options_for_select(populate_new_groups),{}, { :class => 'form-control', :id => 'type_dd'})%>
 				</div>
-				<%elsif @ptflag == true && @llabflag == false%>
+				
 				<div>
-					<%= f.select(:grouptype, options_for_select([["Attendance"], ["Alternate PT Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control', :id => 'type_dd'})%>
-				</div>
-				<%elsif @ptflag == false && @llabflag == true%>
-						<div>
-					<%= f.select(:grouptype, options_for_select([["Attendance"], ["Alternate LLAB Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control', :id => 'type_dd'})%>
-				</div>		
-				<%else %>
-				<div>
-					<%= f.select(:grouptype, options_for_select([["Attendance"], ["Non-Attendance"]]),{}, { :class => 'form-control', :id => 'type_dd'})%>
-				</div>
-				<%end%>
+					<%f.check_box :unique_user_group%>
+					<% f.label "Unique Users"%><br />
+					<!--<i>Select this box if you want for the system to only allow you to add users not belonging to attendance group to this group (Not applicable to Non-Attendance)</i>
+					
+				</div>-->
 
 				<br>
 

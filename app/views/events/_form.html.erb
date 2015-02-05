@@ -1,0 +1,109 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		New Group
+	</div>
+	<div class="panel-body">
+		<body id="content" role="main">
+			<div class="container">
+
+				<a data-toggle="collapse" class='text-muted' data-parent="#accordion" href="#accordionThree">
+				<p class='text-muted'>
+					Detailed Instructions
+				</p></a>
+				<div id="accordionThree" class="panel-collapse collapse">
+					<div class="panel-body">
+						<h4> Field and Options Definitions: </h4>
+						<p>
+							~Name - Input group name here. If left blank the group will not have a name. You may update it at any time.
+						</p>
+						<p>
+							~Group type - Select what kind of group you are creating.
+						</p>
+						<p>
+							~~Attendance - Standard attendance group.
+						</p>
+						<p>
+							~~Alternate PT or LLAB - Special type attendance group for alternate PT/LLAB authorised users.
+						</p>
+						<p>
+							~~Non attendance - Group type for users that have nothing to do with taking attendance but need to be able to see attendance of certain users. Example can be a FLT/CC or SQ/CC etc.
+						</p>
+
+					</div>
+
+				</div>
+				<%= form_for(@event) do |f| %>
+				<% if @event.errors.any? %>
+				<div id="error_explanation">
+					<h2><%= pluralize(@event.errors.count, "error") %> prohibited this group from being saved:</h2>
+
+					<ul>
+						<% @event.errors.full_messages.each do |message| %>
+						<li>
+							<%= message %>
+						</li>
+						<% end %>
+					</ul>
+				</div>
+				<% end %>
+
+				<div>
+					<%= f.label "Event Name" %>
+					<br>
+					<i> ~Name your event. Ex: Physical Training</i>
+				</div>
+				<div>
+					<%= f.text_field :event_name, :class => 'form-control'%>
+				</div>
+				<br>
+				<div>
+					<%= f.label "Select days for which attendance for this event could be taken" %>
+					<br>
+					<i> ~To clear, submit without making changes</i>
+					<br>
+					<%= f.select(:event_days, options_for_select(Date::DAYNAMES.collect {|day| [day]}), {}, { :class => 'form-control', :multiple => true})%>
+					<br>
+				</div>
+				<div>
+					<%= f.label "Max Allowed Absences" %>
+					<br>
+					<i> ~Indicate number of allowed absences. Ex: 13</i>
+				</div>
+				<div>
+					<%= f.number_field :absence_max, in: 0..1000, class: 'form-control' %>
+				</div>
+				<div>
+					<%= f.label "Max Allowed Tardies" %>
+					<br>
+					<i> ~Indicate number of taries at which point it will turn into absence. Ex: 13</i>
+					<br>
+					<i> <b>~Leave/make blank if you DO NOT want to use tardy system (You will have to remove any incurred tardy absences manually).</b></i>
+					<%= f.number_field :max_tardies, in: 2..1000, class: 'form-control' %>
+				</div>
+				<div>
+					<%= f.label "Select Notification Type" %>
+					<br>
+					<i> ~How users will be notified if absence has been recorded/removed</i>
+					<br>
+					<%= f.select(:notification_type, options_for_select([["None"],["SMS"],["E-Mail"],["Both"]]), {}, { :include_blank => false, :class => 'form-control', :multiple => false})%>
+					<br>
+				</div>
+				<br>
+				<div class="actions">
+					<%if params[:action] != "edit"%>
+					<%= f.submit "Create Event", :class=>'btn btn-primary' %>
+					<% else %>
+					<%= f.submit "Update Event", :class=>'btn btn-primary' %>
+					<%end%>
+				</div>
+				<% end %>
+				<br>
+
+			</div>
+	</div>
+
+	<script>
+	$(document).ready(function() {
+		$('select').selectpicker();
+	}); 
+</script>

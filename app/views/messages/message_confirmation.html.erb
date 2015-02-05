@@ -24,7 +24,9 @@
 				</div>
 				<% end %>
 				<div>
-					<h3> Please type the following message in the box below: "<%= @user.original_message %>" </h3>
+					<h3> Please type the following message displayed in italics in the input box below.</h3> 
+					<h3>Be sure to ONLY use text surrounded by "" (While excluding the "") and type in EXACTLY what you see. </h3>
+					<h4 style="center"><i>"<%= @user.original_message %>"</i></h4>
 				</div>
 				<div class="field">
 					<%= text_area_tag :entered_message,nil, :class => 'form-control'%>
